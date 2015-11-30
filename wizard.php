@@ -83,7 +83,7 @@
         <?php 
 
             // Get Every plugs 
-            require_once '../cultibox/main/libs/db_get_common.php';
+            require_once '../bulcky/main/libs/db_get_common.php';
 
             // Number of plugs 
             $nb_plugs = get_configuration("NB_PLUGS",$main_error);
@@ -92,7 +92,7 @@
             $plugs_infos = get_plugs_infos($nb_plugs,$main_error);
 
             // Retrieve sensors info
-            require_once '../cultibox/main/libs/lib_sensors.php';
+            require_once '../bulcky/main/libs/lib_sensors.php';
             $sensors_infos = \sensors\getDB();
 
         ?>
