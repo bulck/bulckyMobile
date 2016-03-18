@@ -141,15 +141,19 @@ function generateConf ($path, $userVar) {
     //$newPath = $path . "/" . date("YmdHms");
     $newPath = $path . "/test-cnf" ;
     
-    mkdir($newPath);
+    if (!is_dir($newPath)) {
+        mkdir($newPath);
+    }
     xcopy($path . "/01_defaultConf_RPi/" , $newPath );
 
 
     // On change les parametres pour le server irrigation 
-    mkdir($newPath . "/serverSLF");
+    if (!is_dir($newPath . "/serverSLF")) {
+        mkdir($newPath . "/serverSLF");
+    }
     // Add trace level
     $paramServerSLFXML[] = array (
-        "name" => "verbose",
+        "key" => "verbose",
         "level" => $userVar['PARAM']['VERBOSE_SLF']
     );
     
@@ -168,11 +172,17 @@ function generateConf ($path, $userVar) {
         "value" => count($GLOBALS['IRRIGATION'])
     );    
     
+    $paramServerSLFXML[] = array (
+        "key" => "nettoyage" ,
+        "value" => $userVar['PARAM']['NETTOYAGE_GOUTEUR']
+    );  
     
     $ZoneIndex = 0;    
-    $PFIndex = 0;
+
     foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
 
+        // Parametres des zones 
+        $Zone_nom_upper = str_replace(" ", "", strtoupper($zone_nom));
         
         $paramServerSLFXML[] = array (
             "key" => "zone," . $ZoneIndex . ",name" ,
@@ -182,7 +192,32 @@ function generateConf ($path, $userVar) {
             "key" => "zone," . $ZoneIndex . ",ip" ,
             "value" => $zone["parametres"]["IP"]
         );
-    
+        $paramServerSLFXML[] = array (
+            "key" => "zone," . $ZoneIndex . ",capteur,niveau" ,
+            "value" => $zone["capteur"]["niveau_cuve"]["numero"]
+        );
+        $paramServerSLFXML[] = array (
+            "key" => "zone," . $ZoneIndex . ",nbplateforme" ,
+            "value" => count($zone["plateforme"])
+        );
+        
+        for ($i = 1 ; $i < 4 ; $i++) {
+            $paramServerSLFXML[] = array (
+                "key" => "zone," . $ZoneIndex . ",engrais," . $i . ",temps" ,
+                "value" => $userVar['CUVE'][$Zone_nom_upper . '_ENGRAIS_' . $i]
+            );
+            $paramServerSLFXML[] = array (
+                "key" => "zone," . $ZoneIndex . ",engrais," . $i . ",actif" ,
+                "value" => $userVar['CUVE'][$Zone_nom_upper . '_ENGRAIS_ACTIF_' . $i]
+            );
+            $paramServerSLFXML[] = array (
+                "key" => "zone," . $ZoneIndex . ",engrais," . $i . ",prise" ,
+                "value" => $zone["prise"]["engrais" . $i]
+            );
+        }
+
+        $PFIndex = 0;
+        
         foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
 
             
@@ -191,60 +226,79 @@ function generateConf ($path, $userVar) {
             $ligneIndex = 0;
             
             $paramServerSLFXML[] = array (
-                "key" => "plateforme," . $PFIndex . ",name" ,
+                "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",name" ,
                 "value" => "PF " . $plateforme_nom
             );
             $paramServerSLFXML[] = array (
-                "key" => "plateforme," . $PFIndex . ",ip" ,
+                "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",ip" ,
                 "value" => $zone["parametres"]["IP"]
             );
             $paramServerSLFXML[] = array (
-                "key" => "plateforme," . $PFIndex . ",nbligne" ,
+                "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",nbligne" ,
                 "value" => count($plateforme["ligne"])
             );
             $paramServerSLFXML[] = array (
-                "key" => "plateforme," . $PFIndex . ",tempscycle" ,
+                "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",tempscycle" ,
                 "value" => $plateforme["parametre"]["temps_cycle"]
             );
             $paramServerSLFXML[] = array (
-                "key" => "plateforme," . $PFIndex . ",pompe,prise" ,
+                "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",pompe,prise" ,
                 "value" => $plateforme["prise"]["pompe"]
             );
             $paramServerSLFXML[] = array (
-                "key" => "plateforme," . $PFIndex . ",eauclaire,prise" ,
+                "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",eauclaire,prise" ,
                 "value" => $plateforme["prise"]["EV_eauclaire"]
             );
             $paramServerSLFXML[] = array (
-                "key" => "plateforme," . $PFIndex . ",boutonarret,prise" ,
-                "value" => $plateforme["capteur"]["tor_boutonarret"]
+                "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",boutonarret,prise" ,
+                "value" => $plateforme["capteur"]["tor_boutonarret"]["numero"]
             );
             $paramServerSLFXML[] = array (
-                "key" => "plateforme," . $PFIndex . ",afficheurarret,prise" ,
+                "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",afficheurarret,prise" ,
                 "value" => $plateforme["prise"]["Afficheur_arret"]
             );
 
             
             foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
+
                 $paramServerSLFXML[] = array (
-                    "key" => "plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",name" ,
+                    "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",name" ,
                     "value" => "Ligne " . $ligne_numero
                 );
                 $paramServerSLFXML[] = array (
-                    "key" => "plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",prise" ,
+                    "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",prise" ,
                     "value" => $ligne["prise"]
                 );
+                // On calcul le nombre de l/h : Gouteur 4 l/h --> 2 / membranes --> max 8 l/h (divisé par le nombre de ligne )
+                // ((nb L/h/membrane) / (nb lmax/h/membrane)) * tmpsCycle
+                $tmpsOnMatin = round(($userVar['LIGNE'][$PF_nom_upper . '_' . $ligne_numero . '_MATIN']     / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $plateforme["parametre"]["temps_cycle"]);
+                $tmpsOnAMidi = round(($userVar['LIGNE'][$PF_nom_upper . '_' . $ligne_numero . '_APRESMIDI'] / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $plateforme["parametre"]["temps_cycle"]);
+                $tmpsOnNuit  = round(($userVar['LIGNE'][$PF_nom_upper . '_' . $ligne_numero . '_SOIR']      / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $plateforme["parametre"]["temps_cycle"]);
+                
                 $paramServerSLFXML[] = array (
-                    "key" => "plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",tempsOn,matin" ,
-                    "value" => $userVar['LIGNE'][$PF_nom_upper . '_' . $ligne_numero . '_MATIN']
+                    "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",tempsOn,matin" ,
+                    "value" => $tmpsOnMatin
                 );
                 $paramServerSLFXML[] = array (
-                    "key" => "plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",tempsOn,apresmidi" ,
-                    "value" => $userVar['LIGNE'][$PF_nom_upper . '_' . $ligne_numero . '_APRESMIDI']
+                    "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",tempsOn,apresmidi" ,
+                    "value" => $tmpsOnAMidi
                 );
                 $paramServerSLFXML[] = array (
-                    "key" => "plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",tempsOn,nuit" ,
-                    "value" => $userVar['LIGNE'][$PF_nom_upper . '_' . $ligne_numero . '_SOIR']
+                    "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",tempsOn,nuit" ,
+                    "value" => $tmpsOnNuit
                 );
+                
+                $paramServerSLFXML[] = array (
+                    "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",active" ,
+                    "value" => $userVar['LIGNE'][$PF_nom_upper . '_' . $ligne_numero . '_ACTIVE']
+                );
+                
+                // On sauvegarde le nombre de cycle (utilisé pour stocker le nombre d'arrosage et pour déterminer l'ordre de nettoyage) 
+                $paramServerSLFXML[] = array (
+                    "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",nbCycle" ,
+                    "value" => $PFIndex * 4 + $ligneIndex
+                );                
+                
                 $ligneIndex++; 
             }
             
@@ -254,14 +308,240 @@ function generateConf ($path, $userVar) {
 
         $ZoneIndex++;
     }
-    
-    $paramServerSLFXML[] = array (
-        "key" => "nbplateforme" ,
-        "value" => $PFIndex
-    );
-    
+
     // Save it
+            //print_r($paramServerSLFXML);
     create_conf_XML($newPath . "/serverSLF/conf.xml" , $paramServerSLFXML);
+    
+    
+    /*************************  capteurs ***********************************/
+    // On cré la conf pour les capteurs 
+    if (!is_dir($newPath . "/serverAcqSensor")) {
+        mkdir($newPath . "/serverAcqSensor");
+    }
+
+
+    foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
+
+        // On cré un fichier par zone 
+        $IP = $zone["parametres"]["IP"];
+        
+       // Add trace level
+        $paramServerAcqSensor[] = array (
+            "key" => "verbose",
+            "level" => $userVar['PARAM']['VERBOSE_ACQSENSOR']
+        );
+
+        $paramServerAcqSensor[] = array (
+            "key" => "simulator" ,
+            "value" => "off"
+        );
+        
+        $paramServerAcqSensor[] = array (
+            "key" => "auto_search" ,
+            "value" => "off"
+        );
+    
+        $nbSensor = 0 ;
+        // Pour chaque zone , on enregistre les capteurs 
+        foreach ($zone["capteur"] as $capteur_nom => $capteur) {
+
+            $nbSensor++;
+        
+            $numCapteur = $capteur["numero"];
+            
+            $paramServerAcqSensor[] = array (
+                "key" => "sensor," . $numCapteur . ",nom" ,
+                "value" => $capteur_nom
+            );
+            
+            $paramServerAcqSensor[] = array (
+                "key" => "sensor," . $numCapteur . ",type" ,
+                "value" => $capteur["type"]
+            );
+
+            $paramServerAcqSensor[] = array (
+                "key" => "sensor," . $numCapteur . ",index" ,
+                "value" => $capteur["index"]
+            );
+            
+            if ($capteur["type"] == "MCP230XX") {
+                $paramServerAcqSensor[] = array (
+                    "key" => "sensor," . $numCapteur . ",nbinput" ,
+                    "value" => $capteur["nbinput"]
+                );
+                
+                for ($i = 1 ; $i <= $capteur["nbinput"] ; $i++) {
+                    $paramServerAcqSensor[] = array (
+                        "key" => "sensor," . $numCapteur . ",input," . $i ,
+                        "value" => $capteur["input," . $i]
+                    ); 
+                    $paramServerAcqSensor[] = array (
+                        "key" => "sensor," . $numCapteur . ",value," . $i ,
+                        "value" => $capteur["value," . $i]
+                    ); 
+                }
+            }
+
+            if ($capteur["type"] == "ADS1015") {
+                $paramServerAcqSensor[] = array (
+                    "key" => "sensor," . $numCapteur . ",input" ,
+                    "value" => $capteur["input"]
+                );
+                $paramServerAcqSensor[] = array (
+                    "key" => "sensor," . $numCapteur . ",min" ,
+                    "value" => $capteur["min"]
+                );
+                $paramServerAcqSensor[] = array (
+                    "key" => "sensor," . $numCapteur . ",max" ,
+                    "value" => $capteur["max"]
+                );
+            }
+        }
+
+        foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
+
+            foreach ($plateforme["capteur"] as $capteur_nom => $capteur) {
+            
+                $nbSensor++;
+                $numCapteur = $capteur["numero"];
+                
+                $paramServerAcqSensor[] = array (
+                    "key" => "sensor," . $numCapteur . ",nom" ,
+                    "value" => $capteur_nom
+                );
+                
+                $paramServerAcqSensor[] = array (
+                    "key" => "sensor," . $numCapteur . ",type" ,
+                    "value" => $capteur["type"]
+                );
+
+                $paramServerAcqSensor[] = array (
+                    "key" => "sensor," . $numCapteur . ",index" ,
+                    "value" => $capteur["index"]
+                );
+                
+                if ($capteur["type"] == "MCP230XX") {
+                    $paramServerAcqSensor[] = array (
+                        "key" => "sensor," . $numCapteur . ",nbinput" ,
+                        "value" => $capteur["nbinput"]
+                    );
+                    
+                    for ($i = 1 ; $i <= $capteur["nbinput"] ; $i++) {
+                        $paramServerAcqSensor[] = array (
+                            "key" => "sensor," . $numCapteur . ",input," . $i ,
+                            "value" => $capteur["input," . $i]
+                        ); 
+                        $paramServerAcqSensor[] = array (
+                            "key" => "sensor," . $numCapteur . ",value," . $i ,
+                            "value" => $capteur["value," . $i]
+                        ); 
+                    }
+                }
+
+                if ($capteur["type"] == "ADS1015") {
+                    $paramServerAcqSensor[] = array (
+                        "key" => "sensor," . $numCapteur . ",input" ,
+                        "value" => $capteur["input"]
+                    );
+                    $paramServerAcqSensor[] = array (
+                        "key" => "sensor," . $numCapteur . ",min" ,
+                        "value" => $capteur["min"]
+                    );
+                    $paramServerAcqSensor[] = array (
+                        "key" => "sensor," . $numCapteur . ",max" ,
+                        "value" => $capteur["max"]
+                    );
+                }
+            }
+
+            
+            foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
+                
+                // On ajoute un détecteur de pression par ligne
+                foreach ($ligne["capteur"] as $capteur_nom => $capteur) {
+
+                    $nbSensor++;
+                    $numCapteur = $capteur["numero"];
+                    
+                    $paramServerAcqSensor[] = array (
+                        "key" => "sensor," . $numCapteur . ",nom" ,
+                        "value" => $capteur_nom
+                    );
+                    
+                    $paramServerAcqSensor[] = array (
+                        "key" => "sensor," . $numCapteur . ",type" ,
+                        "value" => $capteur["type"]
+                    );
+
+                    $paramServerAcqSensor[] = array (
+                        "key" => "sensor," . $numCapteur . ",index" ,
+                        "value" => $capteur["index"]
+                    );
+                    
+                    if ($capteur["type"] == "MCP230XX") {
+                        $paramServerAcqSensor[] = array (
+                            "key" => "sensor," . $numCapteur . ",nbinput" ,
+                            "value" => $capteur["nbinput"]
+                        );
+                        
+                        for ($i = 1 ; $i <= $capteur["nbinput"] ; $i++) {
+                            $paramServerAcqSensor[] = array (
+                                "key" => "sensor," . $numCapteur . ",input," . $i ,
+                                "value" => $capteur["input," . $i]
+                            ); 
+                            $paramServerAcqSensor[] = array (
+                                "key" => "sensor," . $numCapteur . ",value," . $i ,
+                                "value" => $capteur["value," . $i]
+                            ); 
+                        }
+                    }
+
+                    if ($capteur["type"] == "ADS1015") {
+                        $paramServerAcqSensor[] = array (
+                            "key" => "sensor," . $numCapteur . ",input" ,
+                            "value" => $capteur["input"]
+                        );
+                        $paramServerAcqSensor[] = array (
+                            "key" => "sensor," . $numCapteur . ",min" ,
+                            "value" => $capteur["min"]
+                        );
+                        $paramServerAcqSensor[] = array (
+                            "key" => "sensor," . $numCapteur . ",max" ,
+                            "value" => $capteur["max"]
+                        );
+                    }
+                }
+            }
+        }
+        
+        $paramServerAcqSensor[] = array (
+            "key" => "nbSensor" ,
+            "value" => $nbSensor
+        );
+        
+        // On sauvegarde 
+        $arraToSave[$IP] = $paramServerAcqSensor;
+        
+        
+        
+        unset($paramServerAcqSensor);
+    }
+    
+    foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
+        
+        $IP = $zone["parametres"]["IP"];
+        
+        if ($IP == "localhost") {
+            $extension = "";
+        } else {
+            $extension = "_" . $IP;
+        }
+        
+        create_conf_XML($newPath . "/serverAcqSensor/conf" . $extension . ".xml" , $arraToSave[$IP]);
+        
+    }
+    
     
     // On repositionne cette conf comme celle apr défaut
     //xcopy($newPath , $path . "/01_defaultConf_RPi");

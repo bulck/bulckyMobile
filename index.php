@@ -60,6 +60,13 @@
 				border-color: #fff;
 				color: #555 !important;
 			}
+            input[type=range]::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              width: 100%; height: 44px;
+              background: #fdfdfd; background: -moz-linear-gradient(top, #fdfdfd 0%, #bebebe 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fdfdfd), color-stop(100%,#bebebe)); background: -webkit-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: -o-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: -ms-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: linear-gradient(to bottom, #fdfdfd 0%,#bebebe 100%);
+              border: 1px solid #bbb;
+              -webkit-border-radius: 22px; -moz-border-radius: 22px; border-radius: 22px;
+            }
             
 		</style>
         
@@ -104,8 +111,6 @@
             <a href="#menu"></a>
          </div>
          <div class="content">
-            <p><strong>This is a demo.</strong><br />
-               Click the menu icon to open the menu.</p>
          </div>
       </div>
 
@@ -126,8 +131,8 @@
             <div id="app">
                 <ul>
                     <li><label>Configuration</label></li>
-                    <li><a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a></li>
-                    <li><a href="#param_ini_avance" >></i>Paramètres avancées</a></li>
+                    <li><a href="#conf_application" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a></li>
+                    <li><a href="#param_conf" ></i>Configuration générale</a></li>
                     <?php
                         // On affiche le titre pour les zones
                         foreach ($GLOBALS['IRRIGATION'] as $nom_zone => $zone)
@@ -152,7 +157,8 @@
                             }
                         }
                     ?>
-                    
+                    <li><label>Debug</label></li>
+                    <li><a href="#param_debug" >></i>Paramètres avancées</a></li>
                 </ul>
 
                 
@@ -164,9 +170,12 @@
                         $zoneName = strtoupper(str_replace(" ", "", $nom_zone));
                         
                         // On calcul le nom des param_inis
-                        $engrais1 = $zoneName . "_ENGRAIS_1";
-                        $engrais2 = $zoneName . "_ENGRAIS_2";
-                        $engrais3 = $zoneName . "_ENGRAIS_3";
+                        $engrais1       = $zoneName . "_ENGRAIS_1";
+                        $engrais2       = $zoneName . "_ENGRAIS_2";
+                        $engrais3       = $zoneName . "_ENGRAIS_3";
+                        $engrais1actif  = $zoneName . "_ENGRAIS_ACTIF_1";
+                        $engrais2actif  = $zoneName . "_ENGRAIS_ACTIF_2";
+                        $engrais3actif  = $zoneName . "_ENGRAIS_ACTIF_3";
                         
                         // 25 mL / min  
                         
@@ -182,8 +191,12 @@
                                         <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais1] ;?> ml/min</p> 
                                         <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 1, "ml/min");' />
                                         <br />
-                                        <input type="button" value="Injecter 25 mL" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais1"] ;?>");' />
+                                        <input type="button" value="Injecter 25 mL" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
                                         <br />
+                                    </li>
+                                    <li>
+                                        <span>Engrais 1 Actif : </span>
+                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if ($param_ini["CUVE"][$engrais1actif] == "true") {echo "checked" ;}?> />
                                     </li>
                                     <li>
                                         <a href="#" >Engrais 2 :</a>
@@ -191,8 +204,12 @@
                                         <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais2] ;?> ml/min</p> 
                                         <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 1, "ml/min");' />
                                         <br />
-                                        <input type="button" value="Injecter 25 mL" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais2"] ;?>");' />
+                                        <input type="button" value="Injecter 25 mL" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
                                         <br />
+                                    </li>
+                                    <li>
+                                        <span>Engrais 2 Actif : </span>
+                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if ($param_ini["CUVE"][$engrais1actif] == "true") {echo "checked" ;}?> />
                                     </li>
                                     <li>
                                         <a href="#" >Engrais 3 :</a>
@@ -200,15 +217,22 @@
                                         <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais3] ;?> ml/min</p> 
                                         <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 1, "ml/min");' />
                                         <br />
-                                        <input type="button" value="Injecter 25 mL" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais3"] ;?>");' />
+                                        <input type="button" value="Injecter 25 mL" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
                                         <br />
                                     </li>
                                     <li>
+                                        <span>Engrais 3 Actif : </span>
+                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if ($param_ini["CUVE"][$engrais1actif] == "true") {echo "checked" ;}?> />
+                                    </li>
+                                    <li>
                                         <a href="#" >Purge :</a>
-                                        <input type="button" value="Vider pendant 60s" onclick='setPlug(60, "<?php echo $zone["prise"]["purge"] ;?>");' />
+                                        <input type="button" value="Vider pendant 60s" onclick='setPlug(60, "<?php echo $zone["prise"]["purge"] ;?>", 0);' />
                                         <br />
                                     </li>
                                 </ul>
+                                <li>
+                                    <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
+                                </li>
                             </div>
                         <?php
                     }
@@ -223,6 +247,9 @@
                         {
 
                             $pfName = strtoupper(str_replace(" ", "", $nom_plateforme));
+                            
+                            // On calcul le maximum de l/h max 
+                            $lhMax = round($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'] / count($plateforme["ligne"]) , 1);
                             ?>
                                 <div id="plateforme_conf_<?php echo $pfName ;?>" class="Panel">
                                     <ul>
@@ -244,31 +271,48 @@
                                                 if (!array_key_exists($soir, $param_ini["LIGNE"]) ) {
                                                     $param_ini["LIGNE"][$soir] = 1.5;
                                                 }
+                                                $active = $pfName . "_" . $ligneName . "_ACTIVE";
+                                                if (!array_key_exists($active, $param_ini["LIGNE"]) ) {
+                                                    $param_ini["LIGNE"][$active] = 1;
+                                                }
                                                 
                                                 ?>
                                                 <li>
                                                     <a href="#" >Ligne <?php echo $ligneName ;?> :</a>
                                                     Matin : 
-                                                    <input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/membrane");' />
+                                                    <input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/membrane", 100);' />
                                                     <p id="<?php echo "LIGNE_" . $matin ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$matin] ;?> l/h/membrane</p> 
-                                                    <input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/membrane");' />
-                                                    <br />
+                                                    <input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/membrane", <?php echo $lhMax ;?>);' />
+                                                </li>
+                                                <li>
+                                                    <input type="range" min="0.1" max="8" step="0.1" >
+                                                </li>
+                                                <li>
                                                     Après Midi : 
-                                                    <input type="button" value="-" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/membrane");' />
+                                                    <input type="button" value="-" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/membrane", 100);' />
                                                     <p id="<?php echo "LIGNE_" . $amidi ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$amidi] ;?> l/h/membrane</p> 
-                                                    <input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/membrane");' />
-                                                    <br />
+                                                    <input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/membrane", <?php echo $lhMax ;?>);' />
+                                                </li>
+                                                <li>
                                                     Soir : 
-                                                    <input type="button" value="-" onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/membrane");' />
+                                                    <input type="button" value="-" onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/membrane", 100);' />
                                                     <p id="<?php echo "LIGNE_" . $soir ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$soir] ;?> l/h/membrane</p> 
-                                                    <input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/membrane");' />
-                                                    <br />
+                                                    <input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/membrane", <?php echo $lhMax ;?>);' />
+                                                </li>
+                                                <li>
                                                     <input type="button" value="ON pendant 60s" onclick='setPlug(60, <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["pompe_prise"] ;?>);' />
                                                     <br />
+                                                </li>
+                                                <li>
+                                                    <span>Activation zone : </span>
+                                                    <input type="checkbox" class="Toggle" onclick='changeVal("LIGNE", "<?php echo $active ;?>", this.checked);' <?php if ($param_ini["LIGNE"][$active] == "true") {echo "checked" ;}?> />
                                                 </li>
                                                 <?php
                                             }
                                         ?>
+                                        <li>
+                                            <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
+                                        </li>
                                     </ul>
                                 </div>
                             <?php
@@ -276,8 +320,24 @@
                     }
                 ?>
 
-                <!-- subpanel -->
-                <div id="param_ini_avance" class="Panel">
+                <!-- subpanel for conf -->
+                <div id="param_conf" class="Panel">
+                    <ul>
+                        <li>
+                            <span>Nettoyage gouteurs :</span>
+                            <select id="price-from" onchange="savParam('NETTOYAGE_GOUTEUR',this.value);" style="display:inline" >
+                                <option value="10"   <?php if ($param_ini["PARAM"]["NETTOYAGE_GOUTEUR"] == "10") {echo "selected";} ?>   >1 cycle sur 10</option>
+                                <option value="100"  <?php if ($param_ini["PARAM"]["NETTOYAGE_GOUTEUR"] == "100") {echo "selected";} ?>  >1 cycle sur 100</option>
+                            </select>
+                        </li>
+                        <li>
+                            <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
+                        </li>
+                    </ul>
+                </div> 
+
+                <!-- subpanel for debug -->
+                <div id="param_debug" class="Panel">
                     <ul>
                         <li>
                             <span>Verbose Server :</span>
@@ -289,37 +349,46 @@
                             </select>
                         </li>
                         <li>
-                        Verbose Sensor :
-                        <select id="price-from" onchange="savParam('VERBOSE_SENSOR',this.value);" style="display:inline" >
-                            <option value="debug"   <?php if ($param_ini["PARAM"]["VERBOSE_SENSOR"] == "debug") {echo "selected";} ?>   >debug</option>
-                            <option value="info"    <?php if ($param_ini["PARAM"]["VERBOSE_SENSOR"] == "info") {echo "selected";} ?>    >info</option>
-                            <option value="warning" <?php if ($param_ini["PARAM"]["VERBOSE_SENSOR"] == "warning") {echo "selected";} ?> >warning</option>
-                            <option value="error"   <?php if ($param_ini["PARAM"]["VERBOSE_SENSOR"] == "error") {echo "selected";} ?>   >error</option>
+                            <span>Verbose Sensor :</span>
+                        <select id="price-from" onchange="savParam('VERBOSE_ACQSENSOR',this.value);" style="display:inline" >
+                            <option value="debug"   <?php if ($param_ini["PARAM"]["VERBOSE_ACQSENSOR"] == "debug")   {echo "selected";} ?>   >debug</option>
+                            <option value="info"    <?php if ($param_ini["PARAM"]["VERBOSE_ACQSENSOR"] == "info")    {echo "selected";} ?>    >info</option>
+                            <option value="warning" <?php if ($param_ini["PARAM"]["VERBOSE_ACQSENSOR"] == "warning") {echo "selected";} ?> >warning</option>
+                            <option value="error"   <?php if ($param_ini["PARAM"]["VERBOSE_ACQSENSOR"] == "error")   {echo "selected";} ?>   >error</option>
                         </select>
                         </li>
                         <li>
-                        Verbose Plug :
-                        <select id="price-from" onchange="savParam('VERBOSE_PLUG',this.value);" style="display:inline" >
-                            <option value="debug"   <?php if ($param_ini["PARAM"]["VERBOSE_PLUG"] == "debug") {echo "selected";} ?>   >debug</option>
-                            <option value="info"    <?php if ($param_ini["PARAM"]["VERBOSE_PLUG"] == "info") {echo "selected";} ?>    >info</option>
-                            <option value="warning" <?php if ($param_ini["PARAM"]["VERBOSE_PLUG"] == "warning") {echo "selected";} ?> >warning</option>
-                            <option value="error"   <?php if ($param_ini["PARAM"]["VERBOSE_PLUG"] == "error") {echo "selected";} ?>   >error</option>
-                        </select>
+                            <span>Verbose Plug :</span>
+                            <select id="price-from" onchange="savParam('VERBOSE_PLUG',this.value);" style="display:inline" >
+                                <option value="debug"   <?php if ($param_ini["PARAM"]["VERBOSE_PLUG"] == "debug") {echo "selected";} ?>   >debug</option>
+                                <option value="info"    <?php if ($param_ini["PARAM"]["VERBOSE_PLUG"] == "info") {echo "selected";} ?>    >info</option>
+                                <option value="warning" <?php if ($param_ini["PARAM"]["VERBOSE_PLUG"] == "warning") {echo "selected";} ?> >warning</option>
+                                <option value="error"   <?php if ($param_ini["PARAM"]["VERBOSE_PLUG"] == "error") {echo "selected";} ?>   >error</option>
+                            </select>
                         </li>
                         <li>
-                        Verbose SLF :
-                        <select id="price-from" onchange="savParam('VERBOSE_SLF',this.value);" style="display:inline" >
-                            <option value="debug"   <?php if ($param_ini["PARAM"]["VERBOSE_SLF"] == "debug") {echo "selected";} ?>   >debug</option>
-                            <option value="info"    <?php if ($param_ini["PARAM"]["VERBOSE_SLF"] == "info") {echo "selected";} ?>    >info</option>
-                            <option value="warning" <?php if ($param_ini["PARAM"]["VERBOSE_SLF"] == "warning") {echo "selected";} ?> >warning</option>
-                            <option value="error"   <?php if ($param_ini["PARAM"]["VERBOSE_SLF"] == "error") {echo "selected";} ?>   >error</option>
-                        </select>
+                            <span>Verbose SLF :</span>
+                            <select id="price-from" onchange="savParam('VERBOSE_SLF',this.value);" style="display:inline" >
+                                <option value="debug"   <?php if ($param_ini["PARAM"]["VERBOSE_SLF"] == "debug") {echo "selected";} ?>   >debug</option>
+                                <option value="info"    <?php if ($param_ini["PARAM"]["VERBOSE_SLF"] == "info") {echo "selected";} ?>    >info</option>
+                                <option value="warning" <?php if ($param_ini["PARAM"]["VERBOSE_SLF"] == "warning") {echo "selected";} ?> >warning</option>
+                                <option value="error"   <?php if ($param_ini["PARAM"]["VERBOSE_SLF"] == "error") {echo "selected";} ?>   >error</option>
+                            </select>
                         </li>
                         <li>
-                        <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
+                            <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
                         </li>
                     </ul>
-                </div>                
+                </div>
+                
+                <!-- subpanel for debug -->
+                <div id="conf_application" class="Panel">
+                    <ul>
+                        <li>
+                            <span>En cours d'application :</span>
+                        </li>
+                    </ul>
+                </div>
                 
             </div>
         </nav>

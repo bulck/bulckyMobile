@@ -53,7 +53,7 @@ function checkNested(obj /*, level1, level2, ... levelN*/) {
 
 // Change la valeur d'un des champs
 var CONF = {};
-function upVal (type, varname, incr, unit) {
+function upVal (type, varname, incr, unit, max) {
     // On vérifie si la variable existe
     if (!checkNested(CONF, type)) {
         CONF[type] = {};        
@@ -63,14 +63,34 @@ function upVal (type, varname, incr, unit) {
         CONF[type][varname] = 0;        
     }
 
-    CONF[type][varname] = parseFloat(CONF[type][varname]) + incr;
-    CONF[type][varname] = CONF[type][varname].toFixed(1);
+    if (parseFloat(CONF[type][varname]) + incr > parseFloat(max)) {
+        alert ("Maximum " + max + " atteint pour cette ligne");
+    } else {
+        CONF[type][varname] = parseFloat(CONF[type][varname]) + incr;
+        CONF[type][varname] = CONF[type][varname].toFixed(1);
+        
+        $( "#" + type + "_" + varname ).text( CONF[type][varname] + " " + unit);
+    }
     
-    $( "#" + type + "_" + varname ).text( CONF[type][varname] + " " + unit);
+
+}
+
+function changeVal (type, varname, val) {
+    // On vérifie si la variable existe
+    if (!checkNested(CONF, type)) {
+        CONF[type] = {};        
+    }
+    
+    if (!checkNested(CONF, type, varname)) {
+        CONF[type][varname] = 0;        
+    }
+
+    CONF[type][varname] = val;
+    
 }
 
 // Cette fonction pilote des prises
-function setPlug (time, plug1, plug2 = 0) {
+function setPlug (time, plug1, plug2) {
 
     $.ajax({
          cache: false,
