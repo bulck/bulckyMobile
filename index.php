@@ -67,6 +67,20 @@
               border: 1px solid #bbb;
               -webkit-border-radius: 22px; -moz-border-radius: 22px; border-radius: 22px;
             }
+            input[type=button] {
+                background-color:#44c767;
+                -moz-border-radius:28px;
+                -webkit-border-radius:28px;
+                border-radius:28px;
+                border:1px solid #18ab29;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Arial;
+                font-size:17px;
+                padding:8px 17px;
+                text-decoration:none;
+            }
             
 		</style>
         
@@ -190,44 +204,40 @@
                                         <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -1, "ml/min");' />
                                         <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais1] ;?> ml/min</p> 
                                         <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 1, "ml/min");' />
-                                        <br />
-                                        <input type="button" value="Injecter 25 mL" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
-                                        <br />
-                                    </li>
-                                    <li>
-                                        <span>Engrais 1 Actif : </span>
-                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if ($param_ini["CUVE"][$engrais1actif] == "true") {echo "checked" ;}?> />
                                     </li>
                                     <li>
                                         <a href="#" >Engrais 2 :</a>
                                         <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -1, "ml/min");' />
                                         <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais2] ;?> ml/min</p> 
                                         <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 1, "ml/min");' />
-                                        <br />
-                                        <input type="button" value="Injecter 25 mL" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
-                                        <br />
-                                    </li>
-                                    <li>
-                                        <span>Engrais 2 Actif : </span>
-                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if ($param_ini["CUVE"][$engrais1actif] == "true") {echo "checked" ;}?> />
                                     </li>
                                     <li>
                                         <a href="#" >Engrais 3 :</a>
                                         <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -1, "ml/min");' />
                                         <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais3] ;?> ml/min</p> 
                                         <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 1, "ml/min");' />
+                                    </li>
+                                    <li>
+                                        <a href="#" >Action :</a>
+                                        <input type="button" value="Purge de la cuve" onclick='setPlug(60, "<?php echo $zone["prise"]["purge"] ;?>", 0);' />
                                         <br />
-                                        <input type="button" value="Injecter 25 mL" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
+                                        <input type="button" value="Injecter 25 mL de l'engrais 1" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
                                         <br />
+                                        <input type="button" value="Injecter 25 mL de l'engrais 2" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
+                                        <br />
+                                        <input type="button" value="Injecter 25 mL de l'engrais 3" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
+                                    </li>
+                                    <li>
+                                        <span>Engrais 1 Actif : </span>
+                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if ($param_ini["CUVE"][$engrais1actif] == "true") {echo "checked" ;}?> />
+                                    </li>
+                                    <li>
+                                        <span>Engrais 2 Actif : </span>
+                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if ($param_ini["CUVE"][$engrais1actif] == "true") {echo "checked" ;}?> />
                                     </li>
                                     <li>
                                         <span>Engrais 3 Actif : </span>
                                         <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if ($param_ini["CUVE"][$engrais1actif] == "true") {echo "checked" ;}?> />
-                                    </li>
-                                    <li>
-                                        <a href="#" >Purge :</a>
-                                        <input type="button" value="Vider pendant 60s" onclick='setPlug(60, "<?php echo $zone["prise"]["purge"] ;?>", 0);' />
-                                        <br />
                                     </li>
                                 </ul>
                                 <li>
@@ -279,33 +289,46 @@
                                                 ?>
                                                 <li>
                                                     <a href="#" >Ligne <?php echo $ligneName ;?> :</a>
-                                                    Matin : 
-                                                    <input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/membrane", 100);' />
-                                                    <p id="<?php echo "LIGNE_" . $matin ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$matin] ;?> l/h/membrane</p> 
-                                                    <input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/membrane", <?php echo $lhMax ;?>);' />
+                                                    <table >
+                                                        <tr>
+                                                            <td>Matin :</td>
+                                                            <td><input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/membrane", 100);' /></td>
+                                                            <td><p id="<?php echo "LIGNE_" . $matin ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$matin] ;?> l/h/membrane</p></td>
+                                                            <td><input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/membrane", <?php echo $lhMax ;?>);' /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Après Midi :</td>
+                                                            <td><input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/membrane", 100);' /></td>
+                                                            <td><p id="<?php echo "LIGNE_" . $amidi ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$amidi] ;?> l/h/membrane</p></td>
+                                                            <td><input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/membrane", <?php echo $lhMax ;?>);' /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Soir :</td>
+                                                            <td><input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/membrane", 100);' /></td>
+                                                            <td><p id="<?php echo "LIGNE_" . $soir ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$soir] ;?> l/h/membrane</p></td>
+                                                            <td><input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/membrane", <?php echo $lhMax ;?>);' /></td>
+                                                        </tr>
+                                                    </table>
                                                 </li>
+                                                <?php
+                                            }
+                                            foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
+                                            {
+                                                $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
+                                                ?>
                                                 <li>
-                                                    <input type="range" min="0.1" max="8" step="0.1" >
-                                                </li>
-                                                <li>
-                                                    Après Midi : 
-                                                    <input type="button" value="-" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/membrane", 100);' />
-                                                    <p id="<?php echo "LIGNE_" . $amidi ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$amidi] ;?> l/h/membrane</p> 
-                                                    <input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/membrane", <?php echo $lhMax ;?>);' />
-                                                </li>
-                                                <li>
-                                                    Soir : 
-                                                    <input type="button" value="-" onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/membrane", 100);' />
-                                                    <p id="<?php echo "LIGNE_" . $soir ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$soir] ;?> l/h/membrane</p> 
-                                                    <input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/membrane", <?php echo $lhMax ;?>);' />
-                                                </li>
-                                                <li>
-                                                    <input type="button" value="ON pendant 60s" onclick='setPlug(60, <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["pompe_prise"] ;?>);' />
-                                                    <br />
-                                                </li>
-                                                <li>
-                                                    <span>Activation zone : </span>
+                                                    <span>Activation ligne <?php echo $ligneName ;?> : </span>
                                                     <input type="checkbox" class="Toggle" onclick='changeVal("LIGNE", "<?php echo $active ;?>", this.checked);' <?php if ($param_ini["LIGNE"][$active] == "true") {echo "checked" ;}?> />
+                                                </li> 
+                                                <?php
+                                            }
+                                            foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
+                                            {
+                                                $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
+                                                ?>
+                                                <li>
+                                                    <input type="button" value="ON ligne <?php echo $ligneName ;?> pendant 60s" onclick='setPlug(60, <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["pompe_prise"] ;?>);' />
+                                                    <br />
                                                 </li>
                                                 <?php
                                             }

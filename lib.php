@@ -146,7 +146,55 @@ function generateConf ($path, $userVar) {
     }
     xcopy($path . "/01_defaultConf_RPi/" , $newPath );
 
+    // On change les parametres pour le lancement des modules
+    $paramListCultipiStart[] = array ( 
+        'name' => "serverLog",
+        'waitAfterUS' => "1000",
+        'pathexe' => "tclsh",
+        'path' => "./serverLog/serverLog.tcl",
+        'xmlconf' => "./serverLog/conf.xml",
+    );
+    $paramListCultipiStart[] = array ( 
+        'name' => "serverAcqSensorV2",
+        'waitAfterUS' => "100",
+        'pathexe' => "tclsh",
+        'path' => "./serverAcqSensorV2/serverAcqSensorV2.tcl",
+        'xmlconf' => "./serverAcqSensorV2/conf.xml",
+    );
+    $paramListCultipiStart[] = array ( 
+        'name' => "serverPlugUpdate",
+        'waitAfterUS' => "100",
+        'pathexe' => "tclsh",
+        'path' => "./serverPlugUpdate/serverPlugUpdate.tcl",
+        'xmlconf' => "./serverPlugUpdate/conf.xml",
+    );
+    $paramListCultipiStart[] = array ( 
+        'name' => "serverHisto",
+        'waitAfterUS' => "100",
+        'pathexe' => "tclsh",
+        'path' => "./serverHisto/serverHisto.tcl",
+        'xmlconf' => "./serverHisto/conf.xml",
+    );
+    $paramListCultipiStart[] = array ( 
+        'name' => "serverMail",
+        'waitAfterUS' => "100",
+        'pathexe' => "tclsh",
+        'path' => "./serverMail/serverMail.tcl",
+        'xmlconf' => "./serverMail/conf.xml",
+    );
+    $paramListCultipiStart[] = array ( 
+        'name' => "serverSupervision",
+        'waitAfterUS' => "100",
+        'pathexe' => "tclsh",
+        'path' => "./serverSupervision/serverSupervision.tcl",
+        'xmlconf' => "./serverSupervision/conf.xml",
+    );    
+    if (!is_dir($newPath . "/cultiPi")) {
+        mkdir($newPath . "/cultiPi");
+    }
+    create_conf_XML($newPath . "/cultiPi/start.xml" , $paramListCultipiStart,"starts");
 
+    
     // On change les parametres pour le server irrigation 
     if (!is_dir($newPath . "/serverSLF")) {
         mkdir($newPath . "/serverSLF");
@@ -249,16 +297,7 @@ function generateConf ($path, $userVar) {
                 "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",eauclaire,prise" ,
                 "value" => $plateforme["prise"]["EV_eauclaire"]
             );
-            $paramServerSLFXML[] = array (
-                "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",boutonarret,prise" ,
-                "value" => $plateforme["capteur"]["tor_boutonarret"]["numero"]
-            );
-            $paramServerSLFXML[] = array (
-                "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",afficheurarret,prise" ,
-                "value" => $plateforme["prise"]["Afficheur_arret"]
-            );
 
-            
             foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
 
                 $paramServerSLFXML[] = array (
@@ -567,8 +606,7 @@ if(!isset($function) || empty($function)) {
         
             // On vient lire la configuration 
             $parametre = parse_ini_file("param.ini",true);
-        
-        
+
             echo json_encode($parametre);
             break;
         case 'SET_CONF':
