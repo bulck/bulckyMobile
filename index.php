@@ -134,6 +134,14 @@
             // On charge le fichier de configuration 
             require_once 'config.php';
             
+            function ParamIni($key1, $key2, $default) {
+                global $param_ini;
+                if (array_key_exists($key2, $param_ini[$key1])) {
+                    return $param_ini[$key1][$key2];
+                }
+                return $default;
+            }
+            
             // On vient lire le fichier de param_ini
             $param_ini = parse_ini_file("param.ini",true);
 
@@ -353,6 +361,10 @@
                                 <option value="100"  <?php if ($param_ini["PARAM"]["NETTOYAGE_GOUTEUR"] == "100") {echo "selected";} ?>  >1 cycle sur 100</option>
                             </select>
                         </li>
+                        <li>
+                            <span>Nettoyage gouteur actif :</span>
+                            <input type="checkbox" class="Toggle" onclick="savParam('NETTOYAGE_GOUTEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
+                         </li>
                         <li>
                             <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
                         </li>
