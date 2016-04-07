@@ -93,7 +93,41 @@ function create_conf_XML($file, $paramList,$tag="conf") {
 // }}}
 
 
+function create_plugConf($dir, $nbPlug) {
 
+    // Check if directory exists
+    if(!is_dir(dirname($dir)))
+        mkdir(dirname($dir));
+    if(!is_dir(dirname($dir . "/plg")))
+        mkdir(dirname($dir . "/plg"));
+    if(!is_dir(dirname($dir . "/prg")))
+        mkdir(dirname($dir . "/prg"));
+
+    // Open in write mode
+    $fidPlgA = fopen($dir . "/plg/pluga" ,"w+");
+    
+    // Add header
+    fwrite($fidPlgA,$nbPlug . "\r\n");
+    for ($i = 1; $i <= $nbPlug; $i++) {
+        fwrite($fidPlgA,(2999 + $i). "\r\n");
+        
+        // On cré le fichier de conf associé
+        $fid = fopen($dir . "/plg/plug" . str_pad($i, 2, '0', STR_PAD_LEFT) ,"w+");
+        
+        fwrite($fid,"REG:N+000". "\r\n");
+        fwrite($fid,"SEC:N+0000". "\r\n");
+        fwrite($fid,"SEN:M100000". "\r\n");
+        fwrite($fid,"STOL:000". "\r\n");
+        
+        fclose($fid);
+    }
+
+    // Close file
+    fclose($fidPlgA);
+    
+    return true;
+}
+// }}}
 
 
 function forcePlug($number,$time,$value) {
@@ -137,9 +171,9 @@ function xcopy($src, $dest) {
 
 function generateConf ($path, $userVar) {
 
-    // On copie le parametrage actuel 
-    //$newPath = $path . "/" . date("YmdHms");
-    $newPath = $path . "/test-cnf" ;
+    // On sauvegare le parametrage actuel 
+    $newPath = $path . "/" . date("YmdH");
+    //$newPath = $path . "/test-cnf" ;
     
     if (!is_dir($newPath)) {
         mkdir($newPath);
@@ -194,7 +228,34 @@ function generateConf ($path, $userVar) {
     }
     create_conf_XML($newPath . "/cultiPi/start.xml" , $paramListCultipiStart,"starts");
 
+    /*************************  Prise ***********************************/
+    // On cherche le nombre de prise 
+    $prisemax = 0;
+    foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
+        
+        // On ajoute les prises engrais, purge , remplissage
+        foreach ($zone["prise"] as $prise_nom => $numero) {
+            if ($numero > $prisemax) {
+                $prisemax = $numero;
+            }
+        }
+        foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
+            foreach ($plateforme["prise"] as $prise_nom => $numero) {
+                if ($numero > $prisemax) {
+                    $prisemax = $numero;
+                }
+            }
+            foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
+                if ($ligne["prise"] > $prisemax) {
+                    $prisemax = $numero;
+                }
+            }
+        }
+    }
+    // On cré le fichier pluga 
+    create_plugConf($newPath . "/serverPlugUpdate" , $prisemax);
     
+    /*************************  Serveur Irrigation ***********************************/
     // On change les parametres pour le server irrigation 
     if (!is_dir($newPath . "/serverSLF")) {
         mkdir($newPath . "/serverSLF");
@@ -349,7 +410,6 @@ function generateConf ($path, $userVar) {
     }
 
     // Save it
-            //print_r($paramServerSLFXML);
     create_conf_XML($newPath . "/serverSLF/conf.xml" , $paramServerSLFXML);
     
     
@@ -583,9 +643,8 @@ function generateConf ($path, $userVar) {
     
     
     // On repositionne cette conf comme celle apr défaut
-    //xcopy($newPath , $path . "/01_defaultConf_RPi");
-    
-    
+    xcopy($newPath , $path . "/01_defaultConf_RPi");
+
     // On relance l'acquisition
 
     
@@ -616,8 +675,12 @@ if(!isset($function) || empty($function)) {
             write_ini_file($variable, "param.ini", true);
             
             // On cré la conf 
-            $path = "C:/cultibox/xampp/htdocs";
-
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $path = "C:/cultibox/xampp/htdocs";
+            } else {
+                $path = "/etc/bulckypi";
+            }
+            
             generateConf($path, $variable);
             
             break;
