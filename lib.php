@@ -171,7 +171,7 @@ function xcopy($src, $dest) {
 
 function generateConf ($path, $userVar) {
 
-    // On sauvegare le parametrage actuel 
+    // On sauvegarde le parametrage actuel 
     $newPath = $path . "/" . date("YmdH");
     //$newPath = $path . "/test-cnf" ;
     
@@ -233,10 +233,17 @@ function generateConf ($path, $userVar) {
         );    
     }
    
-    if (!is_dir($newPath . "/cultiPi")) {
-        mkdir($newPath . "/cultiPi");
+    $paramListCultipiConf[] = array (
+        "key" => "verbose",
+        "level" => "warning"
+    );
+   
+    if (!is_dir($newPath . "/bulckyPi")) {
+        mkdir($newPath . "/bulckyPi");
     }
-    create_conf_XML($newPath . "/cultiPi/start.xml" , $paramListCultipiStart,"starts");
+
+    create_conf_XML($newPath . "/bulckyPi/start.xml" , $paramListCultipiStart,"starts");
+    create_conf_XML($newPath . "/bulckyPi/conf.xml" , $paramListCultipiConf,);
 
     /*************************  Prise ***********************************/
     // On cherche le nombre de prise 
