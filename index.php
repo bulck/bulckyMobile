@@ -113,6 +113,9 @@
             // On charge la conf 
             loadConf();
             
+            // On vient lire la valeur des capteurs 
+            readSensors();
+            
          });
       </script>
 
@@ -441,15 +444,54 @@
                 <!-- Valeur des capteurs -->
                 <div id="sensors" class="Panel">
                     <ul>
-                        <?php 
-                            for ($i = 1; $i <= 15; $i++) {
-                        ?>
-                            <li>
+                        <li>
+                            <input type="button" value="Recharger les valeurs" onclick='readSensors();' />
+                            <br />
+                        </li>
+                        <li>
+                            <table >
+                                <tr>
+                                    <th>Numéro</th><th>Nom</th><th>Valeur</th>
+                                </tr>
 
-                            </li>
                         <?php 
+                            foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
+                                foreach ($zone["capteur"] as $capteur_nom => $capteur) {
+
+                                ?>
+                                    <tr>
+                                        <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
+                                    </tr>
+                                <?php
+                                }
+
+                                foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
+
+                                    foreach ($plateforme["capteur"] as $capteur_nom => $capteur) {
+                                        ?>
+                                            <tr>
+                                                <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
+                                            </tr>
+                                        <?php
+                                    }
+
+                                    
+                                    foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
+                                        
+                                        // On ajoute un détecteur de pression par ligne
+                                        foreach ($ligne["capteur"] as $capteur_nom => $capteur) {
+                                        ?>
+                                            <tr>
+                                                <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
+                                            </tr>
+                                        <?php
+                                        }
+                                    }
+                                }
                             }
                         ?>
+                            </table>
+                        </li>
                     </ul>
                 </div>
 

@@ -137,10 +137,10 @@ function forcePlug($number,$time,$value) {
     try {
         switch(php_uname('s')) {
             case 'Windows NT':
-                $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "D:\CBX\06_bulckyCore\cultiPi\getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time);
+                $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "D:\CBX\06_bulckyCore\bulckyPi\getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time);
                 break;
             default : 
-                $return_array["status"] = exec('tclsh "/opt/cultipi/cultiPi/getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time);
+                $return_array["status"] = exec('tclsh "/opt/bulckypi/bulckyPi/getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time);
                 break;
         }
     } catch (Exception $e) {
@@ -719,7 +719,34 @@ if(!isset($function) || empty($function)) {
             }
         
             break;        
-            
+        case 'GET_SENSORS' :
+            $nbSensor = 10;
+            $return_array = array();
+            $commandLine = 'tclsh "/opt/bulckypi/bulckyPi/get.tcl" serverAcqSensor localhost ';
+            for ($i = 1; $i <= $nbSensor; $i++) {
+                $commandLine = $commandLine . ' "::sensor(' . $i . ',value)"';
+            }
+            $ret = "";
+            try {
+                $ret = exec($commandLine);
+            } catch (Exception $e) {
+                echo 'Exception reçue : ',  $e->getMessage(), "\n";
+            }
+            $arr = explode ("\t", $ret);
+
+            for ($i = 0; $i < $nbSensor; $i++) {
+                if (array_key_exists($i, $arr)) {
+                    if ($arr[$i] != "") {
+                        $return_array[$i + 1] = $arr[$i];
+                    } else {
+                        $return_array[$i + 1] = "DEFCOM";
+                    }
+                } else {
+                    $return_array[$i + 1] = "DEFCOM";
+                }
+            }
+            echo json_encode($return_array);
+            break;
             
         default:
             echo json_encode("0");

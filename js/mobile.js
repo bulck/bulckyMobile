@@ -102,7 +102,7 @@ function setPlug (time, plug1, plug2) {
              prise1:plug1,
              prise2:plug2,
              temps:time,
-             etat:"ON"
+             etat:"on"
          }
     }).done(function (data) {
         // page_cultipi.js l 1380
@@ -113,4 +113,26 @@ function setPlug (time, plug1, plug2) {
 
 function savParam (param, value) {
     CONF["PARAM"][param] = value;  
+}
+
+function readSensors () {
+    $.ajax({
+         cache: false,
+         async: true,
+         type: "POST",
+         url: "lib.php",
+         data: {
+             function:"GET_SENSORS"
+         }
+    }).done(function (data) {
+        SENSORS = jQuery.parseJSON(data);
+        for(var index in SENSORS) { 
+           if (SENSORS.hasOwnProperty(index)) {
+               var attr = SENSORS[index];
+               document.getElementById("sensor_" + index).innerHTML = attr;
+           }
+        }
+        
+        
+    });
 }
