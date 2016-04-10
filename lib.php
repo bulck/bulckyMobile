@@ -262,6 +262,7 @@ function generateConf ($path, $userVar) {
             }
         }
     }
+
     // On cré le fichier pluga 
     create_plugConf($newPath . "/serverPlugUpdate" , $prisemax);
     

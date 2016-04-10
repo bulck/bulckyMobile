@@ -421,6 +421,22 @@
                     </ul>
                 </div>
                 
+                <!-- Pilotage prise -->
+                <div id="debug_pilotage" class="Panel">
+                    <ul>
+                        <?php 
+                            for ($i = 1; $i <= 25; $i++) {
+                        ?>
+                            <li>
+                                <input type="button" value="ON sortie <?php echo $i ;?> pendant 30s" onclick='setPlug(30, <?php echo $i ;?>,0);' />
+                                <br />
+                            </li>
+                        <?php 
+                            }
+                        ?>
+                    </ul>
+                </div>
+                
                 <!-- subpanel for debug -->
                 <div id="conf_application" class="Panel">
                     <ul>
