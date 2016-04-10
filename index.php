@@ -182,6 +182,7 @@
                     <li><label>Debug</label></li>
                     <li><a href="#param_debug" ><i class="fa fa-cogs"></i>Paramètres avancées</a></li>
                     <li><a href="#debug_pilotage" ><i class="fa fa-power-off"></i>Pilotage</a></li>
+                    <li><a href="#sensors" ><i class="fa fa-tachometer"></i>Capteurs</a></li>
                 </ul>
 
                 
@@ -436,7 +437,22 @@
                         ?>
                     </ul>
                 </div>
-                
+
+                <!-- Valeur des capteurs -->
+                <div id="sensors" class="Panel">
+                    <ul>
+                        <?php 
+                            for ($i = 1; $i <= 15; $i++) {
+                        ?>
+                            <li>
+
+                            </li>
+                        <?php 
+                            }
+                        ?>
+                    </ul>
+                </div>
+
                 <!-- subpanel for debug -->
                 <div id="conf_application" class="Panel">
                     <ul>
