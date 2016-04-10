@@ -109,7 +109,7 @@ function create_plugConf($dir, $nbPlug) {
     // Add header
     fwrite($fidPlgA,$nbPlug . "\r\n");
     for ($i = 1; $i <= $nbPlug; $i++) {
-        fwrite($fidPlgA,(2999 + $i). "\r\n");
+        fwrite($fidPlgA,(3000 + ($i - 1) % 8 + intval(($i - 1) / 8) * 10) . "\r\n");
         
         // On cré le fichier de conf associé
         $fid = fopen($dir . "/plg/plug" . str_pad($i, 2, '0', STR_PAD_LEFT) ,"w+");
@@ -243,7 +243,7 @@ function generateConf ($path, $userVar) {
     }
 
     create_conf_XML($newPath . "/bulckyPi/start.xml" , $paramListCultipiStart,"starts");
-    create_conf_XML($newPath . "/bulckyPi/conf.xml" , $paramListCultipiConf,);
+    create_conf_XML($newPath . "/bulckyPi/conf.xml" , $paramListCultipiConf);
 
     /*************************  Prise ***********************************/
     // On cherche le nombre de prise 
@@ -433,8 +433,8 @@ function generateConf ($path, $userVar) {
     
     /*************************  capteurs ***********************************/
     // On cré la conf pour les capteurs 
-    if (!is_dir($newPath . "/serverAcqSensor")) {
-        mkdir($newPath . "/serverAcqSensor");
+    if (!is_dir($newPath . "/serverAcqSensorV2")) {
+        mkdir($newPath . "/serverAcqSensorV2");
     }
 
 
@@ -655,7 +655,7 @@ function generateConf ($path, $userVar) {
             $extension = "_" . $IP;
         }
         
-        create_conf_XML($newPath . "/serverAcqSensor/conf" . $extension . ".xml" , $arraToSave[$IP]);
+        create_conf_XML($newPath . "/serverAcqSensorV2/conf" . $extension . ".xml" , $arraToSave[$IP]);
         
     }
     

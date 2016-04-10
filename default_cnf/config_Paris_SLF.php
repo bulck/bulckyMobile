@@ -26,7 +26,7 @@ $GLOBALS['IRRIGATION'] = array(
             'niveau_cuve' => array (
                 'numero'      => 2,
                 'type'        => "MCP230XX",
-                'index'       => 8,
+                'index'       => 7,
                 'nbinput'       => "3",
                 'input,1'       => "4",
                 'value,1'       => "5",
@@ -58,7 +58,7 @@ $GLOBALS['IRRIGATION'] = array(
                     'pression_pompe'     => array (
                         'numero'      => 4,
                         'type'        => "ADS1015",
-                        'index'       => 1,
+                        'index'       => 0,
                         'input'       => "1",
                         'min'         => "0",
                         'max'         => "10"
@@ -74,7 +74,7 @@ $GLOBALS['IRRIGATION'] = array(
                             'pression'    =>  array (
                                 'numero'      => 5,
                                 'type'        => "MCP230XX",
-                                'index'       => 1,
+                                'index'       => 7,
                                 'nbinput'     => 1,
                                 'input,1'     => 1,
                                 'value,1'     => 1
@@ -87,9 +87,9 @@ $GLOBALS['IRRIGATION'] = array(
                             'pression'    =>  array (
                                 'numero'      => 6,
                                 'type'        => "MCP230XX",
-                                'index'       => 1,
+                                'index'       => 7,
                                 'nbinput'       => 1,
-                                'input,1'       => 1,
+                                'input,1'       => 2,
                                 'value,1'       => 1
                             )
                         ),
@@ -100,9 +100,9 @@ $GLOBALS['IRRIGATION'] = array(
                             'pression'    =>  array (
                                 'numero'      => 7,
                                 'type'        => "MCP230XX",
-                                'index'       => 1,
+                                'index'       => 7,
                                 'nbinput'       => 1,
-                                'input,1'       => 1,
+                                'input,1'       => 3,
                                 'value,1'       => 1
                             )
                         )
@@ -112,5 +112,5 @@ $GLOBALS['IRRIGATION'] = array(
         )
     )
 );
-                            
+
 ?>
