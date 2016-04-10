@@ -657,7 +657,7 @@ function generateConf ($path, $userVar) {
     xcopy($newPath , $path . "/01_defaultConf_RPi");
 
     // On relance l'acquisition
-
+    exec("sudo /etc/init.d/bulckypi force-reload >/dev/null 2>&1",$ret,$ret_var);
     
 }
 
