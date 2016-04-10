@@ -96,7 +96,7 @@
                     "pageshadow",
                     "theme-dark",
                     "fullscreen"
-                ],
+                ]/*,
                 navbar 		: {
                     add:true
                 },
@@ -107,7 +107,7 @@
                         '<img src="img/shortlogo2.png" class="image_header" />',
                         '<a href="#/" class="fa fa-envelope" class="humidity_zone" ></a>'
                     ]
-                }
+                }*/
             });
             
             // On charge la conf 
@@ -154,7 +154,7 @@
                 <ul>
                     <li><label>Configuration</label></li>
                     <li><a href="#conf_application" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a></li>
-                    <li><a href="#param_conf" ></i>Configuration générale</a></li>
+                    <li><a href="#param_conf" ><i class="fa fa-database"></i>Configuration générale</a></li>
                     <?php
                         // On affiche le titre pour les zones
                         foreach ($GLOBALS['IRRIGATION'] as $nom_zone => $zone)
@@ -180,7 +180,8 @@
                         }
                     ?>
                     <li><label>Debug</label></li>
-                    <li><a href="#param_debug" >></i>Paramètres avancées</a></li>
+                    <li><a href="#param_debug" ><i class="fa fa-cogs"></i>Paramètres avancées</a></li>
+                    <li><a href="#debug_pilotage" ><i class="fa fa-power-off"></i>Pilotage</a></li>
                 </ul>
 
                 
