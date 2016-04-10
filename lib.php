@@ -222,7 +222,17 @@ function generateConf ($path, $userVar) {
         'pathexe' => "tclsh",
         'path' => "./serverSupervision/serverSupervision.tcl",
         'xmlconf' => "./serverSupervision/conf.xml",
-    );    
+    );
+    if ($userVar['PARAM']['IRRIGATION_ACTIF'] != "false") {
+        $paramListCultipiStart[] = array ( 
+            'name' => "serverSLF",
+            'waitAfterUS' => "100",
+            'pathexe' => "tclsh",
+            'path' => "./serverSLF/serverSLF.tcl",
+            'xmlconf' => "./serverSLF/conf.xml",
+        );    
+    }
+   
     if (!is_dir($newPath . "/cultiPi")) {
         mkdir($newPath . "/cultiPi");
     }

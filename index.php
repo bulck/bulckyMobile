@@ -366,6 +366,10 @@
                             <input type="checkbox" class="Toggle" onclick="savParam('NETTOYAGE_GOUTEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
                          </li>
                         <li>
+                            <span>Irrigation activée :</span>
+                            <input type="checkbox" class="Toggle" onclick="savParam('IRRIGATION_ACTIF',this.checked);" <?php if (ParamIni("PARAM","IRRIGATION_ACTIF","true") == "true") {echo "checked" ;}?> />
+                         </li>
+                        <li>
                             <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
                         </li>
                     </ul>
