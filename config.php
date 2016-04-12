@@ -202,7 +202,7 @@ $GLOBALS['IRRIGATION'] = array(
                 ),
                 'capteur'   => array (
                     'pression_pompe'     => array (
-                        'numero'      => 11,
+                        'numero'      => 14,
                         'type'        => "ADS1015",
                         'index'       => 0,
                         'input'       => "1",

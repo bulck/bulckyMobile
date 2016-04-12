@@ -152,6 +152,9 @@ function forcePlug($number,$time,$value) {
 }
 
 function xcopy($src, $dest) {
+    if (!file_exists($dest)) {
+        mkdir($dest);
+    }
     foreach (scandir($src) as $file) {
         $srcfile = rtrim($src, '/') .'/'. $file;
         $destfile = rtrim($dest, '/') .'/'. $file;
@@ -169,17 +172,14 @@ function xcopy($src, $dest) {
     }
 }
 
-function generateConf ($path, $userVar) {
+function generateConf ($path, $pathTmp, $userVar) {
 
-    // On sauvegarde le parametrage actuel 
-    $newPath = $path . "/" . date("YmdH");
+    // Crée le reperoire temporaire
+    $pathTemporaire = $pathTmp . "/conf_tmp" ;
     //$newPath = $path . "/test-cnf" ;
     
-    if (!is_dir($newPath)) {
-        mkdir($newPath);
-    }
-    xcopy($path . "/01_defaultConf_RPi/" , $newPath );
-
+    if (!is_dir($pathTemporaire))   mkdir($pathTemporaire);
+    
     // On change les parametres pour le lancement des modules
     $paramListCultipiStart[] = array ( 
         'name' => "serverLog",
@@ -238,12 +238,10 @@ function generateConf ($path, $userVar) {
         "level" => "warning"
     );
    
-    if (!is_dir($newPath . "/bulckyPi")) {
-        mkdir($newPath . "/bulckyPi");
-    }
+    if (!is_dir($pathTemporaire . "/bulckyPi")) mkdir($pathTemporaire . "/bulckyPi");
 
-    create_conf_XML($newPath . "/bulckyPi/start.xml" , $paramListCultipiStart,"starts");
-    create_conf_XML($newPath . "/bulckyPi/conf.xml" , $paramListCultipiConf);
+    create_conf_XML($pathTemporaire . "/bulckyPi/start.xml" , $paramListCultipiStart,"starts");
+    create_conf_XML($pathTemporaire . "/bulckyPi/conf.xml" , $paramListCultipiConf);
 
     /*************************  Prise ***********************************/
     // On cherche le nombre de prise 
@@ -270,13 +268,52 @@ function generateConf ($path, $userVar) {
         }
     }
 
-    // On cré le fichier pluga 
-    create_plugConf($newPath . "/serverPlugUpdate" , $prisemax);
+    // Création des répertoires
+    if (!is_dir($pathTemporaire . "/serverPlugUpdate")) mkdir($pathTemporaire . "/serverPlugUpdate");
+    if (!is_dir($pathTemporaire . "/serverPlugUpdate/plg")) mkdir($pathTemporaire . "/serverPlugUpdate/plg");
+    if (!is_dir($pathTemporaire . "/serverPlugUpdate/prg")) mkdir($pathTemporaire . "/serverPlugUpdate/prg");
+    
+    // Création du fichier pluga 
+    create_plugConf($pathTemporaire . "/serverPlugUpdate" , $prisemax);
+    
+    // Création du fichier de conf
+    // Add trace level
+    $paramServerPlugUpdate = array (
+        array (
+            "key" => "verbose",
+            "level" => "info"
+        ),
+        array (
+            "key" => "wireless_freq_plug_update",
+            "value" => "1"
+        ),
+        array (
+            "key" => "alarm_activ",
+            "value" => "0000"
+        ),
+        array (
+            "key" => "alarm_value",
+            "value" => "6000"
+        ),
+        array (
+            "key" => "alarm_sensor",
+            "value" => "T"
+        ),
+        array (
+            "key" => "alarm_sens",
+            "value" => "+"
+        ),
+        array (
+            "key" => "programm_activ",
+            "value" => "off"
+        )
+    );
+    create_conf_XML($pathTemporaire . "/serverPlugUpdate/conf.xml" , $paramServerPlugUpdate);
     
     /*************************  Serveur Irrigation ***********************************/
     // On change les parametres pour le server irrigation 
-    if (!is_dir($newPath . "/serverSLF")) {
-        mkdir($newPath . "/serverSLF");
+    if (!is_dir($pathTemporaire . "/serverSLF")) {
+        mkdir($pathTemporaire . "/serverSLF");
     }
     // Add trace level
     $paramServerSLFXML[] = array (
@@ -428,13 +465,13 @@ function generateConf ($path, $userVar) {
     }
 
     // Save it
-    create_conf_XML($newPath . "/serverSLF/conf.xml" , $paramServerSLFXML);
+    create_conf_XML($pathTemporaire . "/serverSLF/conf.xml" , $paramServerSLFXML);
     
     
     /*************************  capteurs ***********************************/
     // On cré la conf pour les capteurs 
-    if (!is_dir($newPath . "/serverAcqSensorV2")) {
-        mkdir($newPath . "/serverAcqSensorV2");
+    if (!is_dir($pathTemporaire . "/serverAcqSensorV2")) {
+        mkdir($pathTemporaire . "/serverAcqSensorV2");
     }
 
 
@@ -464,7 +501,6 @@ function generateConf ($path, $userVar) {
         foreach ($zone["capteur"] as $capteur_nom => $capteur) {
 
             $nbSensor++;
-        
             $numCapteur = $capteur["numero"];
             
             $paramServerAcqSensor[] = array (
@@ -655,16 +691,131 @@ function generateConf ($path, $userVar) {
             $extension = "_" . $IP;
         }
         
-        create_conf_XML($newPath . "/serverAcqSensorV2/conf" . $extension . ".xml" , $arraToSave[$IP]);
+        create_conf_XML($pathTemporaire . "/serverAcqSensorV2/conf" . $extension . ".xml" , $arraToSave[$IP]);
         
     }
     
+    /*************************  serverHisto ***********************************/
+    // On cré la conf pour les capteurs 
+    if (!is_dir($pathTemporaire . "/serverHisto")) {
+        mkdir($pathTemporaire . "/serverHisto");
+    }
+    // Add trace level
+    $paramServerHisto[] = array (
+        "key" => "verbose",
+        "level" => "warning"
+    );
+    $paramServerHisto[] = array (
+        "key" => "logPeriode",
+        "value" => "60"
+    );
+    $paramServerHisto[] = array (
+        "key" => "pathMySQL",
+        "value" => "/usr/bin/mysql"
+    );   
+    create_conf_XML($pathTemporaire . "/serverHisto/conf.xml" , $paramServerHisto);
     
-    // On repositionne cette conf comme celle apr défaut
-    xcopy($newPath , $path . "/01_defaultConf_RPi");
+    /*************************  serverLog ***********************************/
+    // On cré la conf pour les capteurs 
+    if (!is_dir($pathTemporaire . "/serverLog")) mkdir($pathTemporaire . "/serverLog");
+    
+    // Add trace level
+    $paramServerLog[] = array (
+        "key" => "logPath",
+        "level" => "/var/log/cultipi"
+    );
+    $paramServerLog[] = array (
+        "key" => "verbose",
+        "value" => "warning"
+    );
+    create_conf_XML($pathTemporaire . "/serverLog/conf.xml" , $paramServerLog);
+    
+    /*************************  serverMail ***********************************/
+    // On cré la conf pour les capteurs 
+    if (!is_dir($pathTemporaire . "/serverMail")) mkdir($pathTemporaire . "/serverMail");
+    
+    // Add trace level
+    $paramServerMail = array (
+        array (
+            "key" => "verbose",
+            "level" => "info"
+        ),
+        array (
+            "key" => "serverSMTP",
+            "value" => "smtp.gmail.com"
+        ),
+        array (
+            "key" => "port",
+            "value" => "35"
+        ),
+        array (
+            "key" => "username",
+            "value" => "hercul@gmail.com"
+        ),
+        array (
+            "key" => "password",
+            "value" => "pswwword"
+        ),
+        array (
+            "key" => "useSSL",
+            "value" => "true"
+        )
+    );
+   
+    create_conf_XML($pathTemporaire . "/serverMail/conf.xml" , $paramServerMail);        
+    
+    
+    /*************************  serverSupervision ***********************************/
+    // On cré la conf pour les capteurs 
+    if (!is_dir($pathTemporaire . "/serverSupervision")) mkdir($pathTemporaire . "/serverSupervision");
+    
+    // Add trace level
+    $paramServerSupervision = array (
+        array (
+            "key" => "verbose",
+            "level" => "info"
+        ),
+        array (
+            "key" => "nbProcess",
+            "value" => "0"
+        )
+    );
+   
+    create_conf_XML($pathTemporaire . "/serverSupervision/conf.xml" , $paramServerSupervision);            
+    
+    switch(php_uname('s')) {
+        case 'Windows NT':
+            // On repositionne cette conf comme celle par défaut
+            xcopy($pathTemporaire , $path . "/00_defaultConf_Win");
+            
+            // On la sauvegarde 
+            xcopy($pathTemporaire , $path . "/" . date("YmdH"));
+
+            break;
+        default : 
+            // On supprime l'ancienne conf 
+            exec("sudo mv $path/01_defaultConf_RPi/* /tmp/",$ret,$err);
+            if ($err != 0) echo json_encode($err);
+        
+            // On repositionne cette conf comme celle par défaut
+            exec("sudo cp -R $pathTemporaire/* $path/01_defaultConf_RPi/",$ret,$err);
+            if ($err != 0) echo json_encode($err);
+            
+            // On crée le répertoire de sauvegarde
+            exec("sudo mkdir $path/" .  date("YmdH"),$ret,$err);
+            if ($err != 0) echo json_encode($err);
+            
+            // On copie la conf dedans
+            exec("sudo cp -R $pathTemporaire/* $path/" .  date("YmdH") . "/" ,$ret,$err);
+            if ($err != 0) echo json_encode($err);
+            
+            break;
+    }
+
 
     // On relance l'acquisition
-    exec("sudo /etc/init.d/bulckypi force-reload >/dev/null 2>&1",$ret,$ret_var);
+    exec("sudo /etc/init.d/bulckypi force-reload >/dev/null 2>&1",$ret,$err);
+    if ($err != 0) echo json_encode($err);
     
 }
 
@@ -694,12 +845,14 @@ if(!isset($function) || empty($function)) {
             
             // On cré la conf 
             if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $path = "C:/cultibox/xampp/htdocs";
+                $path = "D:/CBX/06_bulckyCore/_conf";
+                $pathTmp = "D:/tmp";
             } else {
                 $path = "/etc/bulckypi";
+                $pathTmp = "/tmp";
             }
             
-            generateConf($path, $variable);
+            generateConf($path, $pathTmp, $variable);
             
             break;
         case 'SET_PLUG':
@@ -722,7 +875,16 @@ if(!isset($function) || empty($function)) {
         case 'GET_SENSORS' :
             $nbSensor = 10;
             $return_array = array();
-            $commandLine = 'tclsh "/opt/bulckypi/bulckyPi/get.tcl" serverAcqSensor localhost ';
+            switch(php_uname('s')) {
+                case 'Windows NT':
+                    $commandLine = 'tclsh "D:/CBX/06_bulckyCore/bulckyPi/get.tcl" serverAcqSensor localhost ';
+                    break;
+                default : 
+                    $commandLine = 'tclsh "/opt/bulckypi/bulckyPi/get.tcl" serverAcqSensor localhost ';
+                    break;
+            }
+            
+            
             for ($i = 1; $i <= $nbSensor; $i++) {
                 $commandLine = $commandLine . ' "::sensor(' . $i . ',value)"';
             }

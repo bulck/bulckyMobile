@@ -21,11 +21,11 @@
 
 			.mm-menu {
 				background: #220011 !important;
+                color: rgba(255, 255, 255, 0.8) ;
 			}
-			.mm-navbar-top-1 {
-				text-align: center;
-				position: relative;
-				border-bottom: none;
+			.mm-navbar-top-1 > * {
+				display: inline-block;
+				vertical-align: middle;
 			}
 			.mm-navbar-top-1:before {
 				content: "";
@@ -60,7 +60,7 @@
 				border-color: #fff;
 				color: #555 !important;
 			}
-            input[type=range]::-webkit-slider-thumb {
+            input[type=range]:-webkit-slider-thumb {
               -webkit-appearance: none;
               width: 100%; height: 44px;
               background: #fdfdfd; background: -moz-linear-gradient(top, #fdfdfd 0%, #bebebe 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fdfdfd), color-stop(100%,#bebebe)); background: -webkit-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: -o-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: -ms-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: linear-gradient(to bottom, #fdfdfd 0%,#bebebe 100%);
@@ -81,6 +81,9 @@
                 padding:8px 17px;
                 text-decoration:none;
             }
+			.mm-navbar-bottom-1 p {
+				color: rgba(255, 255, 255, 0.8) !important;
+			}
             
 		</style>
         
@@ -96,10 +99,17 @@
                     "pageshadow",
                     "theme-dark",
                     "fullscreen"
-                ]/*,
+                ],
                 navbar 		: {
                     add:true
                 },
+                navbars		: {
+                    height 	: 1,
+                    position : "bottom",
+                    content : [ 
+                        '<p id="texte_info" ></p>'
+                    ]
+                }/*,
                 navbars		: {
                     height 	: 4,
                     content : [ 
@@ -156,7 +166,7 @@
             <div id="app">
                 <ul>
                     <li><label>Configuration</label></li>
-                    <li><a href="#conf_application" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a></li>
+                    <li><a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a></li>
                     <li><a href="#param_conf" ><i class="fa fa-database"></i>Configuration générale</a></li>
                     <?php
                         // On affiche le titre pour les zones

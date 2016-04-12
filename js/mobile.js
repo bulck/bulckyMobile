@@ -1,5 +1,27 @@
 
 
+// Cette fonction permet de gérer les message  en haut de l'application
+idMessageTimeout = "";
+function logMessage (message) {
+    
+    if (idMessageTimeout != "") {
+        clearTimeout(idMessageTimeout); 
+    }
+
+    document.getElementById("texte_info").innerHTML = message;
+    
+    idMessageTimeout = setTimeout(
+        function() {
+          document.getElementById("texte_info").innerHTML = "";
+          idMessageTimeout = "";
+        },
+        5000
+    );
+    
+
+}
+
+// Cette fonction charge en mémoire la configuration
 function loadConf () {
     $.ajax({
          cache: false,
@@ -17,6 +39,7 @@ function loadConf () {
 }
 
 function saveConf () {
+    logMessage("Envoi de la conf...");
     $.ajax({
          cache: false,
          async: true,
@@ -27,13 +50,12 @@ function saveConf () {
              variable:CONF
          }
     }).done(function (data) {
-        
-        //CONF = jQuery.parseJSON(data);
         if (data != 0 ) {
             alert (data);
+            logMessage("Erreur lors de l'envoi de la conf...");
+        } else {
+            logMessage("Configuration appliquée");
         }
-        
-        
     });
 }
 
@@ -116,6 +138,7 @@ function savParam (param, value) {
 }
 
 function readSensors () {
+    logMessage("Lecture de la valeur des capteurs...");
     $.ajax({
          cache: false,
          async: true,
@@ -125,6 +148,7 @@ function readSensors () {
              function:"GET_SENSORS"
          }
     }).done(function (data) {
+        logMessage("Valeurs capteurs lues");
         SENSORS = jQuery.parseJSON(data);
         for(var index in SENSORS) { 
            if (SENSORS.hasOwnProperty(index)) {
@@ -132,7 +156,5 @@ function readSensors () {
                document.getElementById("sensor_" + index).innerHTML = attr;
            }
         }
-        
-        
     });
 }
