@@ -341,6 +341,11 @@ function generateConf ($path, $pathTmp, $userVar) {
         "value" => $userVar['PARAM']['NETTOYAGE_GOUTEUR']
     );  
     
+    $paramServerSLFXML[] = array (
+        "key" => "nettoyageactif" ,
+        "value" => $userVar['PARAM']['NETTOYAGE_GOUTEUR_ACTIF']
+    ); 
+    
     $ZoneIndex = 0;    
 
     foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
@@ -720,10 +725,22 @@ function generateConf ($path, $pathTmp, $userVar) {
     if (!is_dir($pathTemporaire . "/serverLog")) mkdir($pathTemporaire . "/serverLog");
     
     // Add trace level
-    $paramServerLog[] = array (
-        "key" => "logPath",
-        "level" => "/var/log/cultipi"
-    );
+    switch(php_uname('s')) {
+        case 'Windows NT':
+            $paramServerLog[] = array (
+                "key" => "logPath",
+                "level" => "D:/CBX/06_bulckyCore"
+            );
+            break;
+        default : 
+            $paramServerLog[] = array (
+                "key" => "logPath",
+                "level" => "/var/log/cultipi"
+            );
+            
+            break;
+    }
+
     $paramServerLog[] = array (
         "key" => "verbose",
         "value" => "warning"
