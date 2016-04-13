@@ -29,11 +29,11 @@ $GLOBALS['IRRIGATION'] = array(
                 'index'       => 7,
                 'nbinput'       => "3",
                 'input,1'       => "13",
-                'value,1'       => "5",
+                'value,1'       => 20,
                 'input,2'       => "14",
-                'value,2'       => "10",
+                'value,2'       => 10,
                 'input,3'       => "15",
-                'value,3'       => "20"
+                'value,3'       => 5
             ),
             'EC_cuve'     => array (
                 'numero'      => 3,
