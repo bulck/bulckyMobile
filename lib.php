@@ -310,7 +310,7 @@ function generateConf ($path, $pathTmp, $userVar) {
     );
     create_conf_XML($pathTemporaire . "/serverPlugUpdate/conf.xml" , $paramServerPlugUpdate);
     
-    /*************************  Serveur Irrigation ***********************************/
+    /*************************  serverSLF ***********************************/
     // On change les parametres pour le server irrigation 
     if (!is_dir($pathTemporaire . "/serverSLF")) {
         mkdir($pathTemporaire . "/serverSLF");
@@ -369,7 +369,14 @@ function generateConf ($path, $pathTmp, $userVar) {
             "key" => "zone," . $ZoneIndex . ",nbplateforme" ,
             "value" => count($zone["plateforme"])
         );
-        
+        $paramServerSLFXML[] = array (
+            "key" => "zone," . $ZoneIndex . ",nbsensor" ,
+            "value" => array_count_key($zone, 'capteur')
+        );
+        $paramServerSLFXML[] = array (
+            "key" => "zone," . $ZoneIndex . ",prise,remplissagecuve" ,
+            "value" => $zone["prise"]["remplissage"]
+        );
         for ($i = 1 ; $i < 4 ; $i++) {
             $paramServerSLFXML[] = array (
                 "key" => "zone," . $ZoneIndex . ",engrais," . $i . ",temps" ,
@@ -832,7 +839,7 @@ function generateConf ($path, $pathTmp, $userVar) {
 
     // On relance l'acquisition
     exec("sudo /etc/init.d/bulckypi force-reload >/dev/null 2>&1",$ret,$err);
-    if ($err != 0) echo json_encode($err);
+    if ($err != 0) echo 'Erreur de rechargement du service';
     
 }
 

@@ -52,7 +52,7 @@ function saveConf () {
     }).done(function (data) {
         if (data != 0 ) {
             //alert (data);
-            logMessage("Erreur lors de l'envoi de la conf...");
+            logMessage("Erreur lors de l'application de la conf : " + data);
         } else {
             logMessage("Configuration appliquée");
         }
