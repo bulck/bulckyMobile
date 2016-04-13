@@ -836,6 +836,20 @@ function generateConf ($path, $pathTmp, $userVar) {
     
 }
 
+function array_count_key($array, $search)
+{   
+    $nbkey = 0;
+    foreach($array as $key => $value) {
+        if ($key === $search) {
+            $nbkey = $nbkey + count($value);
+        } elseif (is_array($value)) {
+            $nbkey = $nbkey + array_count_key($value, $search);
+        }
+    }
+
+    return $nbkey;
+}
+
 //Récupération du nom de la variable, par convention interne, les noms de COOKIE  sont 
 //toujours en majuscule, on capitalise donc le nom récupéré:
 if(isset($_POST['function']) && !empty($_POST['function'])) {
@@ -890,7 +904,7 @@ if(!isset($function) || empty($function)) {
         
             break;        
         case 'GET_SENSORS' :
-            $nbSensor = 10;
+            $nbSensor = array_count_key($GLOBALS['IRRIGATION'], 'capteur');
             $return_array = array();
             switch(php_uname('s')) {
                 case 'Windows NT':
