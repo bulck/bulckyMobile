@@ -219,9 +219,11 @@
                         ?>
                             <div id="cuve_conf_<?php echo $zoneName ;?>" class="Panel">
                                 <ul>
+                                    <!--
                                     <li>EC : <p style="display:inline">3.15</p></li>
                                     <li>Température : <p style="display:inline">25°C</p></li>
                                     <li>Humidité : <p style="display:inline">75%</p></li>
+                                    -->
                                     <li>
                                         <a href="#" >Engrais 1 :</a>
                                         <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -1, "ml/min");' />

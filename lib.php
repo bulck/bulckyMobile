@@ -172,6 +172,26 @@ function xcopy($src, $dest) {
     }
 }
 
+// Cette fonction lit de façon robuste dans param.ini
+function readInIni ($arr, $first, $second, $default) {
+    
+    if (array_key_exists($first, $arr)) {
+        
+        if (array_key_exists($second, $arr[$first])) {
+            return $arr[$first][$second];
+        } else {
+            echo "param.ini ne contient pas $first -> $second";
+            return $default;
+        }
+        
+    } else {
+        echo "param.ini ne contient pas $first";
+        return $default;
+    }
+    
+    
+}
+
 function generateConf ($path, $pathTmp, $userVar) {
 
     // Crée le reperoire temporaire
@@ -223,7 +243,8 @@ function generateConf ($path, $pathTmp, $userVar) {
         'path' => "./serverSupervision/serverSupervision.tcl",
         'xmlconf' => "./serverSupervision/conf.xml",
     );
-    if ($userVar['PARAM']['IRRIGATION_ACTIF'] != "false") {
+    $irrigationActive = readInIni($userVar, 'PARAM', 'IRRIGATION_ACTIF' , "false");
+    if ($irrigationActive != "false") {
         $paramListCultipiStart[] = array ( 
             'name' => "serverSLF",
             'waitAfterUS' => "100",
@@ -318,7 +339,7 @@ function generateConf ($path, $pathTmp, $userVar) {
     // Add trace level
     $paramServerSLFXML[] = array (
         "key" => "verbose",
-        "level" => $userVar['PARAM']['VERBOSE_SLF']
+        "level" => readInIni($userVar, 'PARAM', 'VERBOSE_SLF', 'debug')
     );
     
     // Add every parameters of the database
@@ -338,12 +359,12 @@ function generateConf ($path, $pathTmp, $userVar) {
     
     $paramServerSLFXML[] = array (
         "key" => "nettoyage" ,
-        "value" => $userVar['PARAM']['NETTOYAGE_GOUTEUR']
+        "value" => readInIni($userVar, 'PARAM', 'NETTOYAGE_GOUTEUR' , "false")
     );  
     
     $paramServerSLFXML[] = array (
         "key" => "nettoyageactif" ,
-        "value" => $userVar['PARAM']['NETTOYAGE_GOUTEUR_ACTIF']
+        "value" => readInIni($userVar, 'PARAM', 'NETTOYAGE_GOUTEUR_ACTIF' , "false")
     ); 
     
     $ZoneIndex = 0;    
@@ -380,11 +401,11 @@ function generateConf ($path, $pathTmp, $userVar) {
         for ($i = 1 ; $i < 4 ; $i++) {
             $paramServerSLFXML[] = array (
                 "key" => "zone," . $ZoneIndex . ",engrais," . $i . ",temps" ,
-                "value" => $userVar['CUVE'][$Zone_nom_upper . '_ENGRAIS_' . $i]
+                "value" => readInIni($userVar, 'CUVE', $Zone_nom_upper . '_ENGRAIS_' . $i , 0)
             );
             $paramServerSLFXML[] = array (
                 "key" => "zone," . $ZoneIndex . ",engrais," . $i . ",actif" ,
-                "value" => $userVar['CUVE'][$Zone_nom_upper . '_ENGRAIS_ACTIF_' . $i]
+                "value" => readInIni($userVar, 'CUVE', $Zone_nom_upper . '_ENGRAIS_ACTIF_' . $i , "false")
             );
             $paramServerSLFXML[] = array (
                 "key" => "zone," . $ZoneIndex . ",engrais," . $i . ",prise" ,
@@ -438,9 +459,12 @@ function generateConf ($path, $pathTmp, $userVar) {
                 );
                 // On calcul le nombre de l/h : Gouteur 4 l/h --> 2 / membranes --> max 8 l/h (divisé par le nombre de ligne )
                 // ((nb L/h/membrane) / (nb lmax/h/membrane)) * tmpsCycle
-                $tmpsOnMatin = round(($userVar['LIGNE'][$PF_nom_upper . '_' . $ligne_numero . '_MATIN']     / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $plateforme["parametre"]["temps_cycle"]);
-                $tmpsOnAMidi = round(($userVar['LIGNE'][$PF_nom_upper . '_' . $ligne_numero . '_APRESMIDI'] / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $plateforme["parametre"]["temps_cycle"]);
-                $tmpsOnNuit  = round(($userVar['LIGNE'][$PF_nom_upper . '_' . $ligne_numero . '_SOIR']      / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $plateforme["parametre"]["temps_cycle"]);
+                $debitMatin  = readInIni($userVar, 'LIGNE', $PF_nom_upper . '_' . $ligne_numero . '_MATIN', 1.2);
+                $tmpsOnMatin = round(($debitMatin / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $plateforme["parametre"]["temps_cycle"]);
+                $debitAMidi  = readInIni($userVar, 'LIGNE', $PF_nom_upper . '_' . $ligne_numero . '_APRESMIDI', 1.2);
+                $tmpsOnAMidi = round(($debitAMidi / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $plateforme["parametre"]["temps_cycle"]);
+                $debitNuit   = readInIni($userVar, 'LIGNE', $PF_nom_upper . '_' . $ligne_numero . '_SOIR', 1.2);
+                $tmpsOnNuit  = round(($debitNuit  / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $plateforme["parametre"]["temps_cycle"]);
                 
                 $paramServerSLFXML[] = array (
                     "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",tempsOn,matin" ,
@@ -457,7 +481,7 @@ function generateConf ($path, $pathTmp, $userVar) {
                 
                 $paramServerSLFXML[] = array (
                     "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",active" ,
-                    "value" => $userVar['LIGNE'][$PF_nom_upper . '_' . $ligne_numero . '_ACTIVE']
+                    "value" => readInIni($userVar, 'LIGNE', $PF_nom_upper . '_' . $ligne_numero . '_ACTIVE' , "false")
                 );
                 
                 // On sauvegarde le nombre de cycle (utilisé pour stocker le nombre d'arrosage et pour déterminer l'ordre de nettoyage) 
@@ -495,7 +519,7 @@ function generateConf ($path, $pathTmp, $userVar) {
        // Add trace level
         $paramServerAcqSensor[] = array (
             "key" => "verbose",
-            "level" => $userVar['PARAM']['VERBOSE_ACQSENSOR']
+            "level" => readInIni($userVar, 'PARAM','VERBOSE_ACQSENSOR' , "info")
         );
 
         $paramServerAcqSensor[] = array (
@@ -902,11 +926,13 @@ if(!isset($function) || empty($function)) {
             $etat   = $_POST['etat'];
         
             if ($prise1 != 0 ) {
-                forcePlug($prise1,$temps,$etat);
+                $status = forcePlug($prise1,$temps,$etat);
+                echo $status["status"];
             }
             
             if ($prise2 != 0 ) {
-                forcePlug($prise2,$temps,$etat);
+                $status = forcePlug($prise2,$temps,$etat);
+                echo $status["status"];
             }
         
             break;        

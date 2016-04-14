@@ -98,7 +98,7 @@ function upVal (type, varname, incr, unit, max) {
 }
 
 function changeVal (type, varname, val) {
-    // On v�rifie si la variable existe
+    // On vérifie si la variable existe
     if (!checkNested(CONF, type)) {
         CONF[type] = {};        
     }
@@ -113,7 +113,7 @@ function changeVal (type, varname, val) {
 
 // Cette fonction pilote des prises
 function setPlug (time, plug1, plug2) {
-
+    logMessage("Pilotage envoyé ...");
     $.ajax({
          cache: false,
          async: true,
@@ -127,6 +127,7 @@ function setPlug (time, plug1, plug2) {
              etat:"on"
          }
     }).done(function (data) {
+        logMessage("Pilotage terminé " + data);
         // page_cultipi.js l 1380
         //CONF = jQuery.parseJSON(data);
         
