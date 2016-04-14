@@ -2,7 +2,7 @@
 
 // Cette fonction permet de gérer les message  en haut de l'application
 idMessageTimeout = "";
-function logMessage (message) {
+function logMessage (message, timeOut) {
     
     if (idMessageTimeout != "") {
         clearTimeout(idMessageTimeout); 
@@ -10,15 +10,15 @@ function logMessage (message) {
 
     document.getElementById("texte_info").innerHTML = message;
     
-    idMessageTimeout = setTimeout(
-        function() {
-          document.getElementById("texte_info").innerHTML = "";
-          idMessageTimeout = "";
-        },
-        5000
-    );
-    
-
+    if (timeOut != 0) {
+        idMessageTimeout = setTimeout(
+            function() {
+              document.getElementById("texte_info").innerHTML = "";
+              idMessageTimeout = "";
+            },
+            timeOut
+        );  
+    }
 }
 
 // Cette fonction charge en mémoire la configuration
@@ -39,7 +39,7 @@ function loadConf () {
 }
 
 function saveConf () {
-    logMessage("Envoi de la conf...");
+    logMessage("Envoi de la conf...", 0);
     $.ajax({
          cache: false,
          async: true,
@@ -52,9 +52,9 @@ function saveConf () {
     }).done(function (data) {
         if (data != 0 ) {
             //alert (data);
-            logMessage("Erreur lors de l'application de la conf : " + data);
+            logMessage("Erreur conf : " + data , 5000);
         } else {
-            logMessage("Configuration appliquée");
+            logMessage("Configuration appliquée", 5000);
         }
     });
 }
@@ -76,7 +76,7 @@ function checkNested(obj /*, level1, level2, ... levelN*/) {
 // Change la valeur d'un des champs
 var CONF = {};
 function upVal (type, varname, incr, unit, max) {
-    // On v�rifie si la variable existe
+    // On vérifie si la variable existe
     if (!checkNested(CONF, type)) {
         CONF[type] = {};        
     }
@@ -113,7 +113,7 @@ function changeVal (type, varname, val) {
 
 // Cette fonction pilote des prises
 function setPlug (time, plug1, plug2) {
-    logMessage("Pilotage envoyé ...");
+    logMessage("Pilotage en cours ...", 0);
     $.ajax({
          cache: false,
          async: true,
@@ -127,7 +127,7 @@ function setPlug (time, plug1, plug2) {
              etat:"on"
          }
     }).done(function (data) {
-        logMessage("Pilotage terminé " + data);
+        logMessage("Pilotage terminé " + data , 5000);
         // page_cultipi.js l 1380
         //CONF = jQuery.parseJSON(data);
         
@@ -139,7 +139,7 @@ function savParam (param, value) {
 }
 
 function readSensors () {
-    logMessage("Lecture de la valeur des capteurs...");
+    logMessage("Lecture de la valeur des capteurs...", 0);
     $.ajax({
          cache: false,
          async: true,
@@ -149,7 +149,7 @@ function readSensors () {
              function:"GET_SENSORS"
          }
     }).done(function (data) {
-        logMessage("Valeurs capteurs lues");
+        logMessage("Valeurs capteurs lues" , 5000);
         SENSORS = jQuery.parseJSON(data);
         for(var index in SENSORS) { 
            if (SENSORS.hasOwnProperty(index)) {

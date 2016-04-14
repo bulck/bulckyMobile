@@ -226,26 +226,28 @@
                                     -->
                                     <li>
                                         <a href="#" >Engrais 1 :</a>
-                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -1, "ml/min");' />
+                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
                                         <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais1] ;?> ml/min</p> 
-                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 1, "ml/min");' />
+                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
                                     </li>
                                     <li>
                                         <a href="#" >Engrais 2 :</a>
-                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -1, "ml/min");' />
+                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
                                         <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais2] ;?> ml/min</p> 
-                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 1, "ml/min");' />
+                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
                                     </li>
                                     <li>
                                         <a href="#" >Engrais 3 :</a>
-                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -1, "ml/min");' />
+                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
                                         <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais3] ;?> ml/min</p> 
-                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 1, "ml/min");' />
+                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
                                     </li>
                                     <li>
                                         <a href="#" >Action :</a>
+                                        <!--
                                         <input type="button" value="Purge de la cuve" onclick='setPlug(60, "<?php echo $zone["prise"]["purge"] ;?>", 0);' />
                                         <br />
+                                        -->
                                         <input type="button" value="Injecter 25 mL de l'engrais 1" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
                                         <br />
                                         <input type="button" value="Injecter 25 mL de l'engrais 2" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
@@ -385,6 +387,10 @@
                         <li>
                             <span>Irrigation activée :</span>
                             <input type="checkbox" class="Toggle" onclick="savParam('IRRIGATION_ACTIF',this.checked);" <?php if (ParamIni("PARAM","IRRIGATION_ACTIF","true") == "true") {echo "checked" ;}?> />
+                         </li>
+                        <li>
+                            <span>Supresseur activé :</span>
+                            <input type="checkbox" class="Toggle" onclick="savParam('SURPRESSEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","SURPRESSEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
                          </li>
                         <li>
                             <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>

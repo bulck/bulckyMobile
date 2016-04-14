@@ -180,12 +180,12 @@ function readInIni ($arr, $first, $second, $default) {
         if (array_key_exists($second, $arr[$first])) {
             return $arr[$first][$second];
         } else {
-            echo "param.ini ne contient pas $first -> $second";
+            echo "param.ini ne contient pas $first -> $second (Défaut $default) " . "\r\n";
             return $default;
         }
         
     } else {
-        echo "param.ini ne contient pas $first";
+        echo "param.ini ne contient pas $first (Défaut $default) " . "\r\n";
         return $default;
     }
     
@@ -353,6 +353,11 @@ function generateConf ($path, $pathTmp, $userVar) {
     );
     
     $paramServerSLFXML[] = array (
+        "key" => "surpresseur,actif" ,
+        "value" => readInIni($userVar, 'PARAM', 'SURPRESSEUR_ACTIF' , "false")
+    ); 
+    
+    $paramServerSLFXML[] = array (
         "key" => "nbzone" ,
         "value" => count($GLOBALS['IRRIGATION'])
     );    
@@ -366,7 +371,7 @@ function generateConf ($path, $pathTmp, $userVar) {
         "key" => "nettoyageactif" ,
         "value" => readInIni($userVar, 'PARAM', 'NETTOYAGE_GOUTEUR_ACTIF' , "false")
     ); 
-    
+
     $ZoneIndex = 0;    
 
     foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
