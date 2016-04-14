@@ -201,6 +201,7 @@
                 
                 <!-- Pour les cuves -->
                 <?php
+                    $ZoneIndex = 0;
                     foreach ($GLOBALS['IRRIGATION'] as $nom_zone => $zone)
                     {
                         // On affiche le titre pour les plateformes
@@ -244,10 +245,8 @@
                                     </li>
                                     <li>
                                         <a href="#" >Action :</a>
-                                        <!--
-                                        <input type="button" value="Purge de la cuve" onclick='setPlug(60, "<?php echo $zone["prise"]["purge"] ;?>", 0);' />
+                                        <input type="button" value="Purge de la cuve" onclick='purgeCuve("<?php echo $ZoneIndex ;?>");' />
                                         <br />
-                                        -->
                                         <input type="button" value="Injecter 25 mL de l'engrais 1" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
                                         <br />
                                         <input type="button" value="Injecter 25 mL de l'engrais 2" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
@@ -272,6 +271,7 @@
                                 </li>
                             </div>
                         <?php
+                        $ZoneIndex++;
                     }
                 ?>
                 

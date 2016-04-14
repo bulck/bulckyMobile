@@ -127,10 +127,11 @@ function setPlug (time, plug1, plug2) {
              etat:"on"
          }
     }).done(function (data) {
-        logMessage("Pilotage terminé " + data , 5000);
-        // page_cultipi.js l 1380
-        //CONF = jQuery.parseJSON(data);
-        
+        if (data == "TIMEOUT") {
+            logMessage("Erreur : serverPlugUpdate ne répond pas " , 10000);
+        } else {
+            logMessage("Pilotage terminé " + data , 5000);
+        }
     });
 }
 
@@ -157,5 +158,26 @@ function readSensors () {
                document.getElementById("sensor_" + index).innerHTML = attr;
            }
         }
+    });
+}
+
+function purgeCuve (cuveIdx) {
+    logMessage("Demande purge...", 0);
+    $.ajax({
+         cache: false,
+         async: true,
+         type: "POST",
+         url: "lib.php",
+         data: {
+             function:"PURGE_CUVE",
+             cuve:cuveIdx
+         }
+    }).done(function (data) {
+        if (data == "TIMEOUT") {
+            logMessage("Erreur : serverSLF ne répond pas " , 10000);
+        } else {
+            logMessage("Purge en cours " + data , 5000);
+        }
+        
     });
 }

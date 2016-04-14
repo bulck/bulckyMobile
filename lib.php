@@ -372,7 +372,7 @@ function generateConf ($path, $pathTmp, $userVar) {
         "value" => readInIni($userVar, 'PARAM', 'NETTOYAGE_GOUTEUR_ACTIF' , "false")
     ); 
 
-    $ZoneIndex = 0;    
+    $ZoneIndex = 0;
 
     foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
 
@@ -403,6 +403,11 @@ function generateConf ($path, $pathTmp, $userVar) {
             "key" => "zone," . $ZoneIndex . ",prise,remplissagecuve" ,
             "value" => $zone["prise"]["remplissage"]
         );
+        $paramServerSLFXML[] = array (
+            "key" => "zone," . $ZoneIndex . ",prise,purge" ,
+            "value" => $zone["prise"]["purge"]
+        );
+        
         for ($i = 1 ; $i < 4 ; $i++) {
             $paramServerSLFXML[] = array (
                 "key" => "zone," . $ZoneIndex . ",engrais," . $i . ",temps" ,
@@ -978,6 +983,30 @@ if(!isset($function) || empty($function)) {
             }
             echo json_encode($return_array);
             break;
+            
+        case 'PURGE_CUVE':
+        
+            // On récupère le numéro de la cuve
+            $cuve = $_POST['cuve'];
+
+            $return_array = array();
+
+            try {
+                switch(php_uname('s')) {
+                    case 'Windows NT':
+                        $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "D:\CBX\06_bulckyCore\bulckyPi\getCommand.tcl" serverSLF localhost purgeCuve ' . $cuve );
+                        break;
+                    default : 
+                        $return_array["status"] = exec('tclsh "/opt/bulckypi/bulckyPi/getCommand.tcl" serverSLF localhost purgeCuve ' . $cuve );
+                        break;
+                }
+            } catch (Exception $e) {
+                echo 'Exception reçue : ',  $e->getMessage(), "\n";
+                $return_array["status"] = $e->getMessage();
+            }
+            echo $return_array["status"];
+
+            break;  
             
         default:
             echo json_encode("0");
