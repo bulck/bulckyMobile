@@ -852,20 +852,25 @@ function generateConf ($path, $pathTmp, $userVar) {
             break;
         default : 
             // On supprime l'ancienne conf 
-            exec("sudo mv $path/01_defaultConf_RPi/* /tmp/",$ret,$err);
+            // sudo mv /etc/bulckypi/01_defaultConf_RPi/* /tmp/ --backup=numbered
+            exec("sudo mv $path/01_defaultConf_RPi/* /tmp/ --backup=numbered",$ret,$err);
             if ($err != 0) echo 'Erreur suppression ancienne conf';
         
             // On repositionne cette conf comme celle par défaut
+            // sudo cp -R /tmp/conf_tmp* /etc/bulckypi/01_defaultConf_RPi/
             exec("sudo cp -R $pathTemporaire/* $path/01_defaultConf_RPi/",$ret,$err);
             if ($err != 0) echo 'Erreur copie dans 01_defaultConf_RPi';
             
             // On crée le répertoire de sauvegarde
-            exec("sudo mkdir $path/" .  date("YmdH"),$ret,$err);
-            if ($err != 0) echo 'Erreur création $path/' .  date("YmdH");
+            // sudo mkdir /etc/bulckypi/2016041414
+            $err = 0;
+            if (!is_dir($path . "/" . date("YmdH"))) exec("sudo mkdir $path/" .  date("YmdH"),$ret,$err);
+            if ($err != 0) echo "Erreur création $path/" .  date("YmdH");
             
             // On copie la conf dedans
+            // sudo cp -R /tmp/conf_tmp/* /etc/bulckypi/2016041414/
             exec("sudo cp -R $pathTemporaire/* $path/" .  date("YmdH") . "/" ,$ret,$err);
-            if ($err != 0) echo 'Erreur copie dans le rep $path/' .  date("YmdH");
+            if ($err != 0) echo "Erreur copie dans le rep $path/" .  date("YmdH");
             
             break;
     }

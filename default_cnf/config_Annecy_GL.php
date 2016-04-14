@@ -3,6 +3,7 @@
 $GLOBALS['CONFIG'] = array(
     'debit_gouteur' => "12",
     'gouteur_membrane' => "2",
+    'nom' => "GL Annecy"
 );
 
 $GLOBALS['SURPRESSEUR'] = array(
@@ -60,8 +61,8 @@ $GLOBALS['IRRIGATION'] = array(
                         'type'        => "ADS1015",
                         'index'       => 0,
                         'input'       => "1",
-                        'min'         => "0",
-                        'max'         => "10"
+                        'min'         => "-4",
+                        'max'         => 16
                     ),
                 ),
                 'parametre'   => array (

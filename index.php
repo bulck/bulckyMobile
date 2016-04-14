@@ -154,7 +154,7 @@
                 }
                 return $default;
             }
-            
+
             // On vient lire le fichier de param_ini
             $param_ini = parse_ini_file("param.ini",true);
 
@@ -198,7 +198,6 @@
                     <li><a href="#sensors" ><i class="fa fa-tachometer"></i>Capteurs</a></li>
                 </ul>
 
-                
                 <!-- Pour les cuves -->
                 <?php
                     $ZoneIndex = 0;
@@ -206,7 +205,7 @@
                     {
                         // On affiche le titre pour les plateformes
                         $zoneName = strtoupper(str_replace(" ", "", $nom_zone));
-                        
+
                         // On calcul le nom des param_inis
                         $engrais1       = $zoneName . "_ENGRAIS_1";
                         $engrais2       = $zoneName . "_ENGRAIS_2";
@@ -214,9 +213,9 @@
                         $engrais1actif  = $zoneName . "_ENGRAIS_ACTIF_1";
                         $engrais2actif  = $zoneName . "_ENGRAIS_ACTIF_2";
                         $engrais3actif  = $zoneName . "_ENGRAIS_ACTIF_3";
-                        
+
                         // 25 mL / min  
-                        
+
                         ?>
                             <div id="cuve_conf_<?php echo $zoneName ;?>" class="Panel">
                                 <ul>
@@ -274,7 +273,7 @@
                         $ZoneIndex++;
                     }
                 ?>
-                
+
                 <!-- Plateforme parts -->
                 <?php
                     foreach ($GLOBALS['IRRIGATION'] as $nom_zone => $zone)
@@ -376,8 +375,8 @@
                         <li>
                             <span>Nettoyage gouteurs :</span>
                             <select id="price-from" onchange="savParam('NETTOYAGE_GOUTEUR',this.value);" style="display:inline" >
-                                <option value="10"   <?php if ($param_ini["PARAM"]["NETTOYAGE_GOUTEUR"] == "10") {echo "selected";} ?>   >1 cycle sur 10</option>
-                                <option value="100"  <?php if ($param_ini["PARAM"]["NETTOYAGE_GOUTEUR"] == "100") {echo "selected";} ?>  >1 cycle sur 100</option>
+                                <option value="10"   <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR","100") == "10")  {echo "selected";} ?>   >1 cycle sur 10</option>
+                                <option value="100"  <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR","100") == "100") {echo "selected";} ?>  >1 cycle sur 100</option>
                             </select>
                         </li>
                         <li>
@@ -404,37 +403,37 @@
                         <li>
                             <span>Verbose Server :</span>
                             <select id="price-from" onchange="savParam('VERBOSE_SERVER',this.value);" style="display:inline" >
-                                <option value="debug"   <?php if ($param_ini["PARAM"]["VERBOSE_SERVER"] == "debug") {echo "selected";} ?>   >debug</option>
-                                <option value="info"    <?php if ($param_ini["PARAM"]["VERBOSE_SERVER"] == "info") {echo "selected";} ?>    >info</option>
-                                <option value="warning" <?php if ($param_ini["PARAM"]["VERBOSE_SERVER"] == "warning") {echo "selected";} ?> >warning</option>
-                                <option value="error"   <?php if ($param_ini["PARAM"]["VERBOSE_SERVER"] == "error") {echo "selected";} ?>   >error</option>
+                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "debug") {echo "selected";} ?>   >debug</option>
+                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "info") {echo "selected";} ?>    >info</option>
+                                <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "warning") {echo "selected";} ?> >warning</option>
+                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "error") {echo "selected";} ?>   >error</option>
                             </select>
                         </li>
                         <li>
                             <span>Verbose Sensor :</span>
                         <select id="price-from" onchange="savParam('VERBOSE_ACQSENSOR',this.value);" style="display:inline" >
-                            <option value="debug"   <?php if ($param_ini["PARAM"]["VERBOSE_ACQSENSOR"] == "debug")   {echo "selected";} ?>   >debug</option>
-                            <option value="info"    <?php if ($param_ini["PARAM"]["VERBOSE_ACQSENSOR"] == "info")    {echo "selected";} ?>    >info</option>
-                            <option value="warning" <?php if ($param_ini["PARAM"]["VERBOSE_ACQSENSOR"] == "warning") {echo "selected";} ?> >warning</option>
-                            <option value="error"   <?php if ($param_ini["PARAM"]["VERBOSE_ACQSENSOR"] == "error")   {echo "selected";} ?>   >error</option>
+                            <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "debug")   {echo "selected";} ?>   >debug</option>
+                            <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "info")    {echo "selected";} ?>    >info</option>
+                            <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "warning") {echo "selected";} ?> >warning</option>
+                            <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "error")   {echo "selected";} ?>   >error</option>
                         </select>
                         </li>
                         <li>
                             <span>Verbose Plug :</span>
                             <select id="price-from" onchange="savParam('VERBOSE_PLUG',this.value);" style="display:inline" >
-                                <option value="debug"   <?php if ($param_ini["PARAM"]["VERBOSE_PLUG"] == "debug") {echo "selected";} ?>   >debug</option>
-                                <option value="info"    <?php if ($param_ini["PARAM"]["VERBOSE_PLUG"] == "info") {echo "selected";} ?>    >info</option>
-                                <option value="warning" <?php if ($param_ini["PARAM"]["VERBOSE_PLUG"] == "warning") {echo "selected";} ?> >warning</option>
-                                <option value="error"   <?php if ($param_ini["PARAM"]["VERBOSE_PLUG"] == "error") {echo "selected";} ?>   >error</option>
+                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "debug") {echo "selected";} ?>   >debug</option>
+                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "info") {echo "selected";} ?>    >info</option>
+                                <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "warning") {echo "selected";} ?> >warning</option>
+                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "error") {echo "selected";} ?>   >error</option>
                             </select>
                         </li>
                         <li>
                             <span>Verbose SLF :</span>
                             <select id="price-from" onchange="savParam('VERBOSE_SLF',this.value);" style="display:inline" >
-                                <option value="debug"   <?php if ($param_ini["PARAM"]["VERBOSE_SLF"] == "debug") {echo "selected";} ?>   >debug</option>
-                                <option value="info"    <?php if ($param_ini["PARAM"]["VERBOSE_SLF"] == "info") {echo "selected";} ?>    >info</option>
-                                <option value="warning" <?php if ($param_ini["PARAM"]["VERBOSE_SLF"] == "warning") {echo "selected";} ?> >warning</option>
-                                <option value="error"   <?php if ($param_ini["PARAM"]["VERBOSE_SLF"] == "error") {echo "selected";} ?>   >error</option>
+                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "debug") {echo "selected";} ?>   >debug</option>
+                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "info") {echo "selected";} ?>    >info</option>
+                                <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "warning") {echo "selected";} ?> >warning</option>
+                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "error") {echo "selected";} ?>   >error</option>
                             </select>
                         </li>
                         <li>
@@ -500,7 +499,7 @@
                                         foreach ($ligne["capteur"] as $capteur_nom => $capteur) {
                                         ?>
                                             <tr>
-                                                <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
+                                                <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom . " ligne " . $ligne_numero ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
                                             </tr>
                                         <?php
                                         }
