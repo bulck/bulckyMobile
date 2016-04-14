@@ -226,21 +226,21 @@
                                     -->
                                     <li>
                                         <a href="#" >Engrais 1 :</a>
-                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
+                                        <input type="button" value="-0.1" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
                                         <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais1] ;?> ml/min</p> 
-                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
+                                        <input type="button" value="+0.1" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
                                     </li>
                                     <li>
                                         <a href="#" >Engrais 2 :</a>
-                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
+                                        <input type="button" value="-0.1" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
                                         <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais2] ;?> ml/min</p> 
-                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
+                                        <input type="button" value="+0.1" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
                                     </li>
                                     <li>
                                         <a href="#" >Engrais 3 :</a>
-                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
+                                        <input type="button" value="-0.1" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
                                         <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais3] ;?> ml/min</p> 
-                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
+                                        <input type="button" value="+0.1" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
                                     </li>
                                     <li>
                                         <a href="#" >Action :</a>
@@ -314,25 +314,31 @@
                                                 
                                                 ?>
                                                 <li>
-                                                    <a href="#" >Ligne <?php echo $ligneName ;?> :</a>
+                                                    <a href="#" >Ligne <?php echo $ligneName ;?> (l/h/membrane) :</a>
                                                     <table >
                                                         <tr>
                                                             <td>Matin :</td>
-                                                            <td><input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/membrane", 100);' /></td>
-                                                            <td><p id="<?php echo "LIGNE_" . $matin ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$matin] ;?> l/h/membrane</p></td>
-                                                            <td><input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/membrane", <?php echo $lhMax ;?>);' /></td>
+                                                            <td><input type="button" value="-1"     onclick='upVal("LIGNE", "<?php echo $matin ;?>", -1, "l/h/m", 100);' /></td>
+                                                            <td><input type="button" value="-0.1"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                            <td><p id="<?php echo "LIGNE_" . $matin ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$matin] ;?> l/h/m</p></td>
+                                                            <td><input type="button" value="+0.1"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                            <td><input type="button" value="+1"     onclick='upVal("LIGNE", "<?php echo $matin ;?>", 1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Après Midi :</td>
-                                                            <td><input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/membrane", 100);' /></td>
-                                                            <td><p id="<?php echo "LIGNE_" . $amidi ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$amidi] ;?> l/h/membrane</p></td>
-                                                            <td><input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/membrane", <?php echo $lhMax ;?>);' /></td>
+                                                            <td><input type="button" value="-1"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -1, "l/h/m", 100);' /></td>
+                                                            <td><input type="button" value="-0.1"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                            <td><p id="<?php echo "LIGNE_" . $amidi ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$amidi] ;?> l/h/m</p></td>
+                                                            <td><input type="button" value="+0.1" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                            <td><input type="button" value="+1" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Soir :</td>
-                                                            <td><input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/membrane", 100);' /></td>
-                                                            <td><p id="<?php echo "LIGNE_" . $soir ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$soir] ;?> l/h/membrane</p></td>
-                                                            <td><input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/membrane", <?php echo $lhMax ;?>);' /></td>
+                                                            <td><input type="button" value="-1"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -1, "l/h/m", 100);' /></td>
+                                                            <td><input type="button" value="-0.1"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                            <td><p id="<?php echo "LIGNE_" . $soir ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$soir] ;?> l/h/m</p></td>
+                                                            <td><input type="button" value="+0.1" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                            <td><input type="button" value="+1" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
                                                         </tr>
                                                     </table>
                                                 </li>
