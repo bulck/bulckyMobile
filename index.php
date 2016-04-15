@@ -318,27 +318,21 @@
                                                     <table >
                                                         <tr>
                                                             <td>Matin :</td>
-                                                            <td><input type="button" value="-1"     onclick='upVal("LIGNE", "<?php echo $matin ;?>", -1, "l/h/m", 100);' /></td>
-                                                            <td><input type="button" value="-0.1"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                            <td><input type="button" value="-"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/m", 100);' /></td>
                                                             <td><p id="<?php echo "LIGNE_" . $matin ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$matin] ;?> l/h/m</p></td>
-                                                            <td><input type="button" value="+0.1"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
-                                                            <td><input type="button" value="+1"     onclick='upVal("LIGNE", "<?php echo $matin ;?>", 1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                            <td><input type="button" value="+"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Après Midi :</td>
-                                                            <td><input type="button" value="-1"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -1, "l/h/m", 100);' /></td>
-                                                            <td><input type="button" value="-0.1"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                            <td><input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/m", 100);' /></td>
                                                             <td><p id="<?php echo "LIGNE_" . $amidi ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$amidi] ;?> l/h/m</p></td>
-                                                            <td><input type="button" value="+0.1" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
-                                                            <td><input type="button" value="+1" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                            <td><input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Soir :</td>
-                                                            <td><input type="button" value="-1"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -1, "l/h/m", 100);' /></td>
-                                                            <td><input type="button" value="-0.1"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                            <td><input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/m", 100);' /></td>
                                                             <td><p id="<?php echo "LIGNE_" . $soir ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$soir] ;?> l/h/m</p></td>
-                                                            <td><input type="button" value="+0.1" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
-                                                            <td><input type="button" value="+1" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                            <td><input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
                                                         </tr>
                                                     </table>
                                                 </li>
@@ -408,7 +402,7 @@
                     <ul>
                         <li>
                             <span>Verbose Server :</span>
-                            <select id="price-from" onchange="savParam('VERBOSE_SERVER',this.value);" style="display:inline" >
+                            <select id="verbose_server" onchange="savParam('VERBOSE_SERVER',this.value);" style="display:inline" >
                                 <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "debug") {echo "selected";} ?>   >debug</option>
                                 <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "info") {echo "selected";} ?>    >info</option>
                                 <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "warning") {echo "selected";} ?> >warning</option>
@@ -417,7 +411,7 @@
                         </li>
                         <li>
                             <span>Verbose Sensor :</span>
-                        <select id="price-from" onchange="savParam('VERBOSE_ACQSENSOR',this.value);" style="display:inline" >
+                        <select id="verbose_acqsensor" onchange="savParam('VERBOSE_ACQSENSOR',this.value);" style="display:inline" >
                             <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "debug")   {echo "selected";} ?>   >debug</option>
                             <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "info")    {echo "selected";} ?>    >info</option>
                             <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "warning") {echo "selected";} ?> >warning</option>
@@ -426,7 +420,7 @@
                         </li>
                         <li>
                             <span>Verbose Plug :</span>
-                            <select id="price-from" onchange="savParam('VERBOSE_PLUG',this.value);" style="display:inline" >
+                            <select id="verbose_plug" onchange="savParam('VERBOSE_PLUG',this.value);" style="display:inline" >
                                 <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "debug") {echo "selected";} ?>   >debug</option>
                                 <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "info") {echo "selected";} ?>    >info</option>
                                 <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "warning") {echo "selected";} ?> >warning</option>
@@ -435,13 +429,14 @@
                         </li>
                         <li>
                             <span>Verbose SLF :</span>
-                            <select id="price-from" onchange="savParam('VERBOSE_SLF',this.value);" style="display:inline" >
+                            <select id="verbose_SLF" onchange="savParam('VERBOSE_SLF',this.value);" style="display:inline" >
                                 <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "debug") {echo "selected";} ?>   >debug</option>
                                 <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "info") {echo "selected";} ?>    >info</option>
                                 <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "warning") {echo "selected";} ?> >warning</option>
                                 <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "error") {echo "selected";} ?>   >error</option>
                             </select>
                         </li>
+                        <li><a href="#conf_mail" ><i class="fa fa-envelope-o"></i>Mail</a></li>
                         <li>
                             <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
                         </li>
@@ -519,10 +514,38 @@
                 </div>
 
                 <!-- subpanel for debug -->
-                <div id="conf_application" class="Panel">
+                <div id="conf_mail" class="Panel">
                     <ul>
                         <li>
-                            <span>En cours d'application :</span>
+                            <span>Nom d'utilisateur :</span>
+                            <input type="text" id="conf_mail_username" >
+                            <input type="button" value="Sauvegarder utilisateur" onclick="savParam('MAIL_USERNAME',document.getElementById('conf_mail_username').value);" />
+                        </li>
+                        <li>
+                            <span>Mot de passe :</span>
+                            <input type="password" id="conf_mail_password" ><br />
+                            <input type="button" value="Sauvegarder MDP" onclick="savParam('MAIL_PASSWORD',document.getElementById('conf_mail_password').value);" />
+                        </li>
+                        <li>
+                            <span>Server SMTP :</span>
+                            <select id="conf_mail_Port" onchange="savParam('MAIL_SMTP',this.value);" style="display:inline" >
+                                <option value="smtp.gmail.com"              <?php if (ParamIni("PARAM","MAIL_SMTP","smtp.gmail.com") == "smtp.gmail.com")             {echo "selected";} ?>  >smtp.gmail.com</option>
+                                <option value="mail.greenbox-botanic.com"   <?php if (ParamIni("PARAM","MAIL_SMTP","smtp.gmail.com") == "mail.greenbox-botanic.com")  {echo "selected";} ?>  >mail.greenbox-botanic.com</option>
+                            </select>
+                        </li>
+                        <li>
+                            <span>Port :</span>
+                            <select id="conf_mail_Port" onchange="savParam('MAIL_PORT',this.value);" style="display:inline" >
+                                <option value="587"   <?php if (ParamIni("PARAM","MAIL_PORT","35") == "587") {echo "selected";} ?>  >587</option>
+                                <option value="26"    <?php if (ParamIni("PARAM","MAIL_PORT","35") == "26")  {echo "selected";} ?>  >26</option>
+                            </select>
+                        </li>
+                        <li>
+                            <span>SSL :</span>
+                            <select id="conf_mail_SSL" onchange="savParam('MAIL_SSL',this.value);" style="display:inline" >
+                                <option value="true"   <?php if (ParamIni("PARAM","MAIL_SSL","false") == "true") {echo "selected";} ?>   >Oui</option>
+                                <option value="false"  <?php if (ParamIni("PARAM","MAIL_SSL","false") == "flase") {echo "selected";} ?>  >Non</option>
+                            </select>
                         </li>
                     </ul>
                 </div>

@@ -800,23 +800,23 @@ function generateConf ($path, $pathTmp, $userVar) {
         ),
         array (
             "key" => "serverSMTP",
-            "value" => "smtp.gmail.com"
+            "value" => readInIni($userVar, 'PARAM', 'MAIL_SMTP', "mail.greenbox-botanic.com")
         ),
         array (
             "key" => "port",
-            "value" => "35"
+            "value" => readInIni($userVar, 'PARAM', 'MAIL_PORT', "26")
         ),
         array (
             "key" => "username",
-            "value" => "hercul@gmail.com"
+            "value" => readInIni($userVar, 'PARAM', 'MAIL_USERNAME', "test@gmail.com")
         ),
         array (
             "key" => "password",
-            "value" => "pswwword"
+            "value" => readInIni($userVar, 'PARAM', 'MAIL_PASSWORD', "pssord")
         ),
         array (
             "key" => "useSSL",
-            "value" => "true"
+            "value" => readInIni($userVar, 'PARAM', 'MAIL_SSL', "false")
         )
     );
    
@@ -826,6 +826,58 @@ function generateConf ($path, $pathTmp, $userVar) {
     /*************************  serverSupervision ***********************************/
     // On cré la conf pour les capteurs 
     if (!is_dir($pathTemporaire . "/serverSupervision")) mkdir($pathTemporaire . "/serverSupervision");
+    
+    $processSupervisionId = 0;
+    
+    // On cré un process par ligne d'arrosage
+    foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
+        foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
+            foreach ($plateforme["ligne"] as $ligne_nom => $ligne) {
+                $paramConfSupervision = array (
+                    array (
+                        "key" => "action",
+                        "level" => "checkSensor"
+                    ),
+                    array (
+                        "key" => "eMail",
+                        "value" => readInIni($userVar, 'PARAM', 'MAIL_USERNAME', "test@gmail.com")
+                    ),
+                    array (
+                        "key" => "sensorName",
+                        "value" => "Pression ligne " . $ligne_nom
+                    ),
+                    array (
+                        "key" => "sensor",
+                        "value" => $ligne['capteur']['pression']['numero']
+                    ),
+                    array (
+                        "key" => "sensorOutput",
+                        "value" => "1"
+                    ),
+                    array (
+                        "key" => "valueSeuil",
+                        "value" => "1"
+                    ),
+                    array (
+                        "key" => "timeSeuilInS",
+                        "value" => "3600"
+                    ),
+                    array (
+                        "key" => "alertIf",
+                        "value" => "down"
+                    )
+                );
+                
+                // On sauvegarde
+                create_conf_XML($pathTemporaire . "/serverSupervision/process_" . $processSupervisionId . "_checkSensor.xml" , $paramConfSupervision);  
+                
+                unset($paramConfSupervision);
+                
+                $processSupervisionId++;
+                
+            }
+        }
+    }
     
     // Add trace level
     $paramServerSupervision = array (
@@ -838,6 +890,8 @@ function generateConf ($path, $pathTmp, $userVar) {
             "value" => "0"
         )
     );
+    
+    
    
     create_conf_XML($pathTemporaire . "/serverSupervision/conf.xml" , $paramServerSupervision);            
     
