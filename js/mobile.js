@@ -181,3 +181,20 @@ function purgeCuve (cuveIdx) {
         
     });
 }
+
+function rpi_update (moduleName) {
+    logMessage("Demande mise à jour...", 0);
+    $.ajax({
+         cache: false,
+         async: true,
+         type: "POST",
+         url: "lib.php",
+         data: {
+             function:"RPI_UPDATE",
+             module:moduleName
+         }
+    }).done(function (data) {
+        logMessage("MAJ terminée :" + data, 10000);        
+    });
+}
+

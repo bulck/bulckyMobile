@@ -1067,6 +1067,17 @@ if(!isset($function) || empty($function)) {
 
             break;  
             
+        case 'RPI_UPDATE':
+        
+            // On récupère le module a mettre à jour
+            $module = $_POST['module'];
+            
+            // On met a jour
+            exec("sudo apt-get -u upgrade --assume-no|grep " . $module,$upgrade,$err);
+            echo json_encode($upgrade);
+
+            break;              
+            
         default:
             echo json_encode("0");
     }

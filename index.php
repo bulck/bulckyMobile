@@ -437,6 +437,7 @@
                             </select>
                         </li>
                         <li><a href="#conf_mail" ><i class="fa fa-envelope-o"></i>Mail</a></li>
+                        <li><a href="#conf_action" ><i class="fa fa-terminal"></i>Action</a></li>
                         <li>
                             <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
                         </li>
@@ -513,7 +514,7 @@
                     </ul>
                 </div>
 
-                <!-- subpanel for debug -->
+                <!-- Configuration des mails -->
                 <div id="conf_mail" class="Panel">
                     <ul>
                         <li>
@@ -549,7 +550,19 @@
                         </li>
                     </ul>
                 </div>
-                
+
+                <!-- Action de configuration -->
+                <div id="conf_action" class="Panel">
+                    <ul>
+                        <li>
+                            <input type="button" value="Mise à jour Bulckyface" onclick="rpi_update('bulckyface');" />
+                        </li>
+                        <li>
+                            <input type="button" value="Mise à jour Bulckypi" onclick="rpi_update('bulckypi');" />
+                        </li>
+                    </ul>
+                </div>                
+
             </div>
         </nav>
 
