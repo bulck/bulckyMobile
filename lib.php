@@ -422,6 +422,11 @@ function generateConf ($path, $pathTmp, $userVar) {
                 "value" => $zone["prise"]["engrais" . $i]
             );
         }
+        // On indique si le remplissage doit être fait 
+        $paramServerSLFXML[] = array (
+            "key" => "zone," . $ZoneIndex . ",remplissage,actif" ,
+            "value" => readInIni($userVar, 'CUVE', $Zone_nom_upper . '_REMPLISSAGE_ACTIF' , "true")
+        );
 
         $PFIndex = 0;
         
@@ -444,9 +449,10 @@ function generateConf ($path, $pathTmp, $userVar) {
                 "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",nbligne" ,
                 "value" => count($plateforme["ligne"])
             );
+            $tempsCycle = readInIni($userVar, 'LIGNE', $PF_nom_upper . '_TEMPS_CYCLE', 300);
             $paramServerSLFXML[] = array (
                 "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",tempscycle" ,
-                "value" => $plateforme["parametre"]["temps_cycle"]
+                "value" => $tempsCycle
             );
             $paramServerSLFXML[] = array (
                 "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",pompe,prise" ,
@@ -470,11 +476,11 @@ function generateConf ($path, $pathTmp, $userVar) {
                 // On calcul le nombre de l/h : Gouteur 4 l/h --> 2 / membranes --> max 8 l/h (divisé par le nombre de ligne )
                 // ((nb L/h/membrane) / (nb lmax/h/membrane)) * tmpsCycle
                 $debitMatin  = readInIni($userVar, 'LIGNE', $PF_nom_upper . '_' . $ligne_numero . '_MATIN', 1.2);
-                $tmpsOnMatin = round(($debitMatin / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $plateforme["parametre"]["temps_cycle"]);
+                $tmpsOnMatin = round(($debitMatin / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $tempsCycle);
                 $debitAMidi  = readInIni($userVar, 'LIGNE', $PF_nom_upper . '_' . $ligne_numero . '_APRESMIDI', 1.2);
-                $tmpsOnAMidi = round(($debitAMidi / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $plateforme["parametre"]["temps_cycle"]);
+                $tmpsOnAMidi = round(($debitAMidi / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $tempsCycle);
                 $debitNuit   = readInIni($userVar, 'LIGNE', $PF_nom_upper . '_' . $ligne_numero . '_SOIR', 1.2);
-                $tmpsOnNuit  = round(($debitNuit  / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $plateforme["parametre"]["temps_cycle"]);
+                $tmpsOnNuit  = round(($debitNuit  / ($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'])) * $tempsCycle);
                 
                 $paramServerSLFXML[] = array (
                     "key" => "zone," . $ZoneIndex . ",plateforme," . $PFIndex . ",ligne," . $ligneIndex . ",tempsOn,matin" ,

@@ -167,7 +167,7 @@
                 <ul>
                     <li><label>Configuration</label></li>
                     <li><a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a></li>
-                    <li><a href="#param_conf" ><i class="fa fa-database"></i>Configuration générale</a></li>
+                    <li><a href="#param_conf" ><i class="fa fa-cogs"></i>Configuration générale</a></li>
                     <?php
                         // On affiche le titre pour les zones
                         foreach ($GLOBALS['IRRIGATION'] as $nom_zone => $zone)
@@ -179,7 +179,7 @@
                             // On affiche un titre pour la cuve
                             $strname = strtoupper(str_replace(" ", "", $nom_zone));
                             ?>
-                                <li><a href="#cuve_conf_<?php echo $strname ;?>" class="mm-arrow">Cuve</a></li>
+                                <li><a href="#cuve_conf_<?php echo $strname ;?>" class="mm-arrow"><i class="fa fa-database"></i>Cuve</a></li>
                             <?php  
                             
                             // On affiche le titre pour les plateformes
@@ -193,9 +193,9 @@
                         }
                     ?>
                     <li><label>Debug</label></li>
-                    <li><a href="#param_debug" ><i class="fa fa-cogs"></i>Paramètres avancées</a></li>
                     <li><a href="#debug_pilotage" ><i class="fa fa-power-off"></i>Pilotage</a></li>
                     <li><a href="#sensors" ><i class="fa fa-tachometer"></i>Capteurs</a></li>
+                    <li><a href="#param_debug" ><i class="fa fa-file-code-o"></i>Paramètres avancées</a></li>
                 </ul>
 
                 <!-- Pour les cuves -->
@@ -213,6 +213,7 @@
                         $engrais1actif  = $zoneName . "_ENGRAIS_ACTIF_1";
                         $engrais2actif  = $zoneName . "_ENGRAIS_ACTIF_2";
                         $engrais3actif  = $zoneName . "_ENGRAIS_ACTIF_3";
+                        $remplissageActif  = $zoneName . "_REMPLISSAGE_ACTIF";
 
                         // 25 mL / min  
 
@@ -226,21 +227,21 @@
                                     -->
                                     <li>
                                         <a href="#" >Engrais 1 :</a>
-                                        <input type="button" value="-0.1" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
-                                        <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais1] ;?> ml/min</p> 
-                                        <input type="button" value="+0.1" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
+                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
+                                        <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais1,"5");?> ml/min</p> 
+                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
                                     </li>
                                     <li>
                                         <a href="#" >Engrais 2 :</a>
-                                        <input type="button" value="-0.1" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
-                                        <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais2] ;?> ml/min</p> 
-                                        <input type="button" value="+0.1" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
+                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
+                                        <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais2,"5");?> ml/min</p> 
+                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
                                     </li>
                                     <li>
                                         <a href="#" >Engrais 3 :</a>
-                                        <input type="button" value="-0.1" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
-                                        <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo $param_ini["CUVE"][$engrais3] ;?> ml/min</p> 
-                                        <input type="button" value="+0.1" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
+                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
+                                        <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais3,"5");?> ml/min</p> 
+                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
                                     </li>
                                     <li>
                                         <a href="#" >Action :</a>
@@ -254,16 +255,20 @@
                                     </li>
                                     <li>
                                         <span>Engrais 1 Actif : </span>
-                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if ($param_ini["CUVE"][$engrais1actif] == "true") {echo "checked" ;}?> />
+                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais1actif,"false") == "true") {echo "checked" ;}?> />
                                     </li>
                                     <li>
                                         <span>Engrais 2 Actif : </span>
-                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if ($param_ini["CUVE"][$engrais1actif] == "true") {echo "checked" ;}?> />
+                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais2actif,"false") == "true") {echo "checked" ;}?> />
                                     </li>
                                     <li>
                                         <span>Engrais 3 Actif : </span>
-                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if ($param_ini["CUVE"][$engrais1actif] == "true") {echo "checked" ;}?> />
+                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais3actif,"false") == "true") {echo "checked" ;}?> />
                                     </li>
+                                    <li>
+                                        <span>Remplissage cuve activé :</span>
+                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $remplissageActif ;?>", this.checked);' <?php if (ParamIni("CUVE",$remplissageActif,"true") == "true") {echo "checked" ;}?> />
+                                     </li>
                                 </ul>
                                 <li>
                                     <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
@@ -296,21 +301,9 @@
                                                 
                                                 // On intitilialise les valeurs si elles n'existent pas
                                                 $matin = $pfName . "_" . $ligneName . "_MATIN";
-                                                if (!array_key_exists($matin, $param_ini["LIGNE"]) ) {
-                                                    $param_ini["LIGNE"][$matin] = 1.5;
-                                                }
                                                 $amidi = $pfName . "_" . $ligneName . "_APRESMIDI";
-                                                if (!array_key_exists($amidi, $param_ini["LIGNE"]) ) {
-                                                    $param_ini["LIGNE"][$amidi] = 1.5;
-                                                }
                                                 $soir = $pfName . "_" . $ligneName . "_SOIR";
-                                                if (!array_key_exists($soir, $param_ini["LIGNE"]) ) {
-                                                    $param_ini["LIGNE"][$soir] = 1.5;
-                                                }
                                                 $active = $pfName . "_" . $ligneName . "_ACTIVE";
-                                                if (!array_key_exists($active, $param_ini["LIGNE"]) ) {
-                                                    $param_ini["LIGNE"][$active] = 1;
-                                                }
                                                 
                                                 ?>
                                                 <li>
@@ -319,19 +312,19 @@
                                                         <tr>
                                                             <td>Matin :</td>
                                                             <td><input type="button" value="-"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/m", 100);' /></td>
-                                                            <td><p id="<?php echo "LIGNE_" . $matin ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$matin] ;?> l/h/m</p></td>
+                                                            <td><p id="<?php echo "LIGNE_" . $matin ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$matin,"1.5") ;?> l/h/m</p></td>
                                                             <td><input type="button" value="+"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Après Midi :</td>
                                                             <td><input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/m", 100);' /></td>
-                                                            <td><p id="<?php echo "LIGNE_" . $amidi ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$amidi] ;?> l/h/m</p></td>
+                                                            <td><p id="<?php echo "LIGNE_" . $amidi ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$amidi,"1.5");?> l/h/m</p></td>
                                                             <td><input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Soir :</td>
                                                             <td><input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/m", 100);' /></td>
-                                                            <td><p id="<?php echo "LIGNE_" . $soir ;?>" style="display:inline"><?php echo $param_ini["LIGNE"][$soir] ;?> l/h/m</p></td>
+                                                            <td><p id="<?php echo "LIGNE_" . $soir ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$soir,"1.5");?> l/h/m</p></td>
                                                             <td><input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
                                                         </tr>
                                                     </table>
@@ -344,7 +337,7 @@
                                                 ?>
                                                 <li>
                                                     <span>Activation ligne <?php echo $ligneName ;?> : </span>
-                                                    <input type="checkbox" class="Toggle" onclick='changeVal("LIGNE", "<?php echo $active ;?>", this.checked);' <?php if ($param_ini["LIGNE"][$active] == "true") {echo "checked" ;}?> />
+                                                    <input type="checkbox" class="Toggle" onclick='changeVal("LIGNE", "<?php echo $active ;?>", this.checked);' <?php if (ParamIni("LIGNE",$active,"true") == "true") {echo "checked" ;}?> />
                                                 </li> 
                                                 <?php
                                             }
@@ -359,6 +352,14 @@
                                                 <?php
                                             }
                                         ?>
+                                        <li>
+                                            <span>Temps cycle :</span>
+                                            <select id="temps_cycle_<?php echo $pfName ;?>" onchange="changeVal('LIGNE','<?php echo $pfName ;?>_TEMPS_CYCLE',this.value);" style="display:inline" >
+                                                <option value="240"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "240") {echo "selected";} ?> >2 minutes</option>
+                                                <option value="300"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "300") {echo "selected";} ?> >5 minutes</option>
+                                                <option value="600"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "600") {echo "selected";} ?> >10 minutes</option>
+                                            </select>
+                                        </li>
                                         <li>
                                             <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
                                         </li>
@@ -382,15 +383,15 @@
                         <li>
                             <span>Nettoyage gouteur actif :</span>
                             <input type="checkbox" class="Toggle" onclick="savParam('NETTOYAGE_GOUTEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
-                         </li>
+                        </li>
                         <li>
                             <span>Irrigation activée :</span>
                             <input type="checkbox" class="Toggle" onclick="savParam('IRRIGATION_ACTIF',this.checked);" <?php if (ParamIni("PARAM","IRRIGATION_ACTIF","true") == "true") {echo "checked" ;}?> />
-                         </li>
+                        </li>
                         <li>
                             <span>Supresseur activé :</span>
                             <input type="checkbox" class="Toggle" onclick="savParam('SURPRESSEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","SURPRESSEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
-                         </li>
+                        </li>
                         <li>
                             <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
                         </li>

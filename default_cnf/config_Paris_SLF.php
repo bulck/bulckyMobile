@@ -65,9 +65,6 @@ $GLOBALS['IRRIGATION'] = array(
                         'max'         => "16"
                     ),
                 ),
-                'parametre'   => array (
-                    'temps_cycle' => 240
-                ),
                  'ligne' => array (
                      "1" => array(
                         'prise' => 1,

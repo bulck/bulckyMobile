@@ -65,9 +65,6 @@ $GLOBALS['IRRIGATION'] = array(
                         'max'         => 16
                     ),
                 ),
-                'parametre'   => array (
-                    'temps_cycle' => 240
-                ),
                  'ligne' => array (
                      "1" => array(
                         'prise' => 1,
@@ -138,9 +135,6 @@ $GLOBALS['IRRIGATION'] = array(
                         'max'         => "10"
                     ),
                 ),
-                'parametre'   => array (
-                    'temps_cycle' => 240
-                ),
                 'ligne' => array (
                     "5" => array(
                         'prise' => 5,
@@ -210,9 +204,6 @@ $GLOBALS['IRRIGATION'] = array(
                         'min'         => "0",
                         'max'         => "10"
                     ),
-                ),
-                'parametre'   => array (
-                    'temps_cycle' => 240
                 ),
                 'ligne' => array (
                     "9" => array(
