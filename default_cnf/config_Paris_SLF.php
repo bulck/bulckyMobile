@@ -19,13 +19,18 @@ $GLOBALS['IRRIGATION'] = array(
             'IP'   => 'localhost'
         ),
         'capteur'   => array (
-            't_rh'        => array (
+            'temperature'        => array (
                 'numero'      => 1,
                 'type'        => "I2C",
                 'index'       => 1
             ),
-            'niveau_cuve' => array (
+            'humidite'        => array (
                 'numero'      => 2,
+                'type'        => "I2C",
+                'index'       => 2
+            ),
+            'niveau_cuve' => array (
+                'numero'      => 3,
                 'type'        => "MCP230XX",
                 'index'       => 7,
                 'nbinput'       => "3",
@@ -37,7 +42,7 @@ $GLOBALS['IRRIGATION'] = array(
                 'value,3'       => "5",
             ),
             'EC_cuve'     => array (
-                'numero'      => 3,
+                'numero'      => 4,
                 'type'        => "USBSERIAL",
                 'index'       => 1
             ),
@@ -57,7 +62,7 @@ $GLOBALS['IRRIGATION'] = array(
                 ),
                 'capteur'   => array (
                     'pression_pompe'     => array (
-                        'numero'      => 4,
+                        'numero'      => 5,
                         'type'        => "ADS1015",
                         'index'       => 0,
                         'input'       => "1",
@@ -70,7 +75,7 @@ $GLOBALS['IRRIGATION'] = array(
                         'prise' => 1,
                         'capteur'   => array (
                             'pression'    =>  array (
-                                'numero'      => 5,
+                                'numero'      => 6,
                                 'type'        => "MCP230XX",
                                 'index'       => 7,
                                 'nbinput'     => 1,
@@ -83,7 +88,7 @@ $GLOBALS['IRRIGATION'] = array(
                         'prise' => 2,
                         'capteur'   => array (
                             'pression'    =>  array (
-                                'numero'      => 6,
+                                'numero'      => 7,
                                 'type'        => "MCP230XX",
                                 'index'       => 7,
                                 'nbinput'       => 1,
@@ -96,7 +101,7 @@ $GLOBALS['IRRIGATION'] = array(
                         'prise' => 3,
                         'capteur'   => array (
                             'pression'    =>  array (
-                                'numero'      => 7,
+                                'numero'      => 8,
                                 'type'        => "MCP230XX",
                                 'index'       => 7,
                                 'nbinput'       => 1,
