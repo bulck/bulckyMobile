@@ -1083,6 +1083,29 @@ if(!isset($function) || empty($function)) {
             echo json_encode($upgrade);
 
             break;              
+
+        case 'LOAD_TEMPLATE_CONF':
+        
+            // On récupère le nom de la conf a appliquer
+            $filenamePHP = $_POST['filename'];
+            
+            // on calcul le nom du fichier param 
+            $filenameINI = str_replace("config", "param", $filenamePHP);
+            $filenameINI = str_replace(".ini",   ".php",  $filenameINI);
+            
+            // On supprime les vieux 
+            exec("sudo mv /var/www/mobile/config.php /tmp/ --backup=numbered",$ret,$err);
+            if ($err != 0) echo "Erreur suppression config.php";
+            exec("sudo mv /var/www/mobile/param.ini /tmp/ --backup=numbered",$ret,$err);
+            if ($err != 0) echo "Erreur suppression param.ini";
+            
+            # On met les nouveaux
+            exec("sudo cp /var/www/mobile/default_cnf/$filenamePHP /var/www/mobile/config.php",$ret,$err);
+            if ($err != 0) echo "Erreur déplacement config.php";
+            exec("sudo cp /var/www/mobile/default_cnf/$filenameINI /var/www/mobile/param.ini",$ret,$err);
+            if ($err != 0) echo "Erreur déplacement param.ini";
+
+            break;             
             
         default:
             echo json_encode("0");

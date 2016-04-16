@@ -198,3 +198,25 @@ function rpi_update (moduleName) {
     });
 }
 
+// Cette fonction permet d'appliquer une conf template
+function loadTemplateConf (confBaseName) {
+    logMessage("Chargement de la conf...", 0);
+    $.ajax({
+         cache: false,
+         async: true,
+         type: "POST",
+         url: "lib.php",
+         data: {
+             function:"LOAD_TEMPLATE_CONF",
+             filename:confBaseName
+         }
+    }).done(function (data) {
+        if (data != "") {
+            logMessage("Erreur :" + data, 10000);
+        } else {
+            logMessage("Chargement terminée :" + data, 10000);
+            location.reload(true);
+        }
+    });
+}
+

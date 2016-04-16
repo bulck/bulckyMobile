@@ -440,6 +440,23 @@
                         <li><a href="#conf_mail" ><i class="fa fa-envelope-o"></i>Mail</a></li>
                         <li><a href="#conf_action" ><i class="fa fa-terminal"></i>Action</a></li>
                         <li>
+                            <span>Appliquer une conf template :</span>
+                            <select id="conf_template" style="display:inline" >
+                                <?php
+                                    // Liste des configs
+                                    $configDispos = glob('default_cnf/*.{php}', GLOB_BRACE);
+                                    foreach ($configDispos as $configDispo)
+                                    {
+                                        ?>
+                                            <option value="<?php echo basename($configDispo) ;?>"  ><?php echo basename($configDispo) ;?></option>
+                                        <?php
+                                    }
+                                ?>
+                            </select>
+                            <input type="button" value="Appliquer" onclick='loadTemplateConf(document.getElementById("conf_template").value);' />
+                            <br />
+                        </li>
+                        <li>
                             <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
                         </li>
                     </ul>
