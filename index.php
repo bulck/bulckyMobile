@@ -1,21 +1,71 @@
 <!DOCTYPE html>
+
+<?php 
+
+    // On charge le fichier de configuration 
+    require_once 'config.php';
+    
+    function ParamIni($key1, $key2, $default) {
+        global $param_ini;
+        if (array_key_exists($key2, $param_ini[$key1])) {
+            return $param_ini[$key1][$key2];
+        }
+        return $default;
+    }
+    
+    // Recherche dans config.php robuste
+    // A la place de $a['b']['c'] utiliser : 
+    // ConfigPHP($a, 'default', 'b', 'c');
+    function ConfigPHP($ar, $default){
+        $numargs = func_num_args();
+        $arg_list = func_get_args();
+        $aritterator = $ar;
+        for($i = 2; $i < $numargs; $i++){
+            if (isset($aritterator[$arg_list[$i]]) || array_key_exists($arg_list[$i], $aritterator)){
+                $aritterator = $aritterator[$arg_list[$i]];
+            }else{
+                return($default);
+            }
+        }
+        return($aritterator);
+    }
+
+    // On vient lire le fichier de param_ini
+    $param_ini = parse_ini_file("param.ini",true);
+
+?>
+
+
 <html>
    <head>
 
-      <title>Irrigation</title>
-      <meta charset="utf-8" />
-      <meta content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" name="viewport">
-      <link type="text/css" href="css/layout.css" rel="stylesheet" />
+        <title><?php echo ConfigPHP($GLOBALS,"Irrigation",'CONFIG','nom'); ?></title>
+        <meta charset="utf-8" />
+        <meta content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" name="viewport">
+        
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-TileImage" content="img/watering-can-144.png">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="img/watering-can-152.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/watering-can-144.png">
+        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/watering-can-120.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/watering-can-114.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/watering-can-72.png">
+        <link rel="apple-touch-icon-precomposed" href="img/watering-can-57.png">
+        <link rel="icon" href="img/watering-can-32" sizes="32x32">
+        
+        <link type="text/css" href="css/layout.css" rel="stylesheet" />
 
-      <!-- Include jQuery.mmenu .css files -->
-      <link type="text/css" href="css/jquery.mmenu.all.css" rel="stylesheet" />
-      <link type="text/css" href="css/font-awesome.min.css" rel="stylesheet" />
-      <link type="text/css" href="css/jquery.mmenu.fullscreen.css" rel="stylesheet" />
+        <!-- Include jQuery.mmenu .css files -->
+        <link type="text/css" href="css/jquery.mmenu.all.css" rel="stylesheet" />
+        <link type="text/css" href="css/font-awesome.min.css" rel="stylesheet" />
+        <link type="text/css" href="css/jquery.mmenu.fullscreen.css" rel="stylesheet" />
 
-      <!-- Include jQuery and the jQuery.mmenu .js files -->
-      <script type="text/javascript" src="js/jquery.min.js"></script>
-      <script type="text/javascript" src="js/jquery.mmenu.min.all.js"></script>
-      <script type="text/javascript" src="js/mobile.js"></script>
+        <!-- Include jQuery and the jQuery.mmenu .js files -->
+        <!--<script type="text/javascript" src="js/zepto.min.js"></script> -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mmenu.min.all.js"></script>
+        <script type="text/javascript" src="js/mobile.js"></script>
 
 		<style type="text/css">
 
@@ -89,7 +139,7 @@
         
       <!-- Fire the plugin onDocumentReady -->
       <script type="text/javascript">
-         jQuery(document).ready(function( $ ) {
+         $(function( $ ) {
             $("#menu").mmenu({
                 offCanvas: false,
                 extensions: [
@@ -140,25 +190,6 @@
          <div class="content">
          </div>
       </div>
-
-        
-        <?php 
-
-            // On charge le fichier de configuration 
-            require_once 'config.php';
-            
-            function ParamIni($key1, $key2, $default) {
-                global $param_ini;
-                if (array_key_exists($key2, $param_ini[$key1])) {
-                    return $param_ini[$key1][$key2];
-                }
-                return $default;
-            }
-
-            // On vient lire le fichier de param_ini
-            $param_ini = parse_ini_file("param.ini",true);
-
-        ?>
 
         <!-- The menu -->
         <nav id="menu" style="min-height: 100vh;">

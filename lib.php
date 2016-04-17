@@ -1101,9 +1101,9 @@ if(!isset($function) || empty($function)) {
             
             # On met les nouveaux
             exec("sudo cp /var/www/mobile/default_cnf/$filenamePHP /var/www/mobile/config.php",$ret,$err);
-            if ($err != 0) echo "Erreur déplacement config.php";
+            if ($err != 0) echo "Erreur déplacement /var/www/mobile/default_cnf/$filenamePHP";
             exec("sudo cp /var/www/mobile/default_cnf/$filenameINI /var/www/mobile/param.ini",$ret,$err);
-            if ($err != 0) echo "Erreur déplacement param.ini";
+            if ($err != 0) echo "Erreur déplacement /var/www/mobile/default_cnf/$filenameINI";
 
             break;             
             

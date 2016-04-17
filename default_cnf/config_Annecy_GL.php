@@ -22,12 +22,12 @@ $GLOBALS['IRRIGATION'] = array(
             'temperature'     => array (
                 'numero'      => 1,
                 'type'        => "I2C",
-                'index'       => 1
+                'index'       => 0
             ),
             'humidite'        => array (
                 'numero'      => 2,
                 'type'        => "I2C",
-                'index'       => 2
+                'index'       => 1
             ),            
             'niveau_cuve' => array (
                 'numero'      => 3,
