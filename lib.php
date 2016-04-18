@@ -834,11 +834,55 @@ function generateConf ($path, $pathTmp, $userVar) {
     if (!is_dir($pathTemporaire . "/serverSupervision")) mkdir($pathTemporaire . "/serverSupervision");
     
     $processSupervisionId = 0;
-    
-    // On cré un process par ligne d'arrosage
+
     foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
+        
+        // On cré un process par cuve 
+        $paramConfSupervision = array (
+            array (
+                "key" => "action",
+                "level" => "checkSensor"
+            ),
+            array (
+                "key" => "eMail",
+                "value" => readInIni($userVar, 'PARAM', 'MAIL_USERNAME', "test@gmail.com")
+            ),
+            array (
+                "key" => "sensorName",
+                "value" => "Niveau cuve " . $zone_nom
+            ),
+            array (
+                "key" => "sensor",
+                "value" => $zone['capteur']['niveau_cuve']['numero']
+            ),
+            array (
+                "key" => "sensorOutput",
+                "value" => "1"
+            ),
+            array (
+                "key" => "valueSeuil",
+                "value" => "5"
+            ),
+            array (
+                "key" => "timeSeuilInS",
+                "value" => "3600"
+            ),
+            array (
+                "key" => "alertIf",
+                "value" => "down"
+            )
+        );
+        
+        // On sauvegarde
+        create_conf_XML($pathTemporaire . "/serverSupervision/process_" . $processSupervisionId . "_checkSensor.xml" , $paramConfSupervision);  
+        
+        unset($paramConfSupervision);
+        
+        $processSupervisionId++;
+        
         foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
             foreach ($plateforme["ligne"] as $ligne_nom => $ligne) {
+                // On cré un process par ligne d'arrosage
                 $paramConfSupervision = array (
                     array (
                         "key" => "action",

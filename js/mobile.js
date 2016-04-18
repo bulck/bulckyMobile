@@ -40,6 +40,7 @@ function loadConf () {
 
 function saveConf () {
     logMessage("Envoi de la conf...", 0);
+    $( ".btnApply" ).removeClass( "fa-arrow-circle-right" ).addClass( "fa-refresh fa-spin" );
     $.ajax({
          cache: false,
          async: true,
@@ -56,6 +57,7 @@ function saveConf () {
         } else {
             logMessage("Configuration appliquée", 5000);
         }
+        $( ".btnApply" ).removeClass( "fa-refresh fa-spin" ).addClass( "fa-arrow-circle-right" );
     });
 }
 

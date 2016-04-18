@@ -197,7 +197,7 @@
             <div id="app">
                 <ul>
                     <li><label>Configuration</label></li>
-                    <li><a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a></li>
+                    <li><a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer</a></li>
                     <li><a href="#param_conf" ><i class="fa fa-cogs"></i>Configuration générale</a></li>
                     <?php
                         // On affiche le titre pour les zones
@@ -302,7 +302,7 @@
                                      </li>
                                 </ul>
                                 <li>
-                                    <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
+                                    <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer</a>
                                 </li>
                             </div>
                         <?php
@@ -392,7 +392,7 @@
                                             </select>
                                         </li>
                                         <li>
-                                            <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
+                                            <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -424,7 +424,7 @@
                             <input type="checkbox" class="Toggle" onclick="savParam('SURPRESSEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","SURPRESSEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
                         </li>
                         <li>
-                            <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
+                            <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer</a>
                         </li>
                     </ul>
                 </div> 
@@ -488,7 +488,7 @@
                             <br />
                         </li>
                         <li>
-                            <a href="#" onclick='saveConf();' ><i class="fa fa-arrow-circle-right"></i>Appliquer</a>
+                            <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer</a>
                         </li>
                     </ul>
                 </div>
