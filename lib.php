@@ -223,28 +223,22 @@ function generateConf ($path, $pathTmp, $userVar) {
         'xmlconf' => "./serverPlugUpdate/conf.xml",
     );
     $paramListCultipiStart[] = array ( 
-        'name' => "serverHisto",
-        'waitAfterUS' => "100",
-        'pathexe' => "tclsh",
-        'path' => "./serverHisto/serverHisto.tcl",
-        'xmlconf' => "./serverHisto/conf.xml",
-    );
-    $paramListCultipiStart[] = array ( 
         'name' => "serverMail",
         'waitAfterUS' => "100",
         'pathexe' => "tclsh",
         'path' => "./serverMail/serverMail.tcl",
         'xmlconf' => "./serverMail/conf.xml",
     );
-    $paramListCultipiStart[] = array ( 
-        'name' => "serverSupervision",
-        'waitAfterUS' => "100",
-        'pathexe' => "tclsh",
-        'path' => "./serverSupervision/serverSupervision.tcl",
-        'xmlconf' => "./serverSupervision/conf.xml",
-    );
     $irrigationActive = readInIni($userVar, 'PARAM', 'IRRIGATION_ACTIF' , "false");
     if ($irrigationActive != "false") {
+        $paramListCultipiStart[] = array ( 
+            'name' => "serverSupervision",
+            'waitAfterUS' => "100",
+            'pathexe' => "tclsh",
+            'path' => "./serverSupervision/serverSupervision.tcl",
+            'xmlconf' => "./serverSupervision/conf.xml",
+        );
+        
         $paramListCultipiStart[] = array ( 
             'name' => "serverSLF",
             'waitAfterUS' => "100",
@@ -253,6 +247,13 @@ function generateConf ($path, $pathTmp, $userVar) {
             'xmlconf' => "./serverSLF/conf.xml",
         );    
     }
+    $paramListCultipiStart[] = array ( 
+        'name' => "serverHisto",
+        'waitAfterUS' => "1000",
+        'pathexe' => "tclsh",
+        'path' => "./serverHisto/serverHisto.tcl",
+        'xmlconf' => "./serverHisto/conf.xml",
+    );
    
     $paramListCultipiConf[] = array (
         "key" => "verbose",
@@ -520,7 +521,7 @@ function generateConf ($path, $pathTmp, $userVar) {
     create_conf_XML($pathTemporaire . "/serverSLF/conf.xml" , $paramServerSLFXML);
     
     
-    /*************************  capteurs ***********************************/
+    /*************************  serverAcqSensorV2 ***********************************/
     // On cré la conf pour les capteurs 
     if (!is_dir($pathTemporaire . "/serverAcqSensorV2")) {
         mkdir($pathTemporaire . "/serverAcqSensorV2");
