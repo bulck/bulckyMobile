@@ -406,22 +406,22 @@
                     <ul>
                         <li>
                             <span>Nettoyage gouteurs :</span>
-                            <select id="price-from" onchange="savParam('NETTOYAGE_GOUTEUR',this.value);" style="display:inline" >
+                            <select id="price-from" onchange="changeVal('PARAM','NETTOYAGE_GOUTEUR',this.value);" style="display:inline" >
                                 <option value="10"   <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR","100") == "10")  {echo "selected";} ?>   >1 cycle sur 10</option>
                                 <option value="100"  <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR","100") == "100") {echo "selected";} ?>  >1 cycle sur 100</option>
                             </select>
                         </li>
                         <li>
                             <span>Nettoyage gouteur actif :</span>
-                            <input type="checkbox" class="Toggle" onclick="savParam('NETTOYAGE_GOUTEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
+                            <input type="checkbox" class="Toggle" onclick="changeVal('PARAM','NETTOYAGE_GOUTEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
                         </li>
                         <li>
                             <span>Irrigation activée :</span>
-                            <input type="checkbox" class="Toggle" onclick="savParam('IRRIGATION_ACTIF',this.checked);" <?php if (ParamIni("PARAM","IRRIGATION_ACTIF","true") == "true") {echo "checked" ;}?> />
+                            <input type="checkbox" class="Toggle" onclick="changeVal('PARAM','IRRIGATION_ACTIF',this.checked);" <?php if (ParamIni("PARAM","IRRIGATION_ACTIF","true") == "true") {echo "checked" ;}?> />
                         </li>
                         <li>
                             <span>Supresseur activé :</span>
-                            <input type="checkbox" class="Toggle" onclick="savParam('SURPRESSEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","SURPRESSEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
+                            <input type="checkbox" class="Toggle" onclick="changeVal('PARAM','SURPRESSEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","SURPRESSEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
                         </li>
                         <li>
                             <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer</a>
@@ -434,7 +434,7 @@
                     <ul>
                         <li>
                             <span>Verbose Server :</span>
-                            <select id="verbose_server" onchange="savParam('VERBOSE_SERVER',this.value);" style="display:inline" >
+                            <select id="verbose_server" onchange="changeVal('PARAM','VERBOSE_SERVER',this.value);" style="display:inline" >
                                 <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "debug") {echo "selected";} ?>   >debug</option>
                                 <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "info") {echo "selected";} ?>    >info</option>
                                 <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "warning") {echo "selected";} ?> >warning</option>
@@ -443,7 +443,7 @@
                         </li>
                         <li>
                             <span>Verbose Sensor :</span>
-                        <select id="verbose_acqsensor" onchange="savParam('VERBOSE_ACQSENSOR',this.value);" style="display:inline" >
+                        <select id="verbose_acqsensor" onchange="changeVal('PARAM','VERBOSE_ACQSENSOR',this.value);" style="display:inline" >
                             <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "debug")   {echo "selected";} ?>   >debug</option>
                             <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "info")    {echo "selected";} ?>    >info</option>
                             <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "warning") {echo "selected";} ?> >warning</option>
@@ -452,7 +452,7 @@
                         </li>
                         <li>
                             <span>Verbose Plug :</span>
-                            <select id="verbose_plug" onchange="savParam('VERBOSE_PLUG',this.value);" style="display:inline" >
+                            <select id="verbose_plug" onchange="changeVal('PARAM','VERBOSE_PLUG',this.value);" style="display:inline" >
                                 <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "debug") {echo "selected";} ?>   >debug</option>
                                 <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "info") {echo "selected";} ?>    >info</option>
                                 <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "warning") {echo "selected";} ?> >warning</option>
@@ -461,7 +461,7 @@
                         </li>
                         <li>
                             <span>Verbose SLF :</span>
-                            <select id="verbose_SLF" onchange="savParam('VERBOSE_SLF',this.value);" style="display:inline" >
+                            <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_SLF',this.value);" style="display:inline" >
                                 <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "debug") {echo "selected";} ?>   >debug</option>
                                 <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "info") {echo "selected";} ?>    >info</option>
                                 <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "warning") {echo "selected";} ?> >warning</option>
@@ -569,30 +569,30 @@
                         <li>
                             <span>Nom d'utilisateur :</span>
                             <input type="text" id="conf_mail_username" >
-                            <input type="button" value="Sauvegarder utilisateur" onclick="savParam('MAIL_USERNAME',document.getElementById('conf_mail_username').value);" />
+                            <input type="button" value="Sauvegarder utilisateur" onclick="changeVal('PARAM','MAIL_USERNAME',document.getElementById('conf_mail_username').value);" />
                         </li>
                         <li>
                             <span>Mot de passe :</span>
                             <input type="password" id="conf_mail_password" ><br />
-                            <input type="button" value="Sauvegarder MDP" onclick="savParam('MAIL_PASSWORD',document.getElementById('conf_mail_password').value);" />
+                            <input type="button" value="Sauvegarder MDP" onclick="changeVal('PARAM','MAIL_PASSWORD',document.getElementById('conf_mail_password').value);" />
                         </li>
                         <li>
                             <span>Server SMTP :</span>
-                            <select id="conf_mail_Port" onchange="savParam('MAIL_SMTP',this.value);" style="display:inline" >
+                            <select id="conf_mail_Port" onchange="changeVal('PARAM','MAIL_SMTP',this.value);" style="display:inline" >
                                 <option value="smtp.gmail.com"              <?php if (ParamIni("PARAM","MAIL_SMTP","smtp.gmail.com") == "smtp.gmail.com")             {echo "selected";} ?>  >smtp.gmail.com</option>
                                 <option value="mail.greenbox-botanic.com"   <?php if (ParamIni("PARAM","MAIL_SMTP","smtp.gmail.com") == "mail.greenbox-botanic.com")  {echo "selected";} ?>  >mail.greenbox-botanic.com</option>
                             </select>
                         </li>
                         <li>
                             <span>Port :</span>
-                            <select id="conf_mail_Port" onchange="savParam('MAIL_PORT',this.value);" style="display:inline" >
+                            <select id="conf_mail_Port" onchange="changeVal('PARAM','MAIL_PORT',this.value);" style="display:inline" >
                                 <option value="587"   <?php if (ParamIni("PARAM","MAIL_PORT","35") == "587") {echo "selected";} ?>  >587</option>
                                 <option value="26"    <?php if (ParamIni("PARAM","MAIL_PORT","35") == "26")  {echo "selected";} ?>  >26</option>
                             </select>
                         </li>
                         <li>
                             <span>SSL :</span>
-                            <select id="conf_mail_SSL" onchange="savParam('MAIL_SSL',this.value);" style="display:inline" >
+                            <select id="conf_mail_SSL" onchange="changeVal('PARAM','MAIL_SSL',this.value);" style="display:inline" >
                                 <option value="true"   <?php if (ParamIni("PARAM","MAIL_SSL","false") == "true") {echo "selected";} ?>   >Oui</option>
                                 <option value="false"  <?php if (ParamIni("PARAM","MAIL_SSL","false") == "flase") {echo "selected";} ?>  >Non</option>
                             </select>

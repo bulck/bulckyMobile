@@ -137,10 +137,6 @@ function setPlug (time, plug1, plug2) {
     });
 }
 
-function savParam (param, value) {
-    CONF["PARAM"][param] = value;  
-}
-
 function readSensors () {
     logMessage("Lecture de la valeur des capteurs...", 0);
     $.ajax({
