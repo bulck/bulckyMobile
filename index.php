@@ -131,7 +131,7 @@
                 padding:8px 17px;
                 text-decoration:none;
             }
-			.mm-navbar-bottom-1 p {
+			.mm-navbar-top-1 p {
 				color: rgba(255, 255, 255, 0.8) !important;
 			}
             
@@ -155,7 +155,7 @@
                 },
                 navbars		: {
                     height 	: 1,
-                    position : "bottom",
+                    position : "top",
                     content : [ 
                         '<p id="texte_info" ></p>'
                     ]
