@@ -43,8 +43,10 @@ $GLOBALS['IRRIGATION'] = array(
             ),
             'EC_cuve'     => array (
                 'numero'      => 4,
-                'type'        => "USBSERIAL",
-                'index'       => 1
+                'type'        => "EC",
+                'index'       => 1,
+                'comPort'     => "",
+                'version'     => "EC3.0"
             ),
         ),
         'prise'   => array (

@@ -603,6 +603,18 @@ function generateConf ($path, $pathTmp, $userVar) {
                     "value" => $capteur["max"]
                 );
             }
+            
+            if ($capteur["type"] == "EC") {
+                $paramServerAcqSensor[] = array (
+                    "key" => "sensor," . $numCapteur . ",comPort" ,
+                    "value" => $capteur["comPort"]
+                );
+                $paramServerAcqSensor[] = array (
+                    "key" => "sensor," . $numCapteur . ",version" ,
+                    "value" => $capteur["version"]
+                );
+            }
+            
         }
 
         foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
