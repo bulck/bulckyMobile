@@ -1148,19 +1148,25 @@ if(!isset($function) || empty($function)) {
             
             // on calcul le nom du fichier param 
             $filenameINI = str_replace("config", "param", $filenamePHP);
-            $filenameINI = str_replace(".ini",   ".php",  $filenameINI);
+            $filenameINI = str_replace(".php",   ".ini",  $filenameINI);
             
             // On supprime les vieux 
-            exec("sudo mv /var/www/mobile/config.php /tmp/ --backup=numbered",$ret,$err);
-            if ($err != 0) echo "Erreur suppression config.php";
-            exec("sudo mv /var/www/mobile/param.ini /tmp/ --backup=numbered",$ret,$err);
-            if ($err != 0) echo "Erreur suppression param.ini";
+            $cmdLine = "sudo mv /var/www/mobile/config.php /tmp/ --backup=numbered";
+            exec($cmdLine,$ret,$err);
+            if ($err != 0) echo "Erreur suppression config.php : $cmdLine";
+            $cmdLine = "sudo mv /var/www/mobile/param.ini /tmp/ --backup=numbered";
+            exec($cmdLine,$ret,$err);
+            if ($err != 0) echo "Erreur suppression param.ini : $cmdLine";
             
             # On met les nouveaux
-            exec("sudo cp /var/www/mobile/default_cnf/$filenamePHP /var/www/mobile/config.php",$ret,$err);
-            if ($err != 0) echo "Erreur déplacement /var/www/mobile/default_cnf/$filenamePHP";
-            exec("sudo cp /var/www/mobile/default_cnf/$filenameINI /var/www/mobile/param.ini",$ret,$err);
-            if ($err != 0) echo "Erreur déplacement /var/www/mobile/default_cnf/$filenameINI";
+            # sudo cp /var/www/mobile/default_cnf/config_Annecy_GL.php /var/www/mobile/config.php
+            $cmdLine = "sudo cp /var/www/mobile/default_cnf/$filenamePHP /var/www/mobile/config.php";
+            exec($cmdLine,$ret,$err);
+            if ($err != 0) echo "Erreur déplacement : $cmdLine";
+            # sudo cp /var/www/mobile/default_cnf/param_Annecy_GL.ini /var/www/mobile/param.ini
+            $cmdLine = "sudo cp /var/www/mobile/default_cnf/$filenameINI /var/www/mobile/param.ini";
+            exec($cmdLine,$ret,$err);
+            if ($err != 0) echo "Erreur déplacement : $cmdLine";
 
             break;             
             
