@@ -462,10 +462,37 @@
                         <li>
                             <span>Verbose SLF :</span>
                             <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_SLF',this.value);" style="display:inline" >
-                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "debug") {echo "selected";} ?>   >debug</option>
-                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "info") {echo "selected";} ?>    >info</option>
+                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "debug")   {echo "selected";} ?>   >debug</option>
+                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "info")    {echo "selected";} ?>    >info</option>
                                 <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "warning") {echo "selected";} ?> >warning</option>
-                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "error") {echo "selected";} ?>   >error</option>
+                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "error")   {echo "selected";} ?>   >error</option>
+                            </select>
+                        </li>
+                        <li>
+                            <span>Verbose Histo :</span>
+                            <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_HISTO',this.value);" style="display:inline" >
+                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_HISTO","info") == "debug")  {echo "selected";} ?>  >debug</option>
+                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_HISTO","info") == "info")   {echo "selected";} ?>  >info</option>
+                                <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_HISTO","info") == "warning") {echo "selected";} ?> >warning</option>
+                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_HISTO","info") == "error")  {echo "selected";} ?>  >error</option>
+                            </select>
+                        </li>
+                        <li>
+                            <span>Verbose Mail :</span>
+                            <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_MAIL',this.value);" style="display:inline" >
+                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_MAIL","info") == "debug")   {echo "selected";} ?> >debug</option>
+                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_MAIL","info") == "info")    {echo "selected";} ?> >info</option>
+                                <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_MAIL","info") == "warning") {echo "selected";} ?> >warning</option>
+                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_MAIL","info") == "error")   {echo "selected";} ?> >error</option>
+                            </select>
+                        </li>
+                        <li>
+                            <span>Verbose Supervision :</span>
+                            <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_SUPERVISION',this.value);" style="display:inline" >
+                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SUPERVISION","info") == "debug")   {echo "selected";} ?> >debug</option>
+                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SUPERVISION","info") == "info")    {echo "selected";} ?> >info</option>
+                                <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SUPERVISION","info") == "warning") {echo "selected";} ?> >warning</option>
+                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_SUPERVISION","info") == "error")   {echo "selected";} ?> >error</option>
                             </select>
                         </li>
                         <li><a href="#conf_mail" ><i class="fa fa-envelope-o"></i>Mail</a></li>

@@ -768,7 +768,7 @@ function generateConf ($path, $pathTmp, $userVar) {
     // Add trace level
     $paramServerHisto[] = array (
         "key" => "verbose",
-        "level" => "warning"
+        "level" => readInIni($userVar, 'PARAM','VERBOSE_HISTO' , "warning")
     );
     $paramServerHisto[] = array (
         "key" => "logPeriode",
@@ -815,7 +815,7 @@ function generateConf ($path, $pathTmp, $userVar) {
     $paramServerMail = array (
         array (
             "key" => "verbose",
-            "level" => "info"
+            "level" => readInIni($userVar, 'PARAM','VERBOSE_MAIL' , "info")
         ),
         array (
             "key" => "serverSMTP",
@@ -946,7 +946,7 @@ function generateConf ($path, $pathTmp, $userVar) {
     $paramServerSupervision = array (
         array (
             "key" => "verbose",
-            "level" => "info"
+            "level" => readInIni($userVar, 'PARAM','VERBOSE_SUPERVISION' , "info")
         ),
         array (
             "key" => "nbProcess",
