@@ -394,6 +394,7 @@
                                                 <option value="60" selected>1 minute</option>
                                                 <option value="120" >2 minutes</option>
                                                 <option value="600" >10 minutes</option>
+												<option value="86400" >1 journée</option>
                                             </select>
 											<?php
                                             foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
@@ -526,6 +527,7 @@
 							<option value="60" selected>1 minute</option>
 							<option value="120" >2 minutes</option>
 							<option value="600" >10 minutes</option>
+							<option value="86400" >1 journée</option>
 						</select>
                         <?php 
                             for ($i = 1; $i <= 25; $i++) {
@@ -546,9 +548,7 @@
                     <ul>
                         <li>
                             <input id="btn_reload_sensor" type="button" value="Recharger les valeurs" onclick='readSensors(0);' />
-                        </li>
-                        <li>
-                            <input id="btn_reload_periodic_sensor" type="button" value="Recharger 30 fois les valeurs" onclick='readSensors(30);' />
+                            <input style="float: right;" id="btn_reload_periodic_sensor" type="button" value="Recharger 30 fois les valeurs" onclick='readSensors(30);' />
                         </li>
                         <li>
                             <table >

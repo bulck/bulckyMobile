@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['CONFIG'] = array(
-    'debit_gouteur' => "12",
+    'debit_gouteur' => "7.6",
     'gouteur_membrane' => "2",
     'nom' => "GL Annecy"
 );

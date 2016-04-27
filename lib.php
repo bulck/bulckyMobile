@@ -1068,7 +1068,7 @@ if(!isset($function) || empty($function)) {
                 echo $status["status"];
             }
             
-            if ($prise2 != 0 && $status["status"] == "" ) {
+            if ($prise2 != 0 && $status["status"] == "done" ) {
                 $status = forcePlug($prise2,$temps,$etat);
                 echo $status["status"];
             }
