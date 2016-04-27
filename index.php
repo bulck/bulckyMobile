@@ -131,6 +131,10 @@
                 padding:8px 17px;
                 text-decoration:none;
             }
+            input[type=button]:disabled {
+                background-color:#dddddd;
+                border:1px solid #eeeeee;
+            }			
 			.mm-navbar-top-1 p {
 				color: rgba(255, 255, 255, 0.8) !important;
 			}
@@ -174,7 +178,7 @@
             loadConf();
             
             // On vient lire la valeur des capteurs 
-            readSensors();
+            readSensors(0);
             
          });
       </script>
@@ -278,11 +282,11 @@
                                         <a href="#" >Action :</a>
                                         <input type="button" value="Purge de la cuve" onclick='purgeCuve("<?php echo $ZoneIndex ;?>");' />
                                         <br />
-                                        <input type="button" value="Injecter 25 mL de l'engrais 1" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
+                                        <input type="button" value="Injecter 25 mL de l'engrais 1" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
                                         <br />
-                                        <input type="button" value="Injecter 25 mL de l'engrais 2" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
+                                        <input type="button" value="Injecter 25 mL de l'engrais 2" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
                                         <br />
-                                        <input type="button" value="Injecter 25 mL de l'engrais 3" onclick='setPlug(60, "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
+                                        <input type="button" value="Injecter 25 mL de l'engrais 3" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
                                     </li>
                                     <li>
                                         <span>Engrais 1 Actif : </span>
@@ -386,6 +390,7 @@
 											</li>
 											<span>Temps de test :</span>
                                             <select id="temps_test_cyle" style="display:inline" >
+                                                <option value="30" >30 secondes</option>
                                                 <option value="60" selected>1 minute</option>
                                                 <option value="120" >2 minutes</option>
                                                 <option value="600" >10 minutes</option>
@@ -396,7 +401,8 @@
                                                 $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
                                                 ?>
                                                 <li>
-                                                    <input type="button" value="ON ligne <?php echo $ligneName ;?>" onclick='setPlug(document.getElementById("temps_test_cyle").value, <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
+                                                    <input type="button" value="ON ligne <?php echo $ligneName ;?>" onclick='setPlug(document.getElementById("temps_test_cyle").value,"on", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
+													<input style="float: right;" type="button" value="OFF ligne <?php echo $ligneName ;?>" onclick='setPlug(document.getElementById("temps_test_cyle").value,"off", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
                                                     <br />
                                                 </li>
                                                 <?php
@@ -514,11 +520,19 @@
                 <!-- Pilotage prise -->
                 <div id="debug_pilotage" class="Panel">
                     <ul>
+						<span>Temps de test :</span>
+						<select id="temps_test_cyle_plug" style="display:inline" >
+							<option value="30" >30 secondes</option>
+							<option value="60" selected>1 minute</option>
+							<option value="120" >2 minutes</option>
+							<option value="600" >10 minutes</option>
+						</select>
                         <?php 
                             for ($i = 1; $i <= 25; $i++) {
                         ?>
                             <li>
-                                <input type="button" value="ON sortie <?php echo $i ;?> pendant 30s" onclick='setPlug(30, <?php echo $i ;?>,0);' />
+                                <input 						 type="button" value="ON sortie <?php echo $i ;?>"  onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"on", <?php echo $i ;?>,0);' />
+                                <input style="float: right;" type="button" value="OFF sortie <?php echo $i ;?>" onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"off", <?php echo $i ;?>,0);' />
                                 <br />
                             </li>
                         <?php 
@@ -531,8 +545,10 @@
                 <div id="sensors" class="Panel">
                     <ul>
                         <li>
-                            <input type="button" value="Recharger les valeurs" onclick='readSensors();' />
-                            <br />
+                            <input id="btn_reload_sensor" type="button" value="Recharger les valeurs" onclick='readSensors(0);' />
+                        </li>
+                        <li>
+                            <input id="btn_reload_periodic_sensor" type="button" value="Recharger 30 fois les valeurs" onclick='readSensors(30);' />
                         </li>
                         <li>
                             <table >

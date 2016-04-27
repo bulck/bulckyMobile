@@ -114,7 +114,7 @@ function changeVal (type, varname, val) {
 }
 
 // Cette fonction pilote des prises
-function setPlug (time, plug1, plug2) {
+function setPlug (time, etatPrise, plug1, plug2) {
     logMessage("Pilotage en cours ...", 0);
     $.ajax({
          cache: false,
@@ -126,19 +126,24 @@ function setPlug (time, plug1, plug2) {
              prise1:plug1,
              prise2:plug2,
              temps:time,
-             etat:"on"
+             etat:etatPrise
          }
     }).done(function (data) {
         if (data == "TIMEOUT") {
             logMessage("Erreur : serverPlugUpdate ne répond pas " , 10000);
+		} else if (data == "done")  {
+			logMessage("Pilotage : OK ", 5000);
         } else {
-            logMessage("Pilotage terminé " + data + ".", 5000);
+            logMessage("Erreur " + data + ".", 5000);
         }
     });
 }
 
-function readSensors () {
+function readSensors (periode) {
+
     logMessage("Lecture de la valeur des capteurs...", 0);
+	document.getElementById('btn_reload_periodic_sensor').disabled=true;
+	document.getElementById('btn_reload_sensor').disabled=true;
     $.ajax({
          cache: false,
          async: true,
@@ -156,6 +161,14 @@ function readSensors () {
                document.getElementById("sensor_" + index).innerHTML = attr;
            }
         }
+		
+		if (periode != 0) {
+			setTimeout(function(){ readSensors(periode - 1); }, 1000);
+		} else {
+			document.getElementById('btn_reload_periodic_sensor').disabled=false;
+			document.getElementById('btn_reload_sensor').disabled=false;
+		}
+		
     });
 }
 
