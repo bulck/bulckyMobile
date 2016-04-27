@@ -197,7 +197,7 @@
             <div id="app">
                 <ul>
                     <li><label>Configuration</label></li>
-                    <li><a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer</a></li>
+                    <li><a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a></li>
                     <li><a href="#param_conf" ><i class="fa fa-cogs"></i>Configuration générale</a></li>
                     <?php
                         // On affiche le titre pour les zones
@@ -302,7 +302,7 @@
                                      </li>
                                 </ul>
                                 <li>
-                                    <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer</a>
+                                    <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                                 </li>
                             </div>
                         <?php
@@ -372,28 +372,36 @@
                                                 </li> 
                                                 <?php
                                             }
+											?>
+											<li>
+												<span>Temps cycle :</span>
+												<select id="temps_cycle_<?php echo $pfName ;?>" onchange="changeVal('LIGNE','<?php echo $pfName ;?>_TEMPS_CYCLE',this.value);" style="display:inline" >
+													<option value="240"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "240") {echo "selected";} ?> >2 minutes</option>
+													<option value="300"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "300") {echo "selected";} ?> >5 minutes</option>
+													<option value="600"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "600") {echo "selected";} ?> >10 minutes</option>
+												</select>
+											</li>
+											<li>
+												<a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
+											</li>
+											<span>Temps de test :</span>
+                                            <select id="temps_test_cyle" style="display:inline" >
+                                                <option value="60" selected>1 minute</option>
+                                                <option value="120" >2 minutes</option>
+                                                <option value="600" >10 minutes</option>
+                                            </select>
+											<?php
                                             foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
                                             {
                                                 $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
                                                 ?>
                                                 <li>
-                                                    <input type="button" value="ON ligne <?php echo $ligneName ;?> pendant 60s" onclick='setPlug(60, <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["pompe_prise"] ;?>);' />
+                                                    <input type="button" value="ON ligne <?php echo $ligneName ;?>" onclick='setPlug(document.getElementById("temps_test_cyle").value, <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
                                                     <br />
                                                 </li>
                                                 <?php
                                             }
                                         ?>
-                                        <li>
-                                            <span>Temps cycle :</span>
-                                            <select id="temps_cycle_<?php echo $pfName ;?>" onchange="changeVal('LIGNE','<?php echo $pfName ;?>_TEMPS_CYCLE',this.value);" style="display:inline" >
-                                                <option value="240"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "240") {echo "selected";} ?> >2 minutes</option>
-                                                <option value="300"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "300") {echo "selected";} ?> >5 minutes</option>
-                                                <option value="600"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "600") {echo "selected";} ?> >10 minutes</option>
-                                            </select>
-                                        </li>
-                                        <li>
-                                            <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer</a>
-                                        </li>
                                     </ul>
                                 </div>
                             <?php
@@ -424,7 +432,7 @@
                             <input type="checkbox" class="Toggle" onclick="changeVal('PARAM','SURPRESSEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","SURPRESSEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
                         </li>
                         <li>
-                            <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer</a>
+                            <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                         </li>
                     </ul>
                 </div> 
@@ -498,7 +506,7 @@
                         <li><a href="#conf_mail" ><i class="fa fa-envelope-o"></i>Mail</a></li>
                         <li><a href="#conf_action" ><i class="fa fa-terminal"></i>Action</a></li>
                         <li>
-                            <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer</a>
+                            <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                         </li>
                     </ul>
                 </div>

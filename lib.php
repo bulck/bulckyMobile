@@ -134,19 +134,25 @@ function forcePlug($number,$time,$value) {
 
     $return_array = array();
 
+	$err = 0;
+	$return_array["status"] = "";
     try {
         switch(php_uname('s')) {
             case 'Windows NT':
-                $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "D:\CBX\06_bulckyCore\bulckyPi\getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time);
+                $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "D:\CBX\06_bulckyCore\bulckyPi\getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time,$ret,$err);
                 break;
             default : 
-                $return_array["status"] = exec('tclsh "/opt/bulckypi/bulckyPi/getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time);
+                $return_array["status"] = exec('tclsh "/opt/bulckypi/bulckyPi/getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time,$ret,$err);
                 break;
         }
     } catch (Exception $e) {
         echo 'Exception reçue : ',  $e->getMessage(), "\n";
         $return_array["status"] = $e->getMessage();
     }
+	
+	if ($err != 0 && $return_array["status"] == "") {
+		$return_array["status"] = "Erreur pilotage prise " . $number;
+	}
 
     return $return_array;
 }

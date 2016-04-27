@@ -132,7 +132,7 @@ function setPlug (time, plug1, plug2) {
         if (data == "TIMEOUT") {
             logMessage("Erreur : serverPlugUpdate ne répond pas " , 10000);
         } else {
-            logMessage("Pilotage terminé " + data , 5000);
+            logMessage("Pilotage terminé " + data + ".", 5000);
         }
     });
 }
