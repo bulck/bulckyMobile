@@ -389,22 +389,24 @@
 											<li>
 												<a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
 											</li>
-											<span>Temps de test :</span>
-                                            <select id="temps_test_cyle" style="display:inline" >
-                                                <option value="30" >30 secondes</option>
-                                                <option value="60" selected>1 minute</option>
-                                                <option value="120" >2 minutes</option>
-                                                <option value="600" >10 minutes</option>
-												<option value="86400" >1 journée</option>
-                                            </select>
+                                            <li>
+                                                <span>Temps de test :</span>
+                                                <select id="temps_test_cyle" style="display:inline" >
+                                                    <option value="30" >30 secondes</option>
+                                                    <option value="60" selected>1 minute</option>
+                                                    <option value="120" >2 minutes</option>
+                                                    <option value="600" >10 minutes</option>
+                                                    <option value="86400" >1 journée</option>
+                                                </select>
+                                            </li>
 											<?php
                                             foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
                                             {
                                                 $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
                                                 ?>
                                                 <li>
-                                                    <input type="button" value="ON ligne <?php echo $ligneName ;?>" onclick='setPlug(document.getElementById("temps_test_cyle").value,"on", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
-													<input style="float: right;" type="button" value="OFF ligne <?php echo $ligneName ;?>" onclick='setPlug(document.getElementById("temps_test_cyle").value,"off", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
+                                                    <input type="button" value="ON <?php echo $ligneName ;?>" onclick='setPlug(document.getElementById("temps_test_cyle").value,"on", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
+													<input style="float: right;" type="button" value="OFF <?php echo $ligneName ;?>" onclick='setPlug(document.getElementById("temps_test_cyle").value,"off", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
                                                     <br />
                                                 </li>
                                                 <?php
@@ -522,20 +524,22 @@
                 <!-- Pilotage prise -->
                 <div id="debug_pilotage" class="Panel">
                     <ul>
-						<span>Temps de test :</span>
-						<select id="temps_test_cyle_plug" style="display:inline" >
-							<option value="30" >30 secondes</option>
-							<option value="60" selected>1 minute</option>
-							<option value="120" >2 minutes</option>
-							<option value="600" >10 minutes</option>
-							<option value="86400" >1 journée</option>
-						</select>
+                        <li>
+                            <span>Temps de test :</span>
+                            <select id="temps_test_cyle_plug" style="display:inline" >
+                                <option value="30" >30 secondes</option>
+                                <option value="60" selected>1 minute</option>
+                                <option value="120" >2 minutes</option>
+                                <option value="600" >10 minutes</option>
+                                <option value="86400" >1 journée</option>
+                            </select>
+                        </li>
                         <?php 
                             for ($i = 1; $i <= 25; $i++) {
                         ?>
                             <li>
-                                <input 						 type="button" value="ON sortie <?php echo $i ;?>"  onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"on", <?php echo $i ;?>,0);' />
-                                <input style="float: right;" type="button" value="OFF sortie <?php echo $i ;?>" onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"off", <?php echo $i ;?>,0);' />
+                                <input 						 type="button" value="ON <?php echo $i ;?>"  onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"on", <?php echo $i ;?>,0);' />
+                                <input style="float: right;" type="button" value="OFF <?php echo $i ;?>" onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"off", <?php echo $i ;?>,0);' />
                                 <br />
                             </li>
                         <?php 
