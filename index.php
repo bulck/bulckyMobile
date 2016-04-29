@@ -369,6 +369,7 @@
                                             foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
                                             {
                                                 $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
+                                                $active = $pfName . "_" . $ligneName . "_ACTIVE";
                                                 ?>
                                                 <li>
                                                     <span>Activation ligne <?php echo $ligneName ;?> : </span>
