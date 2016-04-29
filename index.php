@@ -118,7 +118,7 @@
               -webkit-border-radius: 22px; -moz-border-radius: 22px; border-radius: 22px;
             }
             input[type=button] {
-                font-family: FontAwesome;
+                font-family: FontAwesome, Arial;
                 background-color:#44c767;
                 -moz-border-radius:28px;
                 -webkit-border-radius:28px;
