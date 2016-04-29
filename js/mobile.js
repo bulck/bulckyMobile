@@ -39,26 +39,29 @@ function loadConf () {
 }
 
 function saveConf () {
-    logMessage("Envoi de la conf...", 0);
-    $( ".btnApply" ).removeClass( "fa-arrow-circle-right" ).addClass( "fa-refresh fa-spin" );
-    $.ajax({
-         cache: false,
-         async: true,
-         type: "POST",
-         url: "lib.php",
-         data: {
-             function:"SET_CONF",
-             variable:CONF
-         }
-    }).done(function (data) {
-        if (data != 0 ) {
-            //alert (data);
-            logMessage("Erreur conf : " + data , 5000);
-        } else {
-            logMessage("Configuration appliquée", 5000);
-        }
-        $( ".btnApply" ).removeClass( "fa-refresh fa-spin" ).addClass( "fa-arrow-circle-right" );
-    });
+    var retVal = confirm("Confirmez-vous l'envoi ?");
+    if( retVal == true ) {
+        logMessage("Envoi de la conf...", 0);
+        $( ".btnApply" ).removeClass( "fa-arrow-circle-right" ).addClass( "fa-refresh fa-spin" );
+        $.ajax({
+             cache: false,
+             async: true,
+             type: "POST",
+             url: "lib.php",
+             data: {
+                 function:"SET_CONF",
+                 variable:CONF
+             }
+        }).done(function (data) {
+            if (data != 0 ) {
+                //alert (data);
+                logMessage("Erreur conf : " + data , 5000);
+            } else {
+                logMessage("Configuration appliquée", 5000);
+            }
+            $( ".btnApply" ).removeClass( "fa-refresh fa-spin" ).addClass( "fa-arrow-circle-right" );
+        });
+    }
 }
 
 // var test = {level1:{level2:25},level12:{level2:25}};

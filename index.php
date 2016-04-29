@@ -118,6 +118,7 @@
               -webkit-border-radius: 22px; -moz-border-radius: 22px; border-radius: 22px;
             }
             input[type=button] {
+                font-family: FontAwesome;
                 background-color:#44c767;
                 -moz-border-radius:28px;
                 -webkit-border-radius:28px;
@@ -126,7 +127,6 @@
                 display:inline-block;
                 cursor:pointer;
                 color:#ffffff;
-                font-family:Arial;
                 font-size:17px;
                 padding:8px 17px;
                 text-decoration:none;
@@ -138,7 +138,7 @@
 			.mm-navbar-top-1 p {
 				color: rgba(255, 255, 255, 0.8) !important;
 			}
-            
+
 		</style>
         
       <!-- Fire the plugin onDocumentReady -->
@@ -181,19 +181,10 @@
             readSensors(0);
             
          });
-      </script>
+        </script>
 
     </head>
     <body>
-
-      <!-- The page -->
-      <div class="page">
-         <div class="header">
-            <a href="#menu"></a>
-         </div>
-         <div class="content">
-         </div>
-      </div>
 
         <!-- The menu -->
         <nav id="menu" style="min-height: 100vh;">
@@ -262,22 +253,23 @@
                                     -->
                                     <li>
                                         <a href="#" >Engrais 1 :</a>
-                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
+                                        <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
                                         <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais1,"5");?> ml/min</p> 
-                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
+                                        <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
                                     </li>
                                     <li>
                                         <a href="#" >Engrais 2 :</a>
-                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
+                                        <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
                                         <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais2,"5");?> ml/min</p> 
-                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
+                                        <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
                                     </li>
                                     <li>
                                         <a href="#" >Engrais 3 :</a>
-                                        <input type="button" value="-" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
+                                        <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
                                         <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais3,"5");?> ml/min</p> 
-                                        <input type="button" value="+" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
+                                        <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
                                     </li>
+                                    <hr />
                                     <li>
                                         <a href="#" >Action :</a>
                                         <input type="button" value="Purge de la cuve" onclick='purgeCuve("<?php echo $ZoneIndex ;?>");' />
@@ -288,6 +280,7 @@
                                         <br />
                                         <input type="button" value="Injecter 25 mL de l'engrais 3" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
                                     </li>
+                                    <hr />
                                     <li>
                                         <span>Engrais 1 Actif : </span>
                                         <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais1actif,"false") == "true") {echo "checked" ;}?> />
@@ -346,26 +339,29 @@
                                                     <table >
                                                         <tr>
                                                             <td>Matin :</td>
-                                                            <td><input type="button" value="-"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                            <td><input type="button" value="&#xf146;"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/m", 100);' /></td>
                                                             <td><p id="<?php echo "LIGNE_" . $matin ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$matin,"1.5") ;?> l/h/m</p></td>
-                                                            <td><input type="button" value="+"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                            <td><input type="button" value="&#xf0fe;"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Après Midi :</td>
-                                                            <td><input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                            <td><input type="button" value="&#xf146;"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/m", 100);' /></td>
                                                             <td><p id="<?php echo "LIGNE_" . $amidi ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$amidi,"1.5");?> l/h/m</p></td>
-                                                            <td><input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                            <td><input type="button" value="&#xf0fe;" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Soir :</td>
-                                                            <td><input type="button" value="-"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                            <td><input type="button" value="&#xf146;"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/m", 100);' /></td>
                                                             <td><p id="<?php echo "LIGNE_" . $soir ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$soir,"1.5");?> l/h/m</p></td>
-                                                            <td><input type="button" value="+" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                            <td><input type="button" value="&#xf0fe;" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
                                                         </tr>
                                                     </table>
                                                 </li>
                                                 <?php
                                             }
+                                            ?>
+                                            <hr />
+                                            <?php
                                             foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
                                             {
                                                 $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
@@ -389,6 +385,7 @@
 											<li>
 												<a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
 											</li>
+                                            <hr />
                                             <li>
                                                 <span>Temps de test :</span>
                                                 <select id="temps_test_cyle" style="display:inline" >
@@ -405,8 +402,9 @@
                                                 $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
                                                 ?>
                                                 <li>
-                                                    <input type="button" value="ON <?php echo $ligneName ;?>" onclick='setPlug(document.getElementById("temps_test_cyle").value,"on", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
-													<input style="float: right;" type="button" value="OFF <?php echo $ligneName ;?>" onclick='setPlug(document.getElementById("temps_test_cyle").value,"off", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
+                                                    <span>Ligne <?php echo $ligneName ;?> (Pompe + EV) :</span>
+                                                    <input type="button" value="&#xf144;" onclick='setPlug(document.getElementById("temps_test_cyle").value,"on", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
+													<input style="float: right;" type="button" value="&#xf28d;" onclick='setPlug(document.getElementById("temps_test_cyle").value,"off", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
                                                     <br />
                                                 </li>
                                                 <?php
@@ -538,8 +536,9 @@
                             for ($i = 1; $i <= 25; $i++) {
                         ?>
                             <li>
-                                <input 						 type="button" value="ON <?php echo $i ;?>"  onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"on", <?php echo $i ;?>,0);' />
-                                <input style="float: right;" type="button" value="OFF <?php echo $i ;?>" onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"off", <?php echo $i ;?>,0);' />
+                                <span>Sortie <?php echo $i ;?> :</span>
+                                <input 						 type="button" value="&#xf144;"  onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"on", <?php echo $i ;?>,0);' />
+                                <input style="float: right;" type="button" value="&#xf28d;" onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"off", <?php echo $i ;?>,0);' />
                                 <br />
                             </li>
                         <?php 
@@ -552,8 +551,8 @@
                 <div id="sensors" class="Panel">
                     <ul>
                         <li>
-                            <input id="btn_reload_sensor" type="button" value="Recharger les valeurs" onclick='readSensors(0);' />
-                            <input style="float: right;" id="btn_reload_periodic_sensor" type="button" value="Recharger 30 fois les valeurs" onclick='readSensors(30);' />
+                            <input id="btn_reload_sensor" type="button" value="&#xf0e2;" onclick='readSensors(0);' />
+                            <input style="float: right;" id="btn_reload_periodic_sensor" type="button" value="&#xf021;" onclick='readSensors(30);' />
                         </li>
                         <li>
                             <table >
@@ -666,10 +665,11 @@
                             <br />
                         </li>
                     </ul>
-                </div>                
+                </div>
+                
+
 
             </div>
         </nav>
-
     </body>
 </html>
