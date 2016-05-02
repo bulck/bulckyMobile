@@ -59,89 +59,15 @@
         <link type="text/css" href="css/layout.css" rel="stylesheet" />
 
         <!-- Include jQuery.mmenu .css files -->
-        <link type="text/css" href="css/jquery.mmenu.all.css" rel="stylesheet" />
         <link type="text/css" href="css/font-awesome.min.css" rel="stylesheet" />
+        <link type="text/css" href="css/jquery.mmenu.all.css" rel="stylesheet" />
         <link type="text/css" href="css/jquery.mmenu.fullscreen.css" rel="stylesheet" />
-        <link type="text/css" href="css/ios_switch.css" rel="stylesheet" />
 
         <!-- Include jQuery and the jQuery.mmenu .js files -->
-        <!--<script type="text/javascript" src="js/zepto.min.js"></script> -->
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery.mmenu.min.all.js"></script>
         <script type="text/javascript" src="js/mobile.js"></script>
 
-        <style type="text/css">
-
-            .mm-menu {
-                background: #220011 !important;
-                color: rgba(255, 255, 255, 0.8) ;
-            }
-            .mm-navbar-top-1 > * {
-                display: inline-block;
-                vertical-align: middle;
-            }
-            .mm-navbar-top-1:before {
-                content: "";
-                display: inline-block;
-                vertical-align: middle;
-                height: 100%;
-                width: 1px;
-            }
-            .mm-navbar-top-1 > * {
-                display: inline-block;
-                vertical-align: middle;
-            }
-            .mm-navbar-top-1 img {
-                border: 1px solid rgba(255, 255, 255, 0.6);
-                border-radius: 60px;
-                width: 60px;
-                height: 60px;
-                padding: 10px;
-                margin: 0 10px;
-            }
-            .mm-navbar-top-1 a {
-                border: 1px solid rgba(255, 255, 255, 0.6);
-                border-radius: 40px;
-                color: rgba(255, 255, 255, 0.6) !important;
-                font-size: 16px !important;
-                line-height: 40px;
-                width: 40px;
-                height: 40px;
-                padding: 0;
-            }
-            .mm-navbar-top-1 a:hover {
-                border-color: #fff;
-                color: #555 !important;
-            }
-            input[type=range]:-webkit-slider-thumb {
-              -webkit-appearance: none;
-              width: 100%; height: 44px;
-              background: #fdfdfd; background: -moz-linear-gradient(top, #fdfdfd 0%, #bebebe 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fdfdfd), color-stop(100%,#bebebe)); background: -webkit-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: -o-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: -ms-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: linear-gradient(to bottom, #fdfdfd 0%,#bebebe 100%);
-              border: 1px solid #bbb;
-              -webkit-border-radius: 22px; -moz-border-radius: 22px; border-radius: 22px;
-            }
-            input[type=button] {
-                font-family: FontAwesome, Arial;
-                background-color:#44c767;
-                -moz-border-radius:28px;
-                -webkit-border-radius:28px;
-                border-radius:28px;
-                border:1px solid #18ab29;
-                display:inline-block;
-                cursor:pointer;
-                color:#ffffff;
-                font-size:17px;
-                padding:8px 17px;
-                text-decoration:none;
-            }
-            input[type=button]:disabled {
-                background-color:#dddddd;
-                border:1px solid #eeeeee;
-            }            
-            .mm-navbar-top-1 p {
-                color: rgba(255, 255, 255, 0.8) !important;
-            }
-        </style>
         
       <!-- Fire the plugin onDocumentReady -->
       <script type="text/javascript">
