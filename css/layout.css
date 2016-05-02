@@ -8,6 +8,11 @@
 }
 #page {
     background: #EEE;
+    height: 100%;
+}
+.content 
+{
+    padding: 40px 0 0 0;
 }
 .header,
 .content,
@@ -34,6 +39,7 @@
 	position: fixed;
 	top: 0;
 	left: 0;
+    z-index:100000;
 }
 .footer.fixed
 {
@@ -1441,6 +1447,7 @@ html, body
 {
 	padding: 0;
 	margin: 0;
+    height: 100%;
 }
 body
 {
