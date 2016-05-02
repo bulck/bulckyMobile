@@ -47,7 +47,7 @@
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-TileImage" content="img/water_drop_144.png">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <link rel="apple-touch-icon" href="img/water_drop_180.png">
         <link rel="apple-touch-icon" sizes="76x76" href="img/water_drop_76.png">
         <link rel="apple-touch-icon" sizes="120x120" href="img/water_drop_120.png">
