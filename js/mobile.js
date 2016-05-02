@@ -234,3 +234,12 @@ function loadTemplateConf (confBaseName) {
     });
 }
 
+function displayBlock (sectionName) {
+    // On cache tous les éléments
+    var divsToHide = document.getElementsByClassName("conf_section");
+    for(var i = 0; i < divsToHide.length; i++){
+        divsToHide[i].style.display = "none";
+    }
+    // On affiche le bon 
+    document.getElementById(sectionName).style.display = "block";
+}

@@ -45,14 +45,16 @@
         
         <link rel="icon" type="image/x-icon" href="img/favicon.ico">
         <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="msapplication-TileImage" content="img/watering-can-144.png">
-        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="img/watering-can-152.png">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/watering-can-144.png">
-        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/watering-can-120.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/watering-can-114.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/watering-can-72.png">
-        <link rel="apple-touch-icon-precomposed" href="img/watering-can-57.png">
-        <link rel="icon" href="img/watering-can-32" sizes="32x32">
+        <meta name="msapplication-TileImage" content="img/water_drop_144.png">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <link rel="apple-touch-icon" href="img/water_drop_180.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="img/water_drop_76.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="img/water_drop_120.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="img/water_drop_152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="img/water_drop_180.png">
+        <link rel="apple-touch-startup-image" href="img/water_drop_320.png">
+        <link rel="icon" href="img/water_drop_32.png" sizes="32x32">
         
         <link type="text/css" href="css/layout.css" rel="stylesheet" />
 
@@ -60,6 +62,7 @@
         <link type="text/css" href="css/jquery.mmenu.all.css" rel="stylesheet" />
         <link type="text/css" href="css/font-awesome.min.css" rel="stylesheet" />
         <link type="text/css" href="css/jquery.mmenu.fullscreen.css" rel="stylesheet" />
+        <link type="text/css" href="css/ios_switch.css" rel="stylesheet" />
 
         <!-- Include jQuery and the jQuery.mmenu .js files -->
         <!--<script type="text/javascript" src="js/zepto.min.js"></script> -->
@@ -67,49 +70,49 @@
         <script type="text/javascript" src="js/jquery.mmenu.min.all.js"></script>
         <script type="text/javascript" src="js/mobile.js"></script>
 
-		<style type="text/css">
+        <style type="text/css">
 
-			.mm-menu {
-				background: #220011 !important;
+            .mm-menu {
+                background: #220011 !important;
                 color: rgba(255, 255, 255, 0.8) ;
-			}
-			.mm-navbar-top-1 > * {
-				display: inline-block;
-				vertical-align: middle;
-			}
-			.mm-navbar-top-1:before {
-				content: "";
-				display: inline-block;
-				vertical-align: middle;
-				height: 100%;
-				width: 1px;
-			}
-			.mm-navbar-top-1 > * {
-				display: inline-block;
-				vertical-align: middle;
-			}
-			.mm-navbar-top-1 img {
-				border: 1px solid rgba(255, 255, 255, 0.6);
-				border-radius: 60px;
-				width: 60px;
-				height: 60px;
-				padding: 10px;
-				margin: 0 10px;
-			}
-			.mm-navbar-top-1 a {
-				border: 1px solid rgba(255, 255, 255, 0.6);
-				border-radius: 40px;
-				color: rgba(255, 255, 255, 0.6) !important;
-				font-size: 16px !important;
-				line-height: 40px;
-				width: 40px;
-				height: 40px;
-				padding: 0;
-			}
-			.mm-navbar-top-1 a:hover {
-				border-color: #fff;
-				color: #555 !important;
-			}
+            }
+            .mm-navbar-top-1 > * {
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .mm-navbar-top-1:before {
+                content: "";
+                display: inline-block;
+                vertical-align: middle;
+                height: 100%;
+                width: 1px;
+            }
+            .mm-navbar-top-1 > * {
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .mm-navbar-top-1 img {
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                border-radius: 60px;
+                width: 60px;
+                height: 60px;
+                padding: 10px;
+                margin: 0 10px;
+            }
+            .mm-navbar-top-1 a {
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                border-radius: 40px;
+                color: rgba(255, 255, 255, 0.6) !important;
+                font-size: 16px !important;
+                line-height: 40px;
+                width: 40px;
+                height: 40px;
+                padding: 0;
+            }
+            .mm-navbar-top-1 a:hover {
+                border-color: #fff;
+                color: #555 !important;
+            }
             input[type=range]:-webkit-slider-thumb {
               -webkit-appearance: none;
               width: 100%; height: 44px;
@@ -134,44 +137,23 @@
             input[type=button]:disabled {
                 background-color:#dddddd;
                 border:1px solid #eeeeee;
-            }			
-			.mm-navbar-top-1 p {
-				color: rgba(255, 255, 255, 0.8) !important;
-			}
-
-		</style>
+            }            
+            .mm-navbar-top-1 p {
+                color: rgba(255, 255, 255, 0.8) !important;
+            }
+        </style>
         
       <!-- Fire the plugin onDocumentReady -->
       <script type="text/javascript">
          $(function( $ ) {
             $("#menu").mmenu({
-                offCanvas: false,
                 extensions: [
                     "border-none",
                     "effect-zoom-menu",
                     "effect-zoom-panels",
                     "pageshadow",
-                    "theme-dark",
-                    "fullscreen"
-                ],
-                navbar 		: {
-                    add:true
-                },
-                navbars		: {
-                    height 	: 1,
-                    position : "top",
-                    content : [ 
-                        '<p id="texte_info" ></p>'
-                    ]
-                }/*,
-                navbars		: {
-                    height 	: 4,
-                    content : [ 
-                        '<a href="#/" class="fa fa-phone" class="temperature_zone" ></a>',
-                        '<img src="img/shortlogo2.png" class="image_header" />',
-                        '<a href="#/" class="fa fa-envelope" class="humidity_zone" ></a>'
-                    ]
-                }*/
+                    "theme-dark"
+                ]
             });
             
             // On charge la conf 
@@ -185,44 +167,37 @@
 
     </head>
     <body>
+		<div id="page">
+			<div class="header" style="position: fixed;">
+				<a href="#menu"></a>
+                <marquee direction="left" id="texte_info" scrollamount="15" onfinish="document.getElementById('texte_info').innerHTML = '';"  ><?php echo ConfigPHP($GLOBALS,"Irrigation",'CONFIG','nom'); ?></marquee>
+				
+			</div>
+			<div class="content">
+                <br /><br />
 
-        <!-- The menu -->
-        <nav id="menu" style="min-height: 100vh;">
-
-            <div id="app">
-                <ul>
-                    <li><label>Configuration</label></li>
-                    <li><a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a></li>
-                    <li><a href="#param_conf" ><i class="fa fa-cogs"></i>Configuration générale</a></li>
-                    <?php
-                        // On affiche le titre pour les zones
-                        foreach ($GLOBALS['IRRIGATION'] as $nom_zone => $zone)
-                        {
-                            ?>
-                                <li><label>Zone <?php echo $nom_zone ;?></label></li>
-                            <?php
-                            
-                            // On affiche un titre pour la cuve
-                            $strname = strtoupper(str_replace(" ", "", $nom_zone));
-                            ?>
-                                <li><a href="#cuve_conf_<?php echo $strname ;?>" class="mm-arrow"><i class="fa fa-database"></i>Cuve</a></li>
-                            <?php  
-                            
-                            // On affiche le titre pour les plateformes
-                            foreach ($zone["plateforme"] as $nom_plateforme => $plateforme)
-                            {
-                                $strname = strtoupper(str_replace(" ", "", $nom_plateforme));
-                                ?>
-                                    <li><a href="#plateforme_conf_<?php echo $strname ;?>" class="mm-arrow">PF <?php echo $nom_plateforme ;?></a></li>
-                                <?php  
-                            }
-                        }
-                    ?>
-                    <li><label>Debug</label></li>
-                    <li><a href="#debug_pilotage" ><i class="fa fa-power-off"></i>Pilotage</a></li>
-                    <li><a href="#sensors" ><i class="fa fa-tachometer"></i>Capteurs</a></li>
-                    <li><a href="#param_debug" ><i class="fa fa-file-code-o"></i>Paramètres avancées</a></li>
-                </ul>
+                <!-- subpanel for conf -->
+                <div id="param_conf" class="conf_section">
+                    <span>Nettoyage gouteurs :</span>
+                    <select id="price-from" onchange="changeVal('PARAM','NETTOYAGE_GOUTEUR',this.value);" style="display:inline" >
+                        <option value="10"   <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR","100") == "10")  {echo "selected";} ?>   >1 cycle sur 10</option>
+                        <option value="100"  <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR","100") == "100") {echo "selected";} ?>  >1 cycle sur 100</option>
+                    </select>
+                    <br />
+                    <span>Nettoyage gouteur actif :</span>
+                    <input id="NETTOYAGE_GOUTEUR_ACTIF" type="checkbox" class="ios8-switch ios8-switch-lg" onclick="changeVal('PARAM','NETTOYAGE_GOUTEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
+                    <label for="NETTOYAGE_GOUTEUR_ACTIF"></label>
+                    <br />
+                    <span>Irrigation activée :</span>
+                    <input id="IRRIGATION_ACTIF" type="checkbox" class="ios8-switch ios8-switch-lg" onclick="changeVal('PARAM','IRRIGATION_ACTIF',this.checked);" <?php if (ParamIni("PARAM","IRRIGATION_ACTIF","true") == "true") {echo "checked" ;}?> />
+                    <label for="IRRIGATION_ACTIF"></label>
+                    <br />
+                    <span>Supresseur activé :</span>
+                    <input id="SURPRESSEUR_ACTIF" type="checkbox" class="ios8-switch ios8-switch-lg" onclick="changeVal('PARAM','SURPRESSEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","SURPRESSEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
+                    <label for="SURPRESSEUR_ACTIF"></label>
+                    <br />
+                    <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
+                </div> 
 
                 <!-- Pour les cuves -->
                 <?php
@@ -244,63 +219,66 @@
                         // 25 mL / min  
 
                         ?>
-                            <div id="cuve_conf_<?php echo $zoneName ;?>" class="Panel">
-                                <ul>
-                                    <!--
-                                    <li>EC : <p style="display:inline">3.15</p></li>
-                                    <li>Température : <p style="display:inline">25°C</p></li>
-                                    <li>Humidité : <p style="display:inline">75%</p></li>
-                                    -->
-                                    <li>
-                                        <a href="#" >Engrais 1 :</a>
-                                        <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
-                                        <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais1,"5");?> ml/min</p> 
-                                        <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
-                                    </li>
-                                    <li>
-                                        <a href="#" >Engrais 2 :</a>
-                                        <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
-                                        <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais2,"5");?> ml/min</p> 
-                                        <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
-                                    </li>
-                                    <li>
-                                        <a href="#" >Engrais 3 :</a>
-                                        <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
-                                        <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais3,"5");?> ml/min</p> 
-                                        <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
-                                    </li>
-                                    <hr />
-                                    <li>
-                                        <a href="#" >Action :</a>
-                                        <input type="button" value="Purge de la cuve" onclick='purgeCuve("<?php echo $ZoneIndex ;?>");' />
-                                        <br />
-                                        <input type="button" value="Injecter 25 mL de l'engrais 1" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
-                                        <br />
-                                        <input type="button" value="Injecter 25 mL de l'engrais 2" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
-                                        <br />
-                                        <input type="button" value="Injecter 25 mL de l'engrais 3" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
-                                    </li>
-                                    <hr />
-                                    <li>
-                                        <span>Engrais 1 Actif : </span>
-                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais1actif,"false") == "true") {echo "checked" ;}?> />
-                                    </li>
-                                    <li>
-                                        <span>Engrais 2 Actif : </span>
-                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais2actif,"false") == "true") {echo "checked" ;}?> />
-                                    </li>
-                                    <li>
-                                        <span>Engrais 3 Actif : </span>
-                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais3actif,"false") == "true") {echo "checked" ;}?> />
-                                    </li>
-                                    <li>
-                                        <span>Remplissage cuve activé :</span>
-                                        <input type="checkbox" class="Toggle" onclick='changeVal("CUVE", "<?php echo $remplissageActif ;?>", this.checked);' <?php if (ParamIni("CUVE",$remplissageActif,"true") == "true") {echo "checked" ;}?> />
-                                     </li>
-                                </ul>
-                                <li>
-                                    <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
-                                </li>
+                            <div id="cuve_conf_<?php echo $zoneName ;?>"  class="conf_section">
+                                <!--
+                                <li>EC : <p style="display:inline">3.15</p></li>
+                                <li>Température : <p style="display:inline">25°C</p></li>
+                                <li>Humidité : <p style="display:inline">75%</p></li>
+                                -->
+                                    <p>Engrais 1 :</p>
+                                    <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
+                                    <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais1,"5");?> ml/min</p> 
+                                    <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
+                                    <p>Engrais 2 :</p>
+                                    <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
+                                    <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais2,"5");?> ml/min</p> 
+                                    <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
+                                    <p>Engrais 3 :</p>
+                                    <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
+                                    <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais3,"5");?> ml/min</p> 
+                                    <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
+                                <hr />
+                                    <p>Action :</p>
+                                    <input type="button" value="Purge de la cuve" onclick='purgeCuve("<?php echo $ZoneIndex ;?>");' />
+                                    <br />
+                                    <input type="button" value="Injecter 25 mL de l'engrais 1" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
+                                    <br />
+                                    <input type="button" value="Injecter 25 mL de l'engrais 2" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
+                                    <br />
+                                    <input type="button" value="Injecter 25 mL de l'engrais 3" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
+                                <hr />
+                                
+                                <table class="center">
+                                    <tr>
+                                        <td>Engrais 1 Actif : </td>
+                                        <td>
+                                            <input id="<?php echo $engrais1actif ;?>" type="checkbox" class="ios8-switch ios8-switch-lg" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais1actif,"false") == "true") {echo "checked" ;}?> />
+                                            <label for="<?php echo $engrais1actif ;?>"></label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Engrais 2 Actif : </td>
+                                        <td>
+                                            <input id="<?php echo $engrais2actif ;?>" type="checkbox" class="ios8-switch ios8-switch-lg" onclick='changeVal("CUVE", "<?php echo $engrais2actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais2actif,"false") == "true") {echo "checked" ;}?> />
+                                            <label for="<?php echo $engrais2actif ;?>"></label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Engrais 3 Actif : </td>
+                                        <td>
+                                            <input id="<?php echo $engrais3actif ;?>" type="checkbox" class="ios8-switch ios8-switch-lg" onclick='changeVal("CUVE", "<?php echo $engrais3actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais3actif,"false") == "true") {echo "checked" ;}?> />
+                                            <label for="<?php echo $engrais3actif ;?>"></label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Remplissage cuve activé :</td>
+                                        <td>
+                                            <input id="<?php echo $remplissageActif ;?>" type="checkbox" class="ios8-switch ios8-switch-lg" onclick='changeVal("CUVE", "<?php echo $remplissageActif ;?>", this.checked);' <?php if (ParamIni("CUVE",$remplissageActif,"true") == "true") {echo "checked" ;}?> />
+                                            <label for="<?php echo $remplissageActif ;?>"></label>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                             </div>
                         <?php
                         $ZoneIndex++;
@@ -320,242 +298,148 @@
                             // On calcul le maximum de l/h max 
                             $lhMax = round($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'] / count($plateforme["ligne"]) , 1);
                             ?>
-                                <div id="plateforme_conf_<?php echo $pfName ;?>" class="Panel">
-                                    <ul>
-                                        <?php
-                                            foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
-                                            {
-                                                $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
-                                                
-                                                // On intitilialise les valeurs si elles n'existent pas
-                                                $matin = $pfName . "_" . $ligneName . "_MATIN";
-                                                $amidi = $pfName . "_" . $ligneName . "_APRESMIDI";
-                                                $soir = $pfName . "_" . $ligneName . "_SOIR";
-                                                $active = $pfName . "_" . $ligneName . "_ACTIVE";
-                                                
-                                                ?>
-                                                <li>
-                                                    <a href="#" >Ligne <?php echo $ligneName ;?> (l/h/membrane) :</a>
-                                                    <table >
-                                                        <tr>
-                                                            <td>Matin :</td>
-                                                            <td><input type="button" value="&#xf146;"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/m", 100);' /></td>
-                                                            <td><p id="<?php echo "LIGNE_" . $matin ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$matin,"1.5") ;?> l/h/m</p></td>
-                                                            <td><input type="button" value="&#xf0fe;"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Après Midi :</td>
-                                                            <td><input type="button" value="&#xf146;"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/m", 100);' /></td>
-                                                            <td><p id="<?php echo "LIGNE_" . $amidi ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$amidi,"1.5");?> l/h/m</p></td>
-                                                            <td><input type="button" value="&#xf0fe;" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Soir :</td>
-                                                            <td><input type="button" value="&#xf146;"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/m", 100);' /></td>
-                                                            <td><p id="<?php echo "LIGNE_" . $soir ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$soir,"1.5");?> l/h/m</p></td>
-                                                            <td><input type="button" value="&#xf0fe;" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
-                                                        </tr>
-                                                    </table>
-                                                </li>
-                                                <?php
-                                            }
+                                <div id="plateforme_conf_<?php echo $pfName ;?>" class="conf_section">
+                                    <?php
+                                        foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
+                                        {
+                                            $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
+                                            
+                                            // On intitilialise les valeurs si elles n'existent pas
+                                            $matin = $pfName . "_" . $ligneName . "_MATIN";
+                                            $amidi = $pfName . "_" . $ligneName . "_APRESMIDI";
+                                            $soir = $pfName . "_" . $ligneName . "_SOIR";
+                                            $active = $pfName . "_" . $ligneName . "_ACTIVE";
+                                            
                                             ?>
-                                            <hr />
+                                                <a href="#" >Ligne <?php echo $ligneName ;?> (l/h/membrane) :</a>
+                                                <table class="center" >
+                                                    <tr>
+                                                        <td>Matin :</td>
+                                                        <td><input type="button" value="&#xf146;"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                        <td><p id="<?php echo "LIGNE_" . $matin ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$matin,"1.5") ;?> l/h/m</p></td>
+                                                        <td><input type="button" value="&#xf0fe;"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Après Midi :</td>
+                                                        <td><input type="button" value="&#xf146;"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                        <td><p id="<?php echo "LIGNE_" . $amidi ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$amidi,"1.5");?> l/h/m</p></td>
+                                                        <td><input type="button" value="&#xf0fe;" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Soir :</td>
+                                                        <td><input type="button" value="&#xf146;"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                        <td><p id="<?php echo "LIGNE_" . $soir ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$soir,"1.5");?> l/h/m</p></td>
+                                                        <td><input type="button" value="&#xf0fe;" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                    </tr>
+                                                </table>
                                             <?php
-                                            foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
-                                            {
-                                                $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
-                                                $active = $pfName . "_" . $ligneName . "_ACTIVE";
-                                                ?>
-                                                <li>
-                                                    <span>Activation ligne <?php echo $ligneName ;?> : </span>
-                                                    <input type="checkbox" class="Toggle" onclick='changeVal("LIGNE", "<?php echo $active ;?>", this.checked);' <?php if (ParamIni("LIGNE",$active,"true") == "true") {echo "checked" ;}?> />
-                                                </li> 
-                                                <?php
-                                            }
-											?>
-											<li>
-												<span>Temps cycle :</span>
-												<select id="temps_cycle_<?php echo $pfName ;?>" onchange="changeVal('LIGNE','<?php echo $pfName ;?>_TEMPS_CYCLE',this.value);" style="display:inline" >
-													<option value="240"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "240") {echo "selected";} ?> >2 minutes</option>
-													<option value="300"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "300") {echo "selected";} ?> >5 minutes</option>
-													<option value="600"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "600") {echo "selected";} ?> >10 minutes</option>
-												</select>
-											</li>
-											<li>
-												<a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
-											</li>
-                                            <hr />
-                                            <li>
-                                                <span>Temps de test :</span>
-                                                <select id="temps_test_cyle" style="display:inline" >
-                                                    <option value="30" >30 secondes</option>
-                                                    <option value="60" selected>1 minute</option>
-                                                    <option value="120" >2 minutes</option>
-                                                    <option value="600" >10 minutes</option>
-                                                    <option value="86400" >1 journée</option>
-                                                </select>
-                                            </li>
-											<?php
-                                            foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
-                                            {
-                                                $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
-                                                ?>
-                                                <li>
-                                                    <span>Ligne <?php echo $ligneName ;?> (Pompe + EV) :</span>
-                                                    <input type="button" value="&#xf144;" onclick='setPlug(document.getElementById("temps_test_cyle").value,"on", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
-													<input style="float: right;" type="button" value="&#xf28d;" onclick='setPlug(document.getElementById("temps_test_cyle").value,"off", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' />
-                                                    <br />
-                                                </li>
-                                                <?php
-                                            }
+                                        }
                                         ?>
-                                    </ul>
+                                        <hr />
+                                        <?php
+                                        foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
+                                        {
+                                            $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
+                                            $active = $pfName . "_" . $ligneName . "_ACTIVE";
+                                            ?>
+                                                <span>Activation ligne <?php echo $ligneName ;?> : </span>
+                                                <input id="<?php echo $active ;?>" type="checkbox" class="ios8-switch ios8-switch-lg" onclick='changeVal("LIGNE", "<?php echo $active ;?>", this.checked);' <?php if (ParamIni("LIGNE",$active,"true") == "true") {echo "checked" ;}?> />
+                                                <label for="<?php echo $active ;?>"></label>
+                                                <br />
+                                            <?php
+                                        }
+                                        ?>
+                                            <span>Temps cycle :</span>
+                                            <select id="temps_cycle_<?php echo $pfName ;?>" onchange="changeVal('LIGNE','<?php echo $pfName ;?>_TEMPS_CYCLE',this.value);" style="display:inline" >
+                                                <option value="240"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "240") {echo "selected";} ?> >2 minutes</option>
+                                                <option value="300"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "300") {echo "selected";} ?> >5 minutes</option>
+                                                <option value="600"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "600") {echo "selected";} ?> >10 minutes</option>
+                                            </select>
+                                            <br />
+                                            <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
+                                        <hr />
+                                            <span>Temps de test :</span>
+                                            <select id="temps_test_cyle" style="display:inline" >
+                                                <option value="30" >30 secondes</option>
+                                                <option value="60" selected>1 minute</option>
+                                                <option value="120" >2 minutes</option>
+                                                <option value="600" >10 minutes</option>
+                                                <option value="86400" >1 journée</option>
+                                            </select>
+                                            <table class="center" >
+                                        <?php
+                                        foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
+                                        {
+                                            $ligneName = strtoupper(str_replace(" ", "", $nom_ligne));
+                                            ?>
+                                                <tr>
+                                                    <td>Ligne <?php echo $ligneName ;?> (Pompe + EV) :</td>
+                                                    <td><input type="button" value="&#xf144;" onclick='setPlug(document.getElementById("temps_test_cyle").value,"on", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' /></td>
+                                                    <td><input type="button" value="&#xf28d;" onclick='setPlug(document.getElementById("temps_test_cyle").value,"off", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' /></td>
+                                                <br />
+                                            <?php
+                                        }
+                                        ?>
+                                        </table>
                                 </div>
                             <?php
                         }
                     }
                 ?>
 
-                <!-- subpanel for conf -->
-                <div id="param_conf" class="Panel">
-                    <ul>
-                        <li>
-                            <span>Nettoyage gouteurs :</span>
-                            <select id="price-from" onchange="changeVal('PARAM','NETTOYAGE_GOUTEUR',this.value);" style="display:inline" >
-                                <option value="10"   <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR","100") == "10")  {echo "selected";} ?>   >1 cycle sur 10</option>
-                                <option value="100"  <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR","100") == "100") {echo "selected";} ?>  >1 cycle sur 100</option>
-                            </select>
-                        </li>
-                        <li>
-                            <span>Nettoyage gouteur actif :</span>
-                            <input type="checkbox" class="Toggle" onclick="changeVal('PARAM','NETTOYAGE_GOUTEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
-                        </li>
-                        <li>
-                            <span>Irrigation activée :</span>
-                            <input type="checkbox" class="Toggle" onclick="changeVal('PARAM','IRRIGATION_ACTIF',this.checked);" <?php if (ParamIni("PARAM","IRRIGATION_ACTIF","true") == "true") {echo "checked" ;}?> />
-                        </li>
-                        <li>
-                            <span>Supresseur activé :</span>
-                            <input type="checkbox" class="Toggle" onclick="changeVal('PARAM','SURPRESSEUR_ACTIF',this.checked);" <?php if (ParamIni("PARAM","SURPRESSEUR_ACTIF","true") == "true") {echo "checked" ;}?> />
-                        </li>
-                        <li>
-                            <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
-                        </li>
-                    </ul>
-                </div> 
-
-                <!-- subpanel for debug -->
-                <div id="param_debug" class="Panel">
-                    <ul>
-                        <li>
-                            <span>Verbose Server :</span>
-                            <select id="verbose_server" onchange="changeVal('PARAM','VERBOSE_SERVER',this.value);" style="display:inline" >
-                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "debug") {echo "selected";} ?>   >debug</option>
-                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "info") {echo "selected";} ?>    >info</option>
-                                <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "warning") {echo "selected";} ?> >warning</option>
-                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "error") {echo "selected";} ?>   >error</option>
-                            </select>
-                        </li>
-                        <li>
-                            <span>Verbose Sensor :</span>
-                        <select id="verbose_acqsensor" onchange="changeVal('PARAM','VERBOSE_ACQSENSOR',this.value);" style="display:inline" >
-                            <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "debug")   {echo "selected";} ?>   >debug</option>
-                            <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "info")    {echo "selected";} ?>    >info</option>
-                            <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "warning") {echo "selected";} ?> >warning</option>
-                            <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "error")   {echo "selected";} ?>   >error</option>
-                        </select>
-                        </li>
-                        <li>
-                            <span>Verbose Plug :</span>
-                            <select id="verbose_plug" onchange="changeVal('PARAM','VERBOSE_PLUG',this.value);" style="display:inline" >
-                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "debug") {echo "selected";} ?>   >debug</option>
-                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "info") {echo "selected";} ?>    >info</option>
-                                <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "warning") {echo "selected";} ?> >warning</option>
-                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "error") {echo "selected";} ?>   >error</option>
-                            </select>
-                        </li>
-                        <li>
-                            <span>Verbose SLF :</span>
-                            <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_SLF',this.value);" style="display:inline" >
-                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "debug")   {echo "selected";} ?>   >debug</option>
-                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "info")    {echo "selected";} ?>    >info</option>
-                                <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "warning") {echo "selected";} ?> >warning</option>
-                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "error")   {echo "selected";} ?>   >error</option>
-                            </select>
-                        </li>
-                        <li>
-                            <span>Verbose Histo :</span>
-                            <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_HISTO',this.value);" style="display:inline" >
-                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_HISTO","info") == "debug")  {echo "selected";} ?>  >debug</option>
-                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_HISTO","info") == "info")   {echo "selected";} ?>  >info</option>
-                                <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_HISTO","info") == "warning") {echo "selected";} ?> >warning</option>
-                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_HISTO","info") == "error")  {echo "selected";} ?>  >error</option>
-                            </select>
-                        </li>
-                        <li>
-                            <span>Verbose Mail :</span>
-                            <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_MAIL',this.value);" style="display:inline" >
-                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_MAIL","info") == "debug")   {echo "selected";} ?> >debug</option>
-                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_MAIL","info") == "info")    {echo "selected";} ?> >info</option>
-                                <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_MAIL","info") == "warning") {echo "selected";} ?> >warning</option>
-                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_MAIL","info") == "error")   {echo "selected";} ?> >error</option>
-                            </select>
-                        </li>
-                        <li>
-                            <span>Verbose Supervision :</span>
-                            <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_SUPERVISION',this.value);" style="display:inline" >
-                                <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SUPERVISION","info") == "debug")   {echo "selected";} ?> >debug</option>
-                                <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SUPERVISION","info") == "info")    {echo "selected";} ?> >info</option>
-                                <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SUPERVISION","info") == "warning") {echo "selected";} ?> >warning</option>
-                                <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_SUPERVISION","info") == "error")   {echo "selected";} ?> >error</option>
-                            </select>
-                        </li>
-                        <li><a href="#conf_mail" ><i class="fa fa-envelope-o"></i>Mail</a></li>
-                        <li><a href="#conf_action" ><i class="fa fa-terminal"></i>Action</a></li>
-                        <li>
-                            <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
-                        </li>
-                    </ul>
-                </div>
-                
                 <!-- Pilotage prise -->
-                <div id="debug_pilotage" class="Panel">
-                    <ul>
-                        <li>
-                            <span>Temps de test :</span>
-                            <select id="temps_test_cyle_plug" style="display:inline" >
-                                <option value="30" >30 secondes</option>
-                                <option value="60" selected>1 minute</option>
-                                <option value="120" >2 minutes</option>
-                                <option value="600" >10 minutes</option>
-                                <option value="86400" >1 journée</option>
-                            </select>
-                        </li>
+                <div id="debug_pilotage"  class="conf_section">
+                    <table class="center">
+                        <tr>
+                            <td>Temps de test :</td>
+                            <td colspan="2">
+                                <select id="temps_test_cyle_plug" style="display:inline" >
+                                    <option value="30" >30 secondes</option>
+                                    <option value="60" selected>1 minute</option>
+                                    <option value="120" >2 minutes</option>
+                                    <option value="600" >10 minutes</option>
+                                    <option value="86400" >1 journée</option>
+                                </select>
+                            </td>
+                        </tr>
                         <?php 
-                            for ($i = 1; $i <= 25; $i++) {
-                        ?>
-                            <li>
-                                <span>Sortie <?php echo $i ;?> :</span>
-                                <input 						 type="button" value="&#xf144;"  onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"on", <?php echo $i ;?>,0);' />
-                                <input style="float: right;" type="button" value="&#xf28d;" onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"off", <?php echo $i ;?>,0);' />
-                                <br />
-                            </li>
-                        <?php 
+                            
+                            foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
+                                
+                                // On ajoute les prises engrais, purge , remplissage
+                                foreach ($zone["prise"] as $prise_nom => $numero) {
+                                    $outPrise[$numero] = $prise_nom;
+                                }
+                                foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
+                                    // Pompe 
+                                    foreach ($plateforme["prise"] as $prise_nom => $numero) {
+                                        $outPrise[$numero] = "PF " . $plateforme_nom . " " . $prise_nom;
+                                    }
+                                    foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
+                                        $outPrise[$ligne["prise"]] = " EV Ligne " . $ligne_numero;
+                                    }
+                                }
+                            }
+                            ksort($outPrise);
+                            foreach ($outPrise as $numero => $nom) {
+                                ?>
+                                <tr>
+                                    <td>Sortie <?php echo $numero . " " . $nom ;?> :</td>
+                                    <td><input                          type="button" value="&#xf144;"  onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"on", <?php echo $numero ;?>,0);' /></td>
+                                    <td><input style="float: right;" type="button" value="&#xf28d;" onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"off", <?php echo $numero ;?>,0);' /></td>
+                                <tr>
+                                <?php 
                             }
                         ?>
-                    </ul>
+                    </table>
                 </div>
 
                 <!-- Valeur des capteurs -->
-                <div id="sensors" class="Panel">
-                    <ul>
-                        <li>
-                            <input id="btn_reload_sensor" type="button" value="&#xf0e2;" onclick='readSensors(0);' />
+                <div id="sensors"  class="conf_section"  style="display:block;">
+                            <input style="float: left;" id="btn_reload_sensor" type="button" value="&#xf0e2;" onclick='readSensors(0);' />
                             <input style="float: right;" id="btn_reload_periodic_sensor" type="button" value="&#xf021;" onclick='readSensors(30);' />
-                        </li>
-                        <li>
-                            <table >
+                            <br />
+                            <table class="center">
                                 <tr>
                                     <th>Numéro</th><th>Nom</th><th>Valeur</th>
                                 </tr>
@@ -596,78 +480,195 @@
                                 }
                             }
                         ?>
-                            </table>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Configuration des mails -->
-                <div id="conf_mail" class="Panel">
-                    <ul>
-                        <li>
-                            <span>Nom d'utilisateur :</span>
-                            <input type="text" id="conf_mail_username" >
-                            <input type="button" value="Sauvegarder utilisateur" onclick="changeVal('PARAM','MAIL_USERNAME',document.getElementById('conf_mail_username').value);" />
-                        </li>
-                        <li>
-                            <span>Mot de passe :</span>
-                            <input type="password" id="conf_mail_password" ><br />
-                            <input type="button" value="Sauvegarder MDP" onclick="changeVal('PARAM','MAIL_PASSWORD',document.getElementById('conf_mail_password').value);" />
-                        </li>
-                        <li>
-                            <span>Server SMTP :</span>
-                            <select id="conf_mail_Port" onchange="changeVal('PARAM','MAIL_SMTP',this.value);" style="display:inline" >
-                                <option value="smtp.gmail.com"              <?php if (ParamIni("PARAM","MAIL_SMTP","smtp.gmail.com") == "smtp.gmail.com")             {echo "selected";} ?>  >smtp.gmail.com</option>
-                                <option value="mail.greenbox-botanic.com"   <?php if (ParamIni("PARAM","MAIL_SMTP","smtp.gmail.com") == "mail.greenbox-botanic.com")  {echo "selected";} ?>  >mail.greenbox-botanic.com</option>
-                            </select>
-                        </li>
-                        <li>
-                            <span>Port :</span>
-                            <select id="conf_mail_Port" onchange="changeVal('PARAM','MAIL_PORT',this.value);" style="display:inline" >
-                                <option value="587"   <?php if (ParamIni("PARAM","MAIL_PORT","35") == "587") {echo "selected";} ?>  >587</option>
-                                <option value="26"    <?php if (ParamIni("PARAM","MAIL_PORT","35") == "26")  {echo "selected";} ?>  >26</option>
-                            </select>
-                        </li>
-                        <li>
-                            <span>SSL :</span>
-                            <select id="conf_mail_SSL" onchange="changeVal('PARAM','MAIL_SSL',this.value);" style="display:inline" >
-                                <option value="true"   <?php if (ParamIni("PARAM","MAIL_SSL","false") == "true") {echo "selected";} ?>   >Oui</option>
-                                <option value="false"  <?php if (ParamIni("PARAM","MAIL_SSL","false") == "flase") {echo "selected";} ?>  >Non</option>
-                            </select>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Action de configuration -->
-                <div id="conf_action" class="Panel">
-                    <ul>
-                        <li>
-                            <input type="button" value="Mise à jour Bulckyface" onclick="rpi_update('bulckyface');" />
-                        </li>
-                        <li>
-                            <input type="button" value="Mise à jour Bulckypi" onclick="rpi_update('bulckypi');" />
-                        </li>
-                        <li>
-                            <span>Appliquer une conf template :</span>
-                            <select id="conf_template" style="display:inline" >
-                                <?php
-                                    // Liste des configs
-                                    $configDispos = glob('default_cnf/*.{php}', GLOB_BRACE);
-                                    foreach ($configDispos as $configDispo)
-                                    {
-                                        ?>
-                                            <option value="<?php echo basename($configDispo) ;?>"  ><?php echo basename($configDispo) ;?></option>
-                                        <?php
-                                    }
-                                ?>
-                            </select>
-                            <input type="button" value="Appliquer" onclick='loadTemplateConf(document.getElementById("conf_template").value);' />
-                            <br />
-                        </li>
-                    </ul>
+                        </table>
                 </div>
                 
+                <!-- subpanel for verbose -->
+                <div id="param_verbose"  class="conf_section">
+                    <table class="center"> 
+                        <tr>
+                            <td>Verbose Server :</td>
+                            <td>
+                                <select id="verbose_server" onchange="changeVal('PARAM','VERBOSE_SERVER',this.value);" style="display:inline" >
+                                    <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "debug") {echo "selected";} ?>   >debug</option>
+                                    <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "info") {echo "selected";} ?>    >info</option>
+                                    <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "warning") {echo "selected";} ?> >warning</option>
+                                    <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_SERVER","info") == "error") {echo "selected";} ?>   >error</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Verbose Sensor :</td>
+                            <td>
+                                <select id="verbose_acqsensor" onchange="changeVal('PARAM','VERBOSE_ACQSENSOR',this.value);" style="display:inline" >
+                                    <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "debug")   {echo "selected";} ?>   >debug</option>
+                                    <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "info")    {echo "selected";} ?>    >info</option>
+                                    <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "warning") {echo "selected";} ?> >warning</option>
+                                    <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_ACQSENSOR","info") == "error")   {echo "selected";} ?>   >error</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Verbose Plug :</td>
+                            <td>
+                                <select id="verbose_plug" onchange="changeVal('PARAM','VERBOSE_PLUG',this.value);" style="display:inline" >
+                                    <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "debug") {echo "selected";} ?>   >debug</option>
+                                    <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "info") {echo "selected";} ?>    >info</option>
+                                    <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "warning") {echo "selected";} ?> >warning</option>
+                                    <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_PLUG","info") == "error") {echo "selected";} ?>   >error</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Verbose SLF :</td>
+                            <td>
+                                <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_SLF',this.value);" style="display:inline" >
+                                    <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "debug")   {echo "selected";} ?>   >debug</option>
+                                    <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "info")    {echo "selected";} ?>    >info</option>
+                                    <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "warning") {echo "selected";} ?> >warning</option>
+                                    <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_SLF","debug") == "error")   {echo "selected";} ?>   >error</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Verbose Histo :</td>
+                            <td>
+                                <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_HISTO',this.value);" style="display:inline" >
+                                    <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_HISTO","info") == "debug")  {echo "selected";} ?>  >debug</option>
+                                    <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_HISTO","info") == "info")   {echo "selected";} ?>  >info</option>
+                                    <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_HISTO","info") == "warning") {echo "selected";} ?> >warning</option>
+                                    <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_HISTO","info") == "error")  {echo "selected";} ?>  >error</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Verbose Mail :</td>
+                            <td>
+                                <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_MAIL',this.value);" style="display:inline" >
+                                    <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_MAIL","info") == "debug")   {echo "selected";} ?> >debug</option>
+                                    <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_MAIL","info") == "info")    {echo "selected";} ?> >info</option>
+                                    <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_MAIL","info") == "warning") {echo "selected";} ?> >warning</option>
+                                    <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_MAIL","info") == "error")   {echo "selected";} ?> >error</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Verbose Supervision :</td>
+                            <td>
+                                <select id="verbose_SLF" onchange="changeVal('PARAM','VERBOSE_SUPERVISION',this.value);" style="display:inline" >
+                                    <option value="debug"   <?php if (ParamIni("PARAM","VERBOSE_SUPERVISION","info") == "debug")   {echo "selected";} ?> >debug</option>
+                                    <option value="info"    <?php if (ParamIni("PARAM","VERBOSE_SUPERVISION","info") == "info")    {echo "selected";} ?> >info</option>
+                                    <option value="warning" <?php if (ParamIni("PARAM","VERBOSE_SUPERVISION","info") == "warning") {echo "selected";} ?> >warning</option>
+                                    <option value="error"   <?php if (ParamIni("PARAM","VERBOSE_SUPERVISION","info") == "error")   {echo "selected";} ?> >error</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                    
+                <!-- Action de configuration -->
+                <div id="conf_action" class="conf_section">
+                    <input type="button" value="Mise à jour Bulckyface" onclick="rpi_update('bulckyface');" />
 
+                    <input type="button" value="Mise à jour Bulckypi" onclick="rpi_update('bulckypi');" />
+
+                    <p>Appliquer une conf template :</p>
+                    <select id="conf_template" style="display:inline" >
+                        <?php
+                            // Liste des configs
+                            $configDispos = glob('default_cnf/*.{php}', GLOB_BRACE);
+                            foreach ($configDispos as $configDispo)
+                            {
+                                ?>
+                                    <option value="<?php echo basename($configDispo) ;?>"  ><?php echo basename($configDispo) ;?></option>
+                                <?php
+                            }
+                        ?>
+                    </select>
+                    <input type="button" value="Appliquer" onclick='loadTemplateConf(document.getElementById("conf_template").value);' />
+                </div>
+                
+                <!-- Configuration des mails -->
+                <div id="conf_mail" class="conf_section">
+                    <br />
+                    <span>Nom d'utilisateur :</span>
+                    <input type="text" id="conf_mail_username" >
+                    <input type="button" value="Sauvegarder utilisateur" onclick="changeVal('PARAM','MAIL_USERNAME',document.getElementById('conf_mail_username').value);" />
+                    <br />
+                    <span>Mot de passe :</span>
+                    <input type="password" id="conf_mail_password" ><br />
+                    <input type="button" value="Sauvegarder MDP" onclick="changeVal('PARAM','MAIL_PASSWORD',document.getElementById('conf_mail_password').value);" />
+                    <br />
+                    <span>Server SMTP :</span>
+                    <select id="conf_mail_Port" onchange="changeVal('PARAM','MAIL_SMTP',this.value);" style="display:inline" >
+                        <option value="smtp.gmail.com"              <?php if (ParamIni("PARAM","MAIL_SMTP","smtp.gmail.com") == "smtp.gmail.com")             {echo "selected";} ?>  >smtp.gmail.com</option>
+                        <option value="mail.greenbox-botanic.com"   <?php if (ParamIni("PARAM","MAIL_SMTP","smtp.gmail.com") == "mail.greenbox-botanic.com")  {echo "selected";} ?>  >mail.greenbox-botanic.com</option>
+                    </select>
+                    <br />
+                    <span>Port :</span>
+                    <select id="conf_mail_Port" onchange="changeVal('PARAM','MAIL_PORT',this.value);" style="display:inline" >
+                        <option value="587"   <?php if (ParamIni("PARAM","MAIL_PORT","35") == "587") {echo "selected";} ?>  >587</option>
+                        <option value="26"    <?php if (ParamIni("PARAM","MAIL_PORT","35") == "26")  {echo "selected";} ?>  >26</option>
+                    </select>
+                    <br />
+                    <span>SSL :</span>
+                    <select id="conf_mail_SSL" onchange="changeVal('PARAM','MAIL_SSL',this.value);" style="display:inline" >
+                        <option value="true"   <?php if (ParamIni("PARAM","MAIL_SSL","false") == "true") {echo "selected";} ?>   >Oui</option>
+                        <option value="false"  <?php if (ParamIni("PARAM","MAIL_SSL","false") == "flase") {echo "selected";} ?>  >Non</option>
+                    </select>
+                </div>
+                
+			</div>
+		</div>
+        
+        <!-- The menu -->
+        <nav id="menu">
+
+            <div id="app">
+                <ul>
+                    <li><label>Configuration</label></li>
+                    <li><a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a></li>
+                    <li><a href="#" onclick='displayBlock("param_conf");' ><i class="fa fa-cogs"></i>Configuration générale</a></li>
+                    <?php
+                        // On affiche le titre pour les zones
+                        foreach ($GLOBALS['IRRIGATION'] as $nom_zone => $zone)
+                        {
+                            ?>
+                                <li><label>Zone <?php echo $nom_zone ;?></label></li>
+                            <?php
+                            
+                            // On affiche un titre pour la cuve
+                            $strname = strtoupper(str_replace(" ", "", $nom_zone));
+                            ?>
+                                <li><a href="#" onclick='displayBlock("cuve_conf_<?php echo $strname ;?>");' class="mm-arrow"><i class="fa fa-database"></i>Cuve</a></li>
+                            <?php  
+                            
+                            // On affiche le titre pour les plateformes
+                            foreach ($zone["plateforme"] as $nom_plateforme => $plateforme)
+                            {
+                                $strname = strtoupper(str_replace(" ", "", $nom_plateforme));
+                                ?>
+                                    <li><a href="#" onclick='displayBlock("plateforme_conf_<?php echo $strname ;?>");' class="mm-arrow">PF <?php echo $nom_plateforme ;?></a></li>
+                                <?php  
+                            }
+                        }
+                    ?>
+                    <li><label>Debug</label></li>
+                    <li><a href="#" onclick='displayBlock("debug_pilotage");' ><i class="fa fa-power-off"></i>Pilotage</a></li>
+                    <li><a href="#" onclick='displayBlock("sensors");' ><i class="fa fa-tachometer"></i>Capteurs</a></li>
+                    <li><a href="#param_debug" ><i class="fa fa-file-code-o"></i>Paramètres avancées</a></li>
+                </ul>
+
+                <!-- subpanel for debug -->
+                <div id="param_debug"  class="Panel">
+                    <a href="#" onclick='displayBlock("param_verbose");'  ><i class="fa fa-envelope-o"></i>Verbose</a>
+                    <br />
+                    <a href="#" onclick='displayBlock("conf_mail");'  ><i class="fa fa-envelope-o"></i>Mail</a>
+                    <br />
+                    <a href="#" onclick='displayBlock("conf_action");' ><i class="fa fa-terminal"></i>Action</a>
+                    <br />
+                    <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
+                </div>
 
             </div>
         </nav>

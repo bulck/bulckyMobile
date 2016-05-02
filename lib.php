@@ -290,7 +290,7 @@ function generateConf ($path, $pathTmp, $userVar) {
             }
             foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
                 if ($ligne["prise"] > $prisemax) {
-                    $prisemax = $numero;
+                    $prisemax = $ligne["prise"];
                 }
             }
         }
