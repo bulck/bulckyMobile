@@ -88,6 +88,9 @@
             // On vient lire la valeur des capteurs 
             readSensors(0);
             
+            // On vient lire l'état des prises
+            
+            
          });
         </script>
 
@@ -133,12 +136,10 @@
                 <div id="param_conf" class="conf_section">
                     <table class="center" >
                         <tr>
-                            <td>Nettoyage gouteurs :</td>
+                            <td>Irrigation activée :</td>
                             <td>
-                                <select id="price-from" onchange="changeVal('PARAM','NETTOYAGE_GOUTEUR',this.value);" style="display:inline" >
-                                    <option value="10"   <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR","100") == "10")  {echo "selected";} ?>   >1 cycle sur 10</option>
-                                    <option value="100"  <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR","100") == "100") {echo "selected";} ?>  >1 cycle sur 100</option>
-                                </select>
+                                <input id="IRRIGATION_ACTIF" type="checkbox" class="ios8-switch ios8-switch-lg" onclick="changeVal('PARAM','IRRIGATION_ACTIF',this.checked);" <?php if (ParamIni("PARAM","IRRIGATION_ACTIF","true") == "true") {echo "checked" ;}?> />
+                                <label for="IRRIGATION_ACTIF"></label>
                             </td>
                         </tr>
                         <tr>
@@ -149,10 +150,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Irrigation activée :</td>
+                            <td>Nettoyage gouteurs :</td>
                             <td>
-                                <input id="IRRIGATION_ACTIF" type="checkbox" class="ios8-switch ios8-switch-lg" onclick="changeVal('PARAM','IRRIGATION_ACTIF',this.checked);" <?php if (ParamIni("PARAM","IRRIGATION_ACTIF","true") == "true") {echo "checked" ;}?> />
-                                <label for="IRRIGATION_ACTIF"></label>
+                                <select id="price-from" onchange="changeVal('PARAM','NETTOYAGE_GOUTEUR',this.value);" style="display:inline" >
+                                    <option value="10"   <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR","100") == "10")  {echo "selected";} ?>   >1 cycle sur 10</option>
+                                    <option value="100"  <?php if (ParamIni("PARAM","NETTOYAGE_GOUTEUR","100") == "100") {echo "selected";} ?>  >1 cycle sur 100</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -366,6 +369,8 @@
 
                 <!-- Pilotage prise -->
                 <div id="debug_pilotage"  class="conf_section">
+                    <input style="float: left;" id="btn_reload_plug" type="button" value="&#xf0e2;" onclick='readPlugs(0);' />
+                    <input style="float: right;" id="btn_reload_periodic_plug" type="button" value="&#xf021;" onclick='readPlugs(30);' />
                     <table class="center">
                         <tr>
                             <td>Temps de test :</td>
@@ -403,7 +408,7 @@
                             foreach ($outPrise as $numero => $nom) {
                                 ?>
                                 <tr>
-                                    <td>Sortie <?php echo $numero . " " . $nom ;?> :</td>
+                                    <td><i id="plug_<?php echo $numero ;?>" class="fa"></i><?php echo $numero . " : " . $nom ;?> :</td>
                                     <td><input                          type="button" value="&#xf144;"  onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"on", <?php echo $numero ;?>,0);' /></td>
                                     <td><input style="float: right;" type="button" value="&#xf28d;" onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"off", <?php echo $numero ;?>,0);' /></td>
                                 <tr>
@@ -415,51 +420,51 @@
 
                 <!-- Valeur des capteurs -->
                 <div id="sensors"  class="conf_section" >
-                            <input style="float: left;" id="btn_reload_sensor" type="button" value="&#xf0e2;" onclick='readSensors(0);' />
-                            <input style="float: right;" id="btn_reload_periodic_sensor" type="button" value="&#xf021;" onclick='readSensors(30);' />
-                            <br />
-                            <table class="center">
+                    <input style="float: left;" id="btn_reload_sensor" type="button" value="&#xf0e2;" onclick='readSensors(0);' />
+                    <input style="float: right;" id="btn_reload_periodic_sensor" type="button" value="&#xf021;" onclick='readSensors(30);' />
+                    <br />
+                    <table class="center">
+                        <tr>
+                            <th>Numéro</th><th>Nom</th><th>Valeur</th>
+                        </tr>
+
+                    <?php 
+                        foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
+                            foreach ($zone["capteur"] as $capteur_nom => $capteur) {
+
+                            ?>
                                 <tr>
-                                    <th>Numéro</th><th>Nom</th><th>Valeur</th>
+                                    <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
                                 </tr>
+                            <?php
+                            }
 
-                        <?php 
-                            foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
-                                foreach ($zone["capteur"] as $capteur_nom => $capteur) {
+                            foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
 
-                                ?>
-                                    <tr>
-                                        <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
-                                    </tr>
-                                <?php
+                                foreach ($plateforme["capteur"] as $capteur_nom => $capteur) {
+                                    ?>
+                                        <tr>
+                                            <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
+                                        </tr>
+                                    <?php
                                 }
 
-                                foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
-
-                                    foreach ($plateforme["capteur"] as $capteur_nom => $capteur) {
-                                        ?>
-                                            <tr>
-                                                <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
-                                            </tr>
-                                        <?php
-                                    }
-
+                                
+                                foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
                                     
-                                    foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
-                                        
-                                        // On ajoute un détecteur de pression par ligne
-                                        foreach ($ligne["capteur"] as $capteur_nom => $capteur) {
-                                        ?>
-                                            <tr>
-                                                <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom . " ligne " . $ligne_numero ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
-                                            </tr>
-                                        <?php
-                                        }
+                                    // On ajoute un détecteur de pression par ligne
+                                    foreach ($ligne["capteur"] as $capteur_nom => $capteur) {
+                                    ?>
+                                        <tr>
+                                            <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom . " ligne " . $ligne_numero ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
+                                        </tr>
+                                    <?php
                                     }
                                 }
                             }
-                        ?>
-                        </table>
+                        }
+                    ?>
+                    </table>
                 </div>
                 
                 <div id="display_graph"  class="conf_section">

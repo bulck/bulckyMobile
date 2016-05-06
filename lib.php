@@ -1111,7 +1111,64 @@ if(!isset($function) || empty($function)) {
             }
             echo json_encode($return_array);
             break;
-            
+
+        case 'GET_PLUGS' :
+        
+            $return_array = array();
+            switch(php_uname('s')) {
+                case 'Windows NT':
+                    $commandLine = 'tclsh "D:/Perso/06_bulckyCore/bulckyPi/get.tcl" serverPlugUpdate localhost ';
+                    break;
+                default : 
+                    $commandLine = 'tclsh "/opt/bulckypi/bulckyPi/get.tcl" serverPlugUpdate localhost ';
+                    break;
+            }
+        
+            foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
+                
+                // On ajoute les prises engrais, purge , remplissage
+                foreach ($zone["prise"] as $prise_nom => $numero) {
+                    $outPrise[$numero] = $prise_nom;
+                }
+                foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
+                    // Pompe 
+                    foreach ($plateforme["prise"] as $prise_nom => $numero) {
+                        $outPrise[$numero] = "PF " . $plateforme_nom . " " . $prise_nom;
+                    }
+                    foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
+                        $outPrise[$ligne["prise"]] = " EV Ligne " . $ligne_numero;
+                    }
+                }
+            }
+            ksort($outPrise);
+            $nbPlug = 0 ;
+            foreach ($outPrise as $numero => $nom) {
+                $commandLine = $commandLine . ' "::plug(' . $numero . ',value)"';
+                $nbPlug++;
+            }
+
+            $ret = "";
+            try {
+                $ret = exec($commandLine);
+            } catch (Exception $e) {
+                echo 'Exception reçue : ',  $e->getMessage(), "\n";
+            }
+            $arr = explode ("\t", $ret);
+
+            for ($i = 0; $i < $nbPlug; $i++) {
+                if (array_key_exists($i, $arr)) {
+                    if ($arr[$i] != "") {
+                        $return_array[$i + 1] = $arr[$i];
+                    } else {
+                        $return_array[$i + 1] = "DEFCOM";
+                    }
+                } else {
+                    $return_array[$i + 1] = "DEFCOM";
+                }
+            }
+            echo json_encode($return_array);
+            break;
+
         case 'PURGE_CUVE':
         
             // On récupère le numéro de la cuve

@@ -144,7 +144,7 @@ function setPlug (time, etatPrise, plug1, plug2) {
 
 function readSensors (periode) {
 
-    logMessage("Lecture de la valeur des capteurs...", 0);
+    logMessage("Lecture capteurs...", 0);
 	document.getElementById('btn_reload_periodic_sensor').disabled=true;
 	document.getElementById('btn_reload_sensor').disabled=true;
     $.ajax({
@@ -175,6 +175,57 @@ function readSensors (periode) {
     });
 }
 
+function readPlugs (periode) {
+
+    logMessage("Lecture sorties...", 0);
+	document.getElementById('btn_reload_periodic_plug').disabled=true;
+	document.getElementById('btn_reload_plug').disabled=true;
+    $.ajax({
+         cache: false,
+         async: true,
+         type: "POST",
+         url: "lib.php",
+         data: {
+             function:"GET_PLUGS"
+         }
+    }).done(function (data) {
+        logMessage("Valeurs sorties lues" , 5000);
+        PLUGS = jQuery.parseJSON(data);
+        if (PLUGS != "") {
+            for(var index in PLUGS) { 
+               if (PLUGS.hasOwnProperty(index)) {
+                   var attr = PLUGS[index];
+                   console.log(attr);
+                   if (attr == "on") {
+                       document.getElementById("plug_" + index).classList.remove('fa-stop-circle');
+                       document.getElementById("plug_" + index).classList.remove('fa-warning');
+                       document.getElementById("plug_" + index).classList.add('fa-play-circle');
+                   } else if (attr == "off") {
+                       document.getElementById("plug_" + index).classList.remove('fa-play-circle');
+                       document.getElementById("plug_" + index).classList.remove('fa-warning');
+                       document.getElementById("plug_" + index).classList.add('fa-stop-circle');
+                   } else {
+                       // DEFCOM
+                       document.getElementById("plug_" + index).classList.remove('fa-play-circle');
+                       document.getElementById("plug_" + index).classList.remove('fa-stop-circle');
+                       document.getElementById("plug_" + index).classList.add('fa-warning');
+                   }
+               }
+            }
+        }
+
+		
+		if (periode != 0) {
+			setTimeout(function(){ readPlugs(periode - 1); }, 1000);
+		} else {
+			document.getElementById('btn_reload_periodic_plug').disabled=false;
+			document.getElementById('btn_reload_plug').disabled=false;
+		}
+		
+    });
+}
+
+// Cette function permet de purger la cuve 
 function purgeCuve (cuveIdx) {
     logMessage("Demande purge...", 0);
     $.ajax({
