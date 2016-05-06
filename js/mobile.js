@@ -195,19 +195,18 @@ function readPlugs (periode) {
             for(var index in PLUGS) { 
                if (PLUGS.hasOwnProperty(index)) {
                    var attr = PLUGS[index];
-                   console.log(attr);
                    if (attr == "on") {
-                       document.getElementById("plug_" + index).classList.remove('fa-stop-circle');
+                       document.getElementById("plug_" + index).classList.add('fa-play');
+                       document.getElementById("plug_" + index).classList.remove('fa-stop');
                        document.getElementById("plug_" + index).classList.remove('fa-warning');
-                       document.getElementById("plug_" + index).classList.add('fa-play-circle');
                    } else if (attr == "off") {
-                       document.getElementById("plug_" + index).classList.remove('fa-play-circle');
+                       document.getElementById("plug_" + index).classList.add('fa-stop');
+                       document.getElementById("plug_" + index).classList.remove('fa-play');
                        document.getElementById("plug_" + index).classList.remove('fa-warning');
-                       document.getElementById("plug_" + index).classList.add('fa-stop-circle');
                    } else {
                        // DEFCOM
-                       document.getElementById("plug_" + index).classList.remove('fa-play-circle');
-                       document.getElementById("plug_" + index).classList.remove('fa-stop-circle');
+                       document.getElementById("plug_" + index).classList.remove('fa-play');
+                       document.getElementById("plug_" + index).classList.remove('fa-stop');
                        document.getElementById("plug_" + index).classList.add('fa-warning');
                    }
                }

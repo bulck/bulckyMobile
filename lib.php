@@ -1154,18 +1154,21 @@ if(!isset($function) || empty($function)) {
                 echo 'Exception reçue : ',  $e->getMessage(), "\n";
             }
             $arr = explode ("\t", $ret);
-
-            for ($i = 0; $i < $nbPlug; $i++) {
+            
+            $i = 0;
+            foreach ($outPrise as $numero => $nom) {
                 if (array_key_exists($i, $arr)) {
                     if ($arr[$i] != "") {
-                        $return_array[$i + 1] = $arr[$i];
+                        $return_array[$numero] = $arr[$i];
                     } else {
-                        $return_array[$i + 1] = "DEFCOM";
+                        $return_array[$numero] = "DEFCOM";
                     }
                 } else {
-                    $return_array[$i + 1] = "DEFCOM";
+                    $return_array[$numero] = "DEFCOM";
                 }
+                $i++;
             }
+
             echo json_encode($return_array);
             break;
 

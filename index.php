@@ -408,7 +408,7 @@
                             foreach ($outPrise as $numero => $nom) {
                                 ?>
                                 <tr>
-                                    <td><i id="plug_<?php echo $numero ;?>" class="fa"></i><?php echo $numero . " : " . $nom ;?> :</td>
+                                    <td><i id="plug_<?php echo $numero ;?>" class="fa fa-warning"></i><?php echo $numero . " : " . $nom ;?> :</td>
                                     <td><input                          type="button" value="&#xf144;"  onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"on", <?php echo $numero ;?>,0);' /></td>
                                     <td><input style="float: right;" type="button" value="&#xf28d;" onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"off", <?php echo $numero ;?>,0);' /></td>
                                 <tr>
