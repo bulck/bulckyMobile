@@ -243,3 +243,53 @@ function displayBlock (sectionName) {
     // On affiche le bon 
     document.getElementById(sectionName).style.display = "block";
 }
+
+// Load the Visualization API and the corechart package.
+google.charts.load("current", {packages: ["line"]});
+// Set a callback to run when the Google Visualization API is loaded.
+
+
+function drawChart() {
+
+    var data = new google.visualization.DataTable();
+      data.addColumn('timeofday', 'Heure');
+      data.addColumn('number', 'Pression pompe');
+      data.addColumn('number', 'Pression ligne');
+      data.addColumn('number', 'Niveau d\'eau');
+
+      data.addRows([
+        [[8, 30, 10],  37.8, 80.8, 41.8],
+        [[8, 30, 20],  30.9, 69.5, 32.4],
+        [[8, 30, 30],  25.4,   57, 25.7],
+        [[8, 30, 40],  11.7, 18.8, 10.5],
+        [[8, 30, 50],  11.9, 17.6, 10.4],
+        [[8, 40, 00],   8.8, 13.6,  7.7],
+        [[8, 40, 10],   7.6, 12.3,  9.6],
+        [[8, 40, 20],  12.3, 29.2, 10.6],
+        [[8, 40, 30],  16.9, 42.9, 14.8]
+      ]);
+        var width = window.innerWidth
+        || document.documentElement.clientWidth
+        || document.body.clientWidth - 30;
+        
+        
+      var options = {
+        chart: {
+          title: 'Box Office Earnings in First Two Weeks of Opening',
+          subtitle: 'in millions of dollars (USD)'
+        },
+        width: width,
+        height: 500,
+        axes: {
+          x: {
+            0: {side: 'bottom'}
+          }
+        },
+        legend: { position: 'bottom' }
+      };
+
+      var chart = new google.charts.Line(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+}
+

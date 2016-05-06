@@ -1176,6 +1176,35 @@ if(!isset($function) || empty($function)) {
 
             break;             
             
+        case 'GET_GRAPH_VALUES':
+        
+            // On récupère le type de graphique (cuve ou ligne)
+            $graph_type = $_POST['graph_type'];
+            $index = $_POST['index'];
+            
+            // On récupere la date du graphique
+            $day   = $_POST['day'];
+            $month = $_POST['month'];
+            $year  = $_POST['year'];
+        
+            // SELECT count(*) FROM logs WHERE sensor_nb in ("1", "2") AND timestamp LIKE '160503%' ORDER BY timestamp;
+            // SELECT count(*) FROM logs WHERE sensor_nb in ("1") AND timestamp LIKE '160503%' ORDER BY timestamp;
+            // SELECT timestamp , record1, sensor_nb FROM logs WHERE sensor_nb in ("1", "2") AND timestamp LIKE '160503%' ORDER BY timestamp;
+            // Un point par minute et par ligne 
+            if ($graph_type == "cuve") {
+                // Si c'est une cuve :
+                // Niveau d'eau
+                // Pompe
+                // EC
+            } else {
+                // Si c'est une ligne :
+                // Niveau d'eau
+                // Pompe
+                // Pression ligne
+            }
+        
+            break;
+            
         default:
             echo json_encode("0");
     }

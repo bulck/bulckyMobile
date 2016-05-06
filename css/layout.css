@@ -34,7 +34,7 @@ input[type=button]:disabled {
 }
 .content 
 {
-    padding: 40px 0 0 0;
+    padding: 60px 0 0 0;
 }
 .header,
 .content,
@@ -49,11 +49,11 @@ input[type=button]:disabled {
 	font-size: 16px;
 	font-weight: bold;
 	color: #fff;
-	line-height: 40px;
+	line-height: 60px;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;	
 	width: 100%;
-	height: 40px;
+	height: 60px;
 	padding: 0 50px;
 }
 .header.fixed
@@ -69,13 +69,17 @@ input[type=button]:disabled {
 	background: center center no-repeat transparent;
 	background-image: url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADhJREFUeNpi/P//PwOtARMDHQBdLGFBYtMq3BiHT3DRPU4YR4NrNAmPJuHRJDyahEeT8Ii3BCDAAF0WBj5Er5idAAAAAElFTkSuQmCC );
 	display: block;
-	width: 40px;
-	height: 40px;
+	width: 60px;
+	height: 60px;
 	position: absolute;
 	top: 0;
 	left: 10px;
 }
-
+#first_view 
+{
+    text-align: left;
+    
+}
 table.center {
     margin-left:auto; 
     margin-right:auto;

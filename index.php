@@ -66,9 +66,9 @@
         <!-- Include jQuery and the jQuery.mmenu .js files -->
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery.mmenu.min.all.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript" src="js/mobile.js"></script>
 
-        
       <!-- Fire the plugin onDocumentReady -->
       <script type="text/javascript">
          $(function( $ ) {
@@ -100,7 +100,36 @@
 			</div>
 			<div class="content">
 
-                <!-- subpanel for conf -->
+            
+                <div id="first_view" class="conf_section" style="display:block;" >
+                    <p>Bien venu sur l'interface de configuration de <?php echo ConfigPHP($GLOBALS,"Irrigation",'CONFIG','nom'); ?>.</p>
+                    <p>Vous pouvez configurer : </p>
+                    <ul>
+                        <li><a href="#" onclick='displayBlock("param_conf");' ><i class="fa fa-cogs"></i>Configuration générale</a></li>
+                    <?php
+                        // On affiche le titre pour les zones
+                        foreach ($GLOBALS['IRRIGATION'] as $nom_zone => $zone)
+                        {
+                            // On affiche un titre pour la cuve
+                            $strname = strtoupper(str_replace(" ", "", $nom_zone));
+                            ?>
+                                <li><a href="#" onclick='displayBlock("cuve_conf_<?php echo $strname ;?>");'><i class="fa fa-database"></i>Cuve</a></li>
+                            <?php  
+                            
+                            // On affiche le titre pour les plateformes
+                            foreach ($zone["plateforme"] as $nom_plateforme => $plateforme)
+                            {
+                                $strname = strtoupper(str_replace(" ", "", $nom_plateforme));
+                                ?>
+                                    <li><a href="#" onclick='displayBlock("plateforme_conf_<?php echo $strname ;?>");'>PF <?php echo $nom_plateforme ;?></a></li>
+                                <?php  
+                            }
+                        }
+                    ?>
+                    </ul>
+                </div>
+                
+                <!-- Page de configuration -->
                 <div id="param_conf" class="conf_section">
                     <table class="center" >
                         <tr>
@@ -341,11 +370,13 @@
                         <tr>
                             <td>Temps de test :</td>
                             <td colspan="2">
-                                <select id="temps_test_cyle_plug" style="display:inline" >
+                                <select id="temps_test_cyle_plug" >
                                     <option value="30" >30 secondes</option>
                                     <option value="60" selected>1 minute</option>
                                     <option value="120" >2 minutes</option>
                                     <option value="600" >10 minutes</option>
+                                    <option value="1200" >20 minutes</option>
+                                    <option value="3600" >1 heure</option>
                                     <option value="86400" >1 journée</option>
                                 </select>
                             </td>
@@ -429,6 +460,10 @@
                             }
                         ?>
                         </table>
+                </div>
+                
+                <div id="display_graph"  class="conf_section">
+                    <div id="chart_div"></div>
                 </div>
                 
                 <!-- subpanel for verbose -->
@@ -601,12 +636,35 @@
                             }
                         }
                     ?>
+                    <!--
+                    <li><a href="#panel_graph" class="mm-arrow"><i class="fa fa-line-chart"></i>Graph</a></li>
+                    -->
                     <li><label>Debug</label></li>
                     <li><a href="#" onclick='displayBlock("debug_pilotage");' ><i class="fa fa-power-off"></i>Pilotage</a></li>
                     <li><a href="#" onclick='displayBlock("sensors");' ><i class="fa fa-tachometer"></i>Capteurs</a></li>
                     <li><a href="#param_debug" class="mm-arrow"><i class="fa fa-file-code-o"></i>Paramètres avancées</a></li>
                 </ul>
 
+                <!-- subpanel for graph -->
+                <div id="panel_graph"  class="Panel">
+                    <ul>
+                        <?php
+                            foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
+                                ?>
+                                    <li><a href="#" onclick='google.charts.setOnLoadCallback(drawChart);displayBlock("display_graph");' >Cuve <?php echo $zone_nom ; ?></a></li>
+                                <?php
+                                foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
+                                    foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
+                                        ?>
+                                            <li><a href="#" onclick='google.charts.setOnLoadCallback(drawChart);displayBlock("display_graph");' >Ligne <?php echo $ligne_numero ; ?></a></li>
+                                        <?php
+                                    }
+                                }
+                            }
+                        ?>
+                    </ul>
+                </div>
+                
                 <!-- subpanel for debug -->
                 <div id="param_debug"  class="Panel">
                     <ul>
