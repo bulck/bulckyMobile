@@ -641,9 +641,7 @@
                             }
                         }
                     ?>
-                    <!--
                     <li><a href="#panel_graph" class="mm-arrow"><i class="fa fa-line-chart"></i>Graph</a></li>
-                    -->
                     <li><label>Debug</label></li>
                     <li><a href="#" onclick='displayBlock("debug_pilotage");' ><i class="fa fa-power-off"></i>Pilotage</a></li>
                     <li><a href="#" onclick='displayBlock("sensors");' ><i class="fa fa-tachometer"></i>Capteurs</a></li>
@@ -656,12 +654,12 @@
                         <?php
                             foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
                                 ?>
-                                    <li><a href="#" onclick='google.charts.setOnLoadCallback(drawChart);displayBlock("display_graph");' >Cuve <?php echo $zone_nom ; ?></a></li>
+                                    <li><a href="#" onclick='google.charts.setOnLoadCallback(function() {drawChart("cuve","<?php echo $zone_nom ; ?>");});displayBlock("display_graph");' >Cuve <?php echo $zone_nom ; ?></a></li>
                                 <?php
                                 foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
                                     foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
                                         ?>
-                                            <li><a href="#" onclick='google.charts.setOnLoadCallback(drawChart);displayBlock("display_graph");' >Ligne <?php echo $ligne_numero ; ?></a></li>
+                                            <li><a href="#" onclick='google.charts.setOnLoadCallback(function() {drawChart("ligne","<?php echo $ligne_numero ; ?>");});displayBlock("display_graph");' >Ligne <?php echo $ligne_numero ; ?></a></li>
                                         <?php
                                     }
                                 }

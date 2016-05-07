@@ -7,6 +7,7 @@ require_once 'config.php';
 
 $error=array();
 
+
 function write_ini_file($assoc_arr, $path, $has_sections=FALSE) { 
     $content = ""; 
     if ($has_sections) { 
@@ -1247,22 +1248,132 @@ if(!isset($function) || empty($function)) {
             $month = $_POST['month'];
             $year  = $_POST['year'];
         
-            // SELECT count(*) FROM logs WHERE sensor_nb in ("1", "2") AND timestamp LIKE '160503%' ORDER BY timestamp;
-            // SELECT count(*) FROM logs WHERE sensor_nb in ("1") AND timestamp LIKE '160503%' ORDER BY timestamp;
-            // SELECT timestamp , record1, sensor_nb FROM logs WHERE sensor_nb in ("1", "2") AND timestamp LIKE '160503%' ORDER BY timestamp;
+            $return_array = array();
+        
+            // Open connection to dabase
+            switch(php_uname('s')) {
+                case 'Windows NT':
+                    $db = new PDO('mysql:host=127.0.0.1;port=3891;dbname=cultibox;charset=utf8', 'cultibox', 'cultibox');
+                    break;
+                default : 
+                    $db = new PDO('mysql:host=127.0.0.1;port=3891;dbname=bulcky;charset=utf8', 'bulcky', 'bulcky');
+                    break;
+            }
+            
+        
             // Un point par minute et par ligne 
             if ($graph_type == "cuve") {
                 // Si c'est une cuve :
                 // Niveau d'eau
                 // Pompe
                 // EC
+                // SELECT HOUR(timestamp) , MINUTE(timestamp) , sensor3/100 , sensor4/100 , sensor5/100 FROM bpilogs WHERE timestamp BETWEEN '2016-05-07 00:00:00' AND '2016-05-07 23:59:59' ORDER BY timestamp;
+                
+                $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , sensor3/100 , sensor4/100 , sensor5/100 FROM bpilogs"
+                        . " WHERE timestamp BETWEEN '{$year}-{$month}-{$day} 00:00:00' AND '{$year}-{$month}-{$day} 23:59:59' ORDER BY timestamp;";
+
+                try {
+                    $sth = $db->prepare($sql);
+                    $sth->execute();
+                } catch(\PDOException $e) {
+                    print_r($e->getMessage());
+                }
+                
+                $return_array["cols"] = array (
+                    array(
+                        "type" => 'timeofday',
+                        "label" => "Heure"
+                    ),
+                    array(
+                        "type" => 'number',
+                        "label" => "Niveau eau"
+                    ),
+                    array(
+                        "type" => 'number',
+                        "label" => "EC"
+                    ),
+                    array(
+                        "type" => 'number',
+                        "label" => "Pression pompe"
+                    )
+                );
+                
+                $return_array["rows"] = array ();
+                while ($row = $sth->fetch()) 
+                {
+                    $return_array["rows"][] = array (
+                        "c" => array (
+                            array ("v" => 
+                                array(
+                                    $row['HOUR(timestamp)'],
+                                    $row['MINUTE(timestamp)'],
+                                    "0",
+                                )
+                            ),
+                            array ("v" => $row['sensor3/100']),
+                            array ("v" => $row['sensor4/100']),
+                            array ("v" => $row['sensor5/100'])
+                        )
+                    );
+                }
+            
             } else {
                 // Si c'est une ligne :
                 // Niveau d'eau
                 // Pompe
                 // Pression ligne
+                
+                $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , sensor3/100 , sensor5/100 , sensor6/100 FROM bpilogs"
+                        . " WHERE timestamp BETWEEN '{$year}-{$month}-{$day} 00:00:00' AND '{$year}-{$month}-{$day} 23:59:59' ORDER BY timestamp;";
+                        
+                try {
+                    $sth = $db->prepare($sql);
+                    $sth->execute();
+                } catch(\PDOException $e) {
+                    print_r($e->getMessage());
+                }
+                
+                $return_array["cols"] = array (
+                    array(
+                        "type" => 'timeofday',
+                        "label" => "Heure"
+                    ),
+                    array(
+                        "type" => 'number',
+                        "label" => "Niveau eau"
+                    ),
+                    array(
+                        "type" => 'number',
+                        "label" => "Pression pompe"
+                    ),
+                    array(
+                        "type" => 'number',
+                        "label" => "Pression ligne"
+                    )
+                );
+                
+                $return_array["rows"] = array ();
+                while ($row = $sth->fetch()) 
+                {
+                    $return_array["rows"][] = array (
+                        "c" => array (
+                            array ("v" => 
+                                array(
+                                    $row['HOUR(timestamp)'],
+                                    $row['MINUTE(timestamp)'],
+                                    "0",
+                                )
+                            ),
+                            array ("v" => $row['sensor3/100']),
+                            array ("v" => $row['sensor5/100']),
+                            array ("v" => $row['sensor6/100'])
+                        )
+                    );
+                }
+                
             }
         
+            echo json_encode($return_array);
             break;
             
         default:

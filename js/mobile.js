@@ -299,47 +299,60 @@ google.charts.load("current", {packages: ["line"]});
 // Set a callback to run when the Google Visualization API is loaded.
 
 
-function drawChart() {
+function drawChart(graphType, graphIndex) {
 
-    var data = new google.visualization.DataTable();
-      data.addColumn('timeofday', 'Heure');
-      data.addColumn('number', 'Pression pompe');
-      data.addColumn('number', 'Pression ligne');
-      data.addColumn('number', 'Niveau d\'eau');
+    logMessage("Chargement courbe ...", 0);
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10) {
+        dd='0'+dd
+    } 
 
-      data.addRows([
-        [[8, 30, 10],  37.8, 80.8, 41.8],
-        [[8, 30, 20],  30.9, 69.5, 32.4],
-        [[8, 30, 30],  25.4,   57, 25.7],
-        [[8, 30, 40],  11.7, 18.8, 10.5],
-        [[8, 30, 50],  11.9, 17.6, 10.4],
-        [[8, 40, 00],   8.8, 13.6,  7.7],
-        [[8, 40, 10],   7.6, 12.3,  9.6],
-        [[8, 40, 20],  12.3, 29.2, 10.6],
-        [[8, 40, 30],  16.9, 42.9, 14.8]
-      ]);
+    if(mm<10) {
+        mm='0'+mm
+    } 
+
+    $.ajax({
+        cache: false,
+        async: true,
+        type: "POST",
+        url: "lib.php",
+        data: {
+            function:"GET_GRAPH_VALUES",
+            graph_type:graphType,
+            index:graphIndex,
+            day:dd,
+            month:mm,
+            year:yyyy
+        }
+    }).done(function (jsonData) {
+        logMessage("Chargement terminée", 10000);
+
+        var data = new google.visualization.DataTable(jsonData);
+
         var width = window.innerWidth
         || document.documentElement.clientWidth
         || document.body.clientWidth - 30;
-        
-        
-      var options = {
-        chart: {
-          title: 'Box Office Earnings in First Two Weeks of Opening',
-          subtitle: 'in millions of dollars (USD)'
-        },
-        width: width,
-        height: 500,
-        axes: {
-          x: {
-            0: {side: 'bottom'}
-          }
-        },
-        legend: { position: 'bottom' }
-      };
 
-      var chart = new google.charts.Line(document.getElementById('chart_div'));
+        var options = {
+            chart: {
+                title: 'Courbe'
+            },
+            width: width,
+            height: 500,
+            axes: {
+                x: {
+                    0: {side: 'bottom'}
+                }
+            },
+            legend: { position: 'bottom' }
+        };
 
-      chart.draw(data, options);
+        var chart = new google.charts.Line(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+    });
 }
 
