@@ -299,7 +299,7 @@ google.charts.load("current", {packages: ["corechart"]});
 // Set a callback to run when the Google Visualization API is loaded.
 
 
-function drawChart(graphType, graphIndex) {
+function drawChart(graphType, zoneName, plateformeName , ligneNumero) {
 
     logMessage("Chargement courbe ...", 0);
     var today = new Date();
@@ -321,8 +321,10 @@ function drawChart(graphType, graphIndex) {
         url: "lib.php",
         data: {
             function:"GET_GRAPH_VALUES",
+            zone:zoneName,
+            plateforme:plateformeName,
             graph_type:graphType,
-            index:graphIndex,
+            ligne:ligneNumero,
             day:dd,
             month:mm,
             year:yyyy
@@ -338,18 +340,22 @@ function drawChart(graphType, graphIndex) {
 
         var options = {
             chart: {
-                title: 'Courbe ' + graphType + ' ' + graphIndex
+                title: 'Courbe ' + graphType + ' ' + zoneName + ' ' + plateformeName + ' ' + ligneNumero
             },
             series: {
-              0: {targetAxisIndex: 0},
-              1: {targetAxisIndex: 1}
+              0: {targetAxisIndex: 1},
+              1: {targetAxisIndex: 0}
             },        
             vAxes: {
               // Adds titles to each axis.
-              0: {title: 'Niveau cuve'},
-              1: {title: 'Pression'}
+              0: {title: 'Pression'},
+              1: {title: 'Niveau cuve'}
             },
-            explorer: {},
+            explorer: {
+                actions: ['dragToZoom', 'rightClickToReset'],
+                axis: 'horizontal',
+                keepInBounds: true
+            },
             width: width,
             height: 500,
             legend:"bottom"

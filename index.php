@@ -420,10 +420,11 @@
 
                 <!-- Valeur des capteurs -->
                 <div id="sensors"  class="conf_section" >
-                    <input style="float: left;" id="btn_reload_sensor" type="button" value="&#xf0e2;" onclick='readSensors(0);' />
-                    <input style="float: right;" id="btn_reload_periodic_sensor" type="button" value="&#xf021;" onclick='readSensors(30);' />
-                    <br />
                     <table class="center">
+                        <tr>
+                            <td><input id="btn_reload_sensor" type="button" value="&#xf0e2;" onclick='readSensors(0);' /></td>
+                            <td colspan="2"><input id="btn_reload_periodic_sensor" type="button" value="&#xf021;" onclick='readSensors(30);' /></td>
+                        </tr>
                         <tr>
                             <th>Numéro</th><th>Nom</th><th>Valeur</th>
                         </tr>
@@ -654,12 +655,12 @@
                         <?php
                             foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
                                 ?>
-                                    <li><a href="#" onclick='google.charts.setOnLoadCallback(function() {drawChart("cuve","<?php echo $zone_nom ; ?>");});displayBlock("display_graph");' >Cuve <?php echo $zone_nom ; ?></a></li>
+                                    <li><a href="#" onclick='google.charts.setOnLoadCallback(function() {drawChart("cuve","<?php echo $zone_nom ; ?>","","");});displayBlock("display_graph");' >Cuve <?php echo $zone_nom ; ?></a></li>
                                 <?php
                                 foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
                                     foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
                                         ?>
-                                            <li><a href="#" onclick='google.charts.setOnLoadCallback(function() {drawChart("ligne","<?php echo $ligne_numero ; ?>");});displayBlock("display_graph");' >Ligne <?php echo $ligne_numero ; ?></a></li>
+                                            <li><a href="#" onclick='google.charts.setOnLoadCallback(function() {drawChart("ligne","<?php echo $zone_nom ; ?>","<?php echo $plateforme_nom ; ?>","<?php echo $ligne_numero ; ?>");});displayBlock("display_graph");' >Ligne <?php echo $ligne_numero ; ?></a></li>
                                         <?php
                                     }
                                 }

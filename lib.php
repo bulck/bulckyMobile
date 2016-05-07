@@ -1241,7 +1241,9 @@ if(!isset($function) || empty($function)) {
         
             // On récupère le type de graphique (cuve ou ligne)
             $graph_type = $_POST['graph_type'];
-            $index = $_POST['index'];
+            $zone       = $_POST['zone'];
+            $plateforme = $_POST['plateforme'];
+            $ligne      = $_POST['ligne'];
             
             // On récupere la date du graphique
             $day   = $_POST['day'];
@@ -1265,11 +1267,12 @@ if(!isset($function) || empty($function)) {
             if ($graph_type == "cuve") {
                 // Si c'est une cuve :
                 // Niveau d'eau
-                // Pompe
                 // EC
                 // SELECT HOUR(timestamp) , MINUTE(timestamp) , sensor3/100 , sensor4/100 , sensor5/100 FROM bpilogs WHERE timestamp BETWEEN '2016-05-07 00:00:00' AND '2016-05-07 23:59:59' ORDER BY timestamp;
+                $sensorNiveau = "sensor" . $GLOBALS['IRRIGATION'][$zone]['capteur']['niveau_cuve']['numero'];
+                $sensorEC     = "sensor" . $GLOBALS['IRRIGATION'][$zone]['capteur']['EC_cuve']['numero'];
                 
-                $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , sensor3/100 , sensor4/100 , sensor5/100 FROM bpilogs"
+                $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , {$sensorNiveau}/100 , {$sensorEC}/100 FROM bpilogs"
                         . " WHERE timestamp BETWEEN '{$year}-{$month}-{$day} 00:00:00' AND '{$year}-{$month}-{$day} 23:59:59' ORDER BY timestamp;";
 
                 try {
@@ -1291,10 +1294,6 @@ if(!isset($function) || empty($function)) {
                     array(
                         "type" => 'number',
                         "label" => "EC"
-                    ),
-                    array(
-                        "type" => 'number',
-                        "label" => "Pression pompe"
                     )
                 );
                 
@@ -1310,9 +1309,8 @@ if(!isset($function) || empty($function)) {
                                     "0",
                                 )
                             ),
-                            array ("v" => $row['sensor3/100']),
-                            array ("v" => $row['sensor4/100']),
-                            array ("v" => $row['sensor5/100'])
+                            array ("v" => $row["{$sensorNiveau}/100"]),
+                            array ("v" => $row["{$sensorEC}/100"])
                         )
                     );
                 }
@@ -1322,8 +1320,11 @@ if(!isset($function) || empty($function)) {
                 // Niveau d'eau
                 // Pompe
                 // Pression ligne
+                $sensorNiveau = "sensor" . $GLOBALS['IRRIGATION'][$zone]['capteur']['niveau_cuve']['numero'];
+                $sensorPompe  = "sensor" . $GLOBALS['IRRIGATION'][$zone]['plateforme'][$plateforme]['capteur']['pression_pompe']['numero'];
+                $sensorPLigne = "sensor" . $GLOBALS['IRRIGATION'][$zone]['plateforme'][$plateforme]['ligne'][$ligne]['capteur']['pression']['numero'];
                 
-                $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , sensor3/100 , sensor5/100 , sensor6/100 FROM bpilogs"
+                $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , {$sensorNiveau}/100 , {$sensorPompe}/100 , {$sensorPLigne}/100 FROM bpilogs"
                         . " WHERE timestamp BETWEEN '{$year}-{$month}-{$day} 00:00:00' AND '{$year}-{$month}-{$day} 23:59:59' ORDER BY timestamp;";
                         
                 try {
@@ -1340,15 +1341,15 @@ if(!isset($function) || empty($function)) {
                     ),
                     array(
                         "type" => 'number',
-                        "label" => "Niveau eau"
+                        "label" => "Niveau eau" . $zone
                     ),
                     array(
                         "type" => 'number',
-                        "label" => "Pression pompe"
+                        "label" => "Pression pompe " . $plateforme
                     ),
                     array(
                         "type" => 'number',
-                        "label" => "Pression ligne"
+                        "label" => "Pression ligne " . $ligne
                     )
                 );
                 
@@ -1364,9 +1365,9 @@ if(!isset($function) || empty($function)) {
                                     "0",
                                 )
                             ),
-                            array ("v" => $row['sensor3/100']),
-                            array ("v" => $row['sensor5/100']),
-                            array ("v" => $row['sensor6/100'])
+                            array ("v" => $row["{$sensorNiveau}/100"]),
+                            array ("v" => $row["{$sensorPompe}/100"]),
+                            array ("v" => $row["{$sensorPLigne}/100"])
                         )
                     );
                 }
