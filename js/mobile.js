@@ -349,6 +349,7 @@ function drawChart(graphType, graphIndex) {
               0: {title: 'Niveau cuve'},
               1: {title: 'Pression'}
             },
+            explorer: {},
             width: width,
             height: 500,
             legend:"bottom"
