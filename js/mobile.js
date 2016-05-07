@@ -295,7 +295,7 @@ function displayBlock (sectionName) {
 }
 
 // Load the Visualization API and the corechart package.
-google.charts.load("current", {packages: ["line"]});
+google.charts.load("current", {packages: ["corechart"]});
 // Set a callback to run when the Google Visualization API is loaded.
 
 
@@ -338,19 +338,25 @@ function drawChart(graphType, graphIndex) {
 
         var options = {
             chart: {
-                title: 'Courbe'
+                title: 'Courbe ' + graphType + ' ' + graphIndex
+            },
+            series: {
+              0: {targetAxisIndex: 0},
+              1: {targetAxisIndex: 1}
+            },        
+            vAxes: {
+              // Adds titles to each axis.
+              0: {title: 'Niveau cuve'},
+              1: {title: 'Pression'}
             },
             width: width,
             height: 500,
-            axes: {
-                x: {
-                    0: {side: 'bottom'}
-                }
-            },
-            legend: { position: 'bottom' }
+            legend:"bottom"
         };
 
-        var chart = new google.charts.Line(document.getElementById('chart_div'));
+        
+        //var chart = new google.charts.Line(document.getElementById('chart_div'));
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
         chart.draw(data, options);
     });
