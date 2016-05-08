@@ -98,8 +98,15 @@ function upVal (type, varname, incr, unit, max) {
         
         $( "#" + type + "_" + varname ).text( CONF[type][varname] + " " + unit);
     }
-    
 
+}
+function upValTxtLigne (plateforme, nbLigne , varname, debit_par_goutteur , goutteur_par_membrane) {
+    // On affiche le temps que ça correspond
+    // temps_cycle * Debit / (Debit_par_gouteur * gouteur_par_membrane)
+    tempsOn = parseFloat(CONF["LIGNE"][plateforme + "_TEMPS_CYCLE"]) * parseFloat(CONF["LIGNE"][varname]) / ( parseFloat(debit_par_goutteur) * parseFloat(goutteur_par_membrane) );
+    tempsOff = parseFloat(CONF["LIGNE"][plateforme + "_TEMPS_CYCLE"]) / nbLigne - tempsOn
+    logMessage("Temps ON : " + tempsOn + "s" + " OFF : " + tempsOff + "s", 5000);
+    
 }
 
 function changeVal (type, varname, val) {
@@ -336,7 +343,7 @@ function drawChart(graphType, zoneName, plateformeName , ligneNumero) {
 
         var width = window.innerWidth
         || document.documentElement.clientWidth
-        || document.body.clientWidth - 30;
+        || document.body.clientWidth;
 
         var options = {
             chart: {
@@ -417,7 +424,7 @@ function drawSensor(sensor1Numero, nom) {
 
         var width = window.innerWidth
         || document.documentElement.clientWidth
-        || document.body.clientWidth - 30;
+        || document.body.clientWidth;
 
         var options = {
             chart: {

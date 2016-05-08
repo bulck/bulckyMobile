@@ -265,7 +265,8 @@
                             $pfName = strtoupper(str_replace(" ", "", $nom_plateforme));
                             
                             // On calcul le maximum de l/h max 
-                            $lhMax = round($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'] / count($plateforme["ligne"]) , 1);
+                            $nbLigne = count($plateforme["ligne"]);
+                            $lhMax = round($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'] / $nbLigne , 1);
                             ?>
                                 <div id="plateforme_conf_<?php echo $pfName ;?>" class="conf_section">
                                     <?php
@@ -284,21 +285,21 @@
                                                 <table class="center" >
                                                     <tr>
                                                         <td>Matin :</td>
-                                                        <td><input type="button" value="&#xf146;"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                        <td><input type="button" value="&#xf146;"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/m", 100);upValTxtLigne ("<?php echo $pfName ;?>" , <?php echo $nbLigne ;?> , "<?php echo $matin ;?>", "<?php echo $GLOBALS['CONFIG']['debit_gouteur'] ;?>" , "<?php echo $GLOBALS['CONFIG']['gouteur_membrane'] ;?>");' /></td>
                                                         <td><p id="<?php echo "LIGNE_" . $matin ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$matin,"1.5") ;?> l/h/m</p></td>
-                                                        <td><input type="button" value="&#xf0fe;"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                        <td><input type="button" value="&#xf0fe;"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);upValTxtLigne ("<?php echo $pfName ;?>" , <?php echo $nbLigne ;?> , "<?php echo $matin ;?>", "<?php echo $GLOBALS['CONFIG']['debit_gouteur'] ;?>" , "<?php echo $GLOBALS['CONFIG']['gouteur_membrane'] ;?>");' /></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Après Midi :</td>
-                                                        <td><input type="button" value="&#xf146;"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                        <td><input type="button" value="&#xf146;"  onclick='upVal("LIGNE", "<?php echo $amidi ;?>", -0.1, "l/h/m", 100);upValTxtLigne ("<?php echo $pfName ;?>" , <?php echo $nbLigne ;?> , "<?php echo $amidi ;?>", "<?php echo $GLOBALS['CONFIG']['debit_gouteur'] ;?>" , "<?php echo $GLOBALS['CONFIG']['gouteur_membrane'] ;?>");' /></td>
                                                         <td><p id="<?php echo "LIGNE_" . $amidi ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$amidi,"1.5");?> l/h/m</p></td>
-                                                        <td><input type="button" value="&#xf0fe;" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                        <td><input type="button" value="&#xf0fe;" onclick='upVal("LIGNE", "<?php echo $amidi ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);upValTxtLigne ("<?php echo $pfName ;?>" , <?php echo $nbLigne ;?> , "<?php echo $amidi ;?>", "<?php echo $GLOBALS['CONFIG']['debit_gouteur'] ;?>" , "<?php echo $GLOBALS['CONFIG']['gouteur_membrane'] ;?>");' /></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Soir :</td>
-                                                        <td><input type="button" value="&#xf146;"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/m", 100);' /></td>
+                                                        <td><input type="button" value="&#xf146;"  onclick='upVal("LIGNE", "<?php echo $soir ;?>", -0.1, "l/h/m", 100);upValTxtLigne ("<?php echo $pfName ;?>" , <?php echo $nbLigne ;?> , "<?php echo $soir ;?>", "<?php echo $GLOBALS['CONFIG']['debit_gouteur'] ;?>" , "<?php echo $GLOBALS['CONFIG']['gouteur_membrane'] ;?>");' /></td>
                                                         <td><p id="<?php echo "LIGNE_" . $soir ;?>" style="display:inline"><?php echo ParamIni("LIGNE",$soir,"1.5");?> l/h/m</p></td>
-                                                        <td><input type="button" value="&#xf0fe;" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);' /></td>
+                                                        <td><input type="button" value="&#xf0fe;" onclick='upVal("LIGNE", "<?php echo $soir ;?>", 0.1, "l/h/m", <?php echo $lhMax ;?>);upValTxtLigne ("<?php echo $pfName ;?>" , <?php echo $nbLigne ;?> , "<?php echo $soir ;?>", "<?php echo $GLOBALS['CONFIG']['debit_gouteur'] ;?>" , "<?php echo $GLOBALS['CONFIG']['gouteur_membrane'] ;?>");' /></td>
                                                     </tr>
                                                 </table>
                                             <?php
@@ -325,9 +326,9 @@
                                             <td>Temps cycle :</td>
                                             <td>
                                                 <select id="temps_cycle_<?php echo $pfName ;?>" onchange="changeVal('LIGNE','<?php echo $pfName ;?>_TEMPS_CYCLE',this.value);" style="display:inline" >
-                                                    <option value="240"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "240") {echo "selected";} ?> >2 minutes</option>
+                                                    <option value="240"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","240") == "240") {echo "selected";} ?> >2 minutes</option>
                                                     <option value="300"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "300") {echo "selected";} ?> >5 minutes</option>
-                                                    <option value="600"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "600") {echo "selected";} ?> >10 minutes</option>
+                                                    <option value="600"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","600") == "600") {echo "selected";} ?> >10 minutes</option>
                                                 </select>
                                             </td>
                                         </tr>
