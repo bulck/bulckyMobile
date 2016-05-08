@@ -1377,6 +1377,77 @@ if(!isset($function) || empty($function)) {
             echo json_encode($return_array);
             break;
             
+        case 'GET_SENSOR_VALUE':
+        
+            // On récupère les courbes a afficher
+            $sensor1 = $_POST['sensor1'];
+            $nom1    = $_POST['nom1'];
+            
+            // On récupere la date du graphique
+            $hourStart   = $_POST['hourStart'];
+            $dayStart    = $_POST['dayStart'];
+            $monthStart  = $_POST['monthStart'];
+            $yearStart   = $_POST['yearStart'];
+            $hourEnd     = $_POST['hourEnd'];
+            $dayEnd      = $_POST['dayEnd'];
+            $monthEnd    = $_POST['monthEnd'];
+            $yearEnd     = $_POST['yearEnd'];
+        
+            $return_array = array();
+        
+            // Open connection to dabase
+            switch(php_uname('s')) {
+                case 'Windows NT':
+                    $db = new PDO('mysql:host=127.0.0.1;port=3891;dbname=cultibox;charset=utf8', 'cultibox', 'cultibox');
+                    break;
+                default : 
+                    $db = new PDO('mysql:host=127.0.0.1;port=3891;dbname=bulcky;charset=utf8', 'bulcky', 'bulcky');
+                    break;
+            }
+            
+            $sensor1Text = "sensor" . $sensor1 ;
+            
+            $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , {$sensor1Text} FROM bpilogs"
+                    . " WHERE timestamp BETWEEN '{$yearStart}-{$monthStart}-{$dayStart} {$hourStart}:00:00' AND '{$yearEnd}-{$monthEnd}-{$dayEnd} {$hourEnd}:59:59' ORDER BY timestamp;";
+        
+            try {
+                $sth = $db->prepare($sql);
+                $sth->execute();
+            } catch(\PDOException $e) {
+                print_r($e->getMessage());
+            }
+
+            $return_array["cols"] = array (
+                array(
+                    "type" => 'timeofday',
+                    "label" => "Heure"
+                ),
+                array(
+                    "type" => 'number',
+                    "label" => $nom1
+                )
+            );
+
+            $return_array["rows"] = array ();
+            while ($row = $sth->fetch()) 
+            {
+                $return_array["rows"][] = array (
+                    "c" => array (
+                        array ("v" => 
+                            array(
+                                $row['HOUR(timestamp)'],
+                                $row['MINUTE(timestamp)'],
+                                "0",
+                            )
+                        ),
+                        array ("v" => $row["{$sensor1Text}"])
+                    )
+                );
+            }
+
+            echo json_encode($return_array);
+            break;
+            
         default:
             echo json_encode("0");
     }

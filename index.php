@@ -369,9 +369,11 @@
 
                 <!-- Pilotage prise -->
                 <div id="debug_pilotage"  class="conf_section">
-                    <input style="float: left;" id="btn_reload_plug" type="button" value="&#xf0e2;" onclick='readPlugs(0);' />
-                    <input style="float: right;" id="btn_reload_periodic_plug" type="button" value="&#xf021;" onclick='readPlugs(30);' />
                     <table class="center">
+                        <tr>
+                            <td><input id="btn_reload_plug" type="button" value="&#xf0e2;" onclick='readPlugs(0);' /></td>
+                            <td colspan="2"><input id="btn_reload_periodic_plug" type="button" value="&#xf021;" onclick='readPlugs(30);' /></td>
+                        </tr>
                         <tr>
                             <td>Temps de test :</td>
                             <td colspan="2">
@@ -422,48 +424,43 @@
                 <div id="sensors"  class="conf_section" >
                     <table class="center">
                         <tr>
-                            <td><input id="btn_reload_sensor" type="button" value="&#xf0e2;" onclick='readSensors(0);' /></td>
+                            <td colspan="2"><input id="btn_reload_sensor" type="button" value="&#xf0e2;" onclick='readSensors(0);' /></td>
                             <td colspan="2"><input id="btn_reload_periodic_sensor" type="button" value="&#xf021;" onclick='readSensors(30);' /></td>
                         </tr>
                         <tr>
-                            <th>Numéro</th><th>Nom</th><th>Valeur</th>
+                            <th>Numéro</th><th>Nom</th><th colspan="2">Valeur</th>
                         </tr>
 
                     <?php 
                         foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
                             foreach ($zone["capteur"] as $capteur_nom => $capteur) {
-
-                            ?>
-                                <tr>
-                                    <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
-                                </tr>
-                            <?php
+                                $outCapteur[$capteur["numero"]] = $capteur_nom;
                             }
-
                             foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
-
                                 foreach ($plateforme["capteur"] as $capteur_nom => $capteur) {
-                                    ?>
-                                        <tr>
-                                            <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
-                                        </tr>
-                                    <?php
+                                    $outCapteur[$capteur["numero"]] = $capteur_nom;
                                 }
-
-                                
                                 foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
                                     
                                     // On ajoute un détecteur de pression par ligne
                                     foreach ($ligne["capteur"] as $capteur_nom => $capteur) {
-                                    ?>
-                                        <tr>
-                                            <td>Capteur <?php echo $capteur["numero"];?></td><td><?php echo $capteur_nom . " ligne " . $ligne_numero ;?></td><td id="sensor_<?php echo $capteur["numero"] ;?>"></td>
-                                        </tr>
-                                    <?php
+                                        $outCapteur[$capteur["numero"]] = $capteur_nom . " ligne " . $ligne_numero ;
                                     }
                                 }
                             }
                         }
+                        ksort($outCapteur);
+                        foreach ($outCapteur as $numero => $nom) {
+                            ?>
+                            <tr>
+                                <td>Capteur <?php echo $numero;?></td>
+                                <td><?php echo $nom ;?></td>
+                                <td id="sensor_<?php echo $numero ;?>"></td>
+                                <td><input style="float: right;" type="button" value="&#xf1fe;" onclick='google.charts.setOnLoadCallback(function() {drawSensor("<?php echo $numero ; ?>","<?php echo $nom ;?>");});displayBlock("display_graph");' /></td>
+                            </tr>
+                            <?php 
+                        }
+                        
                     ?>
                     </table>
                 </div>

@@ -369,3 +369,78 @@ function drawChart(graphType, zoneName, plateformeName , ligneNumero) {
     });
 }
 
+function drawSensor(sensor1Numero, nom) {
+
+    logMessage("Chargement courbe ...", 0);
+    var endDate = new Date();
+    var startDate = endDate;
+    
+    var hhe = endDate.getHours();
+    var dde = endDate.getDate();
+    var mme = endDate.getMonth()+1; //January is 0!
+    var yyyye = endDate.getFullYear();
+    if(hhe<10) hhe='0'+hhe; 
+    if(dde<10) dde='0'+dde; 
+    if(mme<10) mme='0'+mme;
+    
+    startDate.setHours(startDate.getHours() - 2);
+    var hhs = startDate.getHours();
+    var dds = startDate.getDate();
+    var mms = startDate.getMonth()+1; //January is 0!
+    var yyyys = startDate.getFullYear();
+    if(hhs<10) hhs='0'+hhs; 
+    if(dds<10) dds='0'+dds; 
+    if(mms<10) mms='0'+mms;
+
+    $.ajax({
+        cache: false,
+        async: true,
+        type: "POST",
+        url: "lib.php",
+        data: {
+            function:"GET_SENSOR_VALUE",
+            sensor1:sensor1Numero,
+            nom1:nom,
+            hourStart:hhs,
+            dayStart:dds,
+            monthStart:mms,
+            yearStart:yyyys,
+            hourEnd:hhe,
+            dayEnd:dde,
+            monthEnd:mme,
+            yearEnd:yyyye
+        }
+    }).done(function (jsonData) {
+        logMessage("Chargement terminée", 10000);
+
+        var data = new google.visualization.DataTable(jsonData);
+
+        var width = window.innerWidth
+        || document.documentElement.clientWidth
+        || document.body.clientWidth - 30;
+
+        var options = {
+            chart: {
+                title: 'Courbe ' + nom
+            },
+            series: {
+              0: {targetAxisIndex: 0},
+              1: {targetAxisIndex: 1}
+            },
+            explorer: {
+                actions: ['dragToZoom', 'rightClickToReset'],
+                axis: 'horizontal',
+                keepInBounds: true
+            },
+            width: width,
+            height: 500,
+            legend:"bottom"
+        };
+
+        
+        //var chart = new google.charts.Line(document.getElementById('chart_div'));
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+    });
+}
