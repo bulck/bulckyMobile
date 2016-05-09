@@ -105,7 +105,7 @@ function upValTxtLigne (plateforme, nbLigne , varname, debit_par_goutteur , gout
     // temps_cycle * Debit / (Debit_par_gouteur * gouteur_par_membrane)
     tempsOn = parseFloat(CONF["LIGNE"][plateforme + "_TEMPS_CYCLE"]) * parseFloat(CONF["LIGNE"][varname]) / ( parseFloat(debit_par_goutteur) * parseFloat(goutteur_par_membrane) );
     tempsOff = parseFloat(CONF["LIGNE"][plateforme + "_TEMPS_CYCLE"]) / nbLigne - tempsOn
-    logMessage("Temps ON : " + tempsOn + "s" + " OFF : " + tempsOff + "s", 5000);
+    logMessage("ON : " + tempsOn + "s" + " OFF : " + tempsOff + "s", 5000);
     
 }
 
