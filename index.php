@@ -326,9 +326,11 @@
                                             <td>Temps cycle :</td>
                                             <td>
                                                 <select id="temps_cycle_<?php echo $pfName ;?>" onchange="changeVal('LIGNE','<?php echo $pfName ;?>_TEMPS_CYCLE',this.value);" style="display:inline" >
-                                                    <option value="240"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","240") == "240") {echo "selected";} ?> >2 minutes</option>
-                                                    <option value="300"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "300") {echo "selected";} ?> >5 minutes</option>
-                                                    <option value="600"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","600") == "600") {echo "selected";} ?> >10 minutes</option>
+                                                    <option value="240"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "240")  {echo "selected";} ?> >2 minutes</option>
+                                                    <option value="300"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "300")  {echo "selected";} ?> >5 minutes</option>
+                                                    <option value="600"  <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "600")  {echo "selected";} ?> >10 minutes</option>
+                                                    <option value="1200" <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "1200") {echo "selected";} ?> >20 minutes</option>
+                                                    <option value="3600" <?php if (ParamIni("LIGNE",$pfName . "_TEMPS_CYCLE","300") == "3600") {echo "selected";} ?> >60 minutes</option>
                                                 </select>
                                             </td>
                                         </tr>
