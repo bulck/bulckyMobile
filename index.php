@@ -57,6 +57,7 @@
         <link rel="icon" href="img/water_drop_32.png" sizes="32x32">
         
         <link type="text/css" href="css/layout.css" rel="stylesheet" />
+	<link type="text/css" href="css/large_layout.css" rel="stylesheet" />
 
         <!-- Include jQuery.mmenu .css files -->
         <link type="text/css" href="css/font-awesome.min.css" rel="stylesheet" />
@@ -105,7 +106,7 @@
 
             
                 <div id="first_view" class="conf_section" style="display:block;" >
-                    <p>Bien venu sur l'interface de configuration de <?php echo ConfigPHP($GLOBALS,"Irrigation",'CONFIG','nom'); ?>.</p>
+                    <p class="title_page">Bienvenu(e) sur l'interface de configuration de <?php echo ConfigPHP($GLOBALS,"Irrigation",'CONFIG','nom'); ?></p>
                     <p>Vous pouvez configurer : </p>
                     <ul>
                         <li><a href="#" onclick='displayBlock("param_conf");' ><i class="fa fa-cogs"></i>Configuration générale</a></li>
@@ -134,6 +135,7 @@
                 
                 <!-- Page de configuration -->
                 <div id="param_conf" class="conf_section">
+		   <p class="title_page">Configuration générale</p>
                     <table class="center" >
                         <tr>
                             <td>Irrigation activée :</td>
@@ -166,6 +168,7 @@
                             </td>
                         </tr>
                     </table>
+		    <hr />
                     <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                 </div> 
 
@@ -195,20 +198,22 @@
                                 <li>Température : <p style="display:inline">25°C</p></li>
                                 <li>Humidité : <p style="display:inline">75%</p></li>
                                 -->
-                                    <p>Engrais 1 :</p>
+				<p class="title_page">Configuration cuve</p>
+
+                                    <p class="title_subpage">Dosage engrais 1</p>
                                     <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
                                     <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais1,"5");?> ml/min</p> 
                                     <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
-                                    <p>Engrais 2 :</p>
+                                    <p class="title_subpage">Dosage engrais 2</p>
                                     <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
                                     <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais2,"5");?> ml/min</p> 
                                     <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
-                                    <p>Engrais 3 :</p>
+                                    <p class="title_subpage">Dosage engrais 3</p>
                                     <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
                                     <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais3,"5");?> ml/min</p> 
                                     <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
 
-                                    <p>Action :</p>
+                                    <p class="title_subpage">Actions</p>
                                     <input type="button" value="Purge de la cuve" onclick='purgeCuve("<?php echo $ZoneIndex ;?>");' />
                                     <br />
                                     <input type="button" value="Injecter 25 mL de l'engrais 1" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
@@ -216,24 +221,26 @@
                                     <input type="button" value="Injecter 25 mL de l'engrais 2" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
                                     <br />
                                     <input type="button" value="Injecter 25 mL de l'engrais 3" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
-                                
+                               
+
+				<p class="title_subpage">Configuration de la cuve</p> 
                                 <table class="center">
                                     <tr>
-                                        <td>Engrais 1 Actif : </td>
+                                        <td>Engrais 1 actif : </td>
                                         <td>
                                             <input id="<?php echo $engrais1actif ;?>" type="checkbox" class="ios8-switch ios8-switch-lg" onclick='changeVal("CUVE", "<?php echo $engrais1actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais1actif,"false") == "true") {echo "checked" ;}?> />
                                             <label for="<?php echo $engrais1actif ;?>"></label>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Engrais 2 Actif : </td>
+                                        <td>Engrais 2 actif : </td>
                                         <td>
                                             <input id="<?php echo $engrais2actif ;?>" type="checkbox" class="ios8-switch ios8-switch-lg" onclick='changeVal("CUVE", "<?php echo $engrais2actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais2actif,"false") == "true") {echo "checked" ;}?> />
                                             <label for="<?php echo $engrais2actif ;?>"></label>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Engrais 3 Actif : </td>
+                                        <td>Engrais 3 actif : </td>
                                         <td>
                                             <input id="<?php echo $engrais3actif ;?>" type="checkbox" class="ios8-switch ios8-switch-lg" onclick='changeVal("CUVE", "<?php echo $engrais3actif ;?>", this.checked);' <?php if (ParamIni("CUVE",$engrais3actif,"false") == "true") {echo "checked" ;}?> />
                                             <label for="<?php echo $engrais3actif ;?>"></label>
@@ -247,6 +254,7 @@
                                         </td>
                                     </tr>
                                 </table>
+				<hr />
                                 <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                             </div>
                         <?php
@@ -281,7 +289,7 @@
                                             $active = $pfName . "_" . $ligneName . "_ACTIVE";
                                             
                                             ?>
-                                                <a href="#" >Ligne <?php echo $ligneName ;?> (l/h/membrane) :</a>
+                                                <p class="title_subpage">Ligne <?php echo $ligneName ;?> (l/h/membrane)</p>
                                                 <table class="center" >
                                                     <tr>
                                                         <td>Matin :</td>
@@ -305,6 +313,7 @@
                                             <?php
                                         }
                                     ?>
+				    <p class="title_subpage">Configuration des lignes</p>
                                     <table class="center">
                                     <?php
                                     foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
@@ -336,8 +345,10 @@
                                             </td>
                                         </tr>
                                     </table>
+                                    <hr />
                                     <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
-
+				    <br />
+				    <p class="title_subpage">Test des lignes</p>
                                     <table class="center" >
                                         <tr>
                                             <td>Temps de test :</td>
@@ -360,7 +371,7 @@
                                                 <td>Ligne <?php echo $ligneName ;?> (Pompe + EV) :</td>
                                                 <td><input type="button" value="&#xf144;" onclick='setPlug(document.getElementById("temps_test_cyle").value,"on", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' /></td>
                                                 <td><input type="button" value="&#xf28d;" onclick='setPlug(document.getElementById("temps_test_cyle").value,"off", <?php echo $ligne["prise"] ;?>,<?php echo $plateforme["prise"]["pompe"] ;?>);' /></td>
-                                            <br />
+                                            <tr />
                                         <?php
                                     }
                                     ?>
@@ -475,6 +486,7 @@
                 
                 <!-- subpanel for verbose -->
                 <div id="param_verbose"  class="conf_section">
+		    <p class="title_page">Configuration de la verbosité</p>
                     <table class="center"> 
                         <tr>
                             <td>Verbose Server :</td>
@@ -558,11 +570,12 @@
                     
                 <!-- Action de configuration -->
                 <div id="conf_action" class="conf_section">
+		    <p class="title_page">Actions de configuration</p>
                     <input type="button" value="Mise à jour Bulckyface" onclick="rpi_update('bulckyface');" />
-
+		    <br />
                     <input type="button" value="Mise à jour Bulckypi" onclick="rpi_update('bulckypi');" />
 
-                    <p>Appliquer une conf template :</p>
+                    <p class="title_page">Appliquer une conf template</p>
                     <select id="conf_template" style="display:inline" >
                         <?php
                             // Liste des configs
@@ -580,15 +593,15 @@
                 
                 <!-- Configuration des mails -->
                 <div id="conf_mail" class="conf_section">
-                    <br />
+		    <p class="title_page">Configuration des mails</p>
                     <span>Nom d'utilisateur :</span>
-                    <input type="text" id="conf_mail_username" >
+                    <input type="text" id="conf_mail_username" ><br />
                     <input type="button" value="Sauvegarder utilisateur" onclick="changeVal('PARAM','MAIL_USERNAME',document.getElementById('conf_mail_username').value);" />
-                    <br />
+                    <br /><br />
                     <span>Mot de passe :</span>
                     <input type="password" id="conf_mail_password" ><br />
                     <input type="button" value="Sauvegarder MDP" onclick="changeVal('PARAM','MAIL_PASSWORD',document.getElementById('conf_mail_password').value);" />
-                    <br />
+                    <br /><br />
                     <span>Server SMTP :</span>
                     <select id="conf_mail_Port" onchange="changeVal('PARAM','MAIL_SMTP',this.value);" style="display:inline" >
                         <option value="smtp.gmail.com"              <?php if (ParamIni("PARAM","MAIL_SMTP","smtp.gmail.com") == "smtp.gmail.com")             {echo "selected";} ?>  >smtp.gmail.com</option>

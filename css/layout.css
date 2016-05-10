@@ -15,10 +15,13 @@ input[type=button] {
     display:inline-block;
     cursor:pointer;
     color:#ffffff;
-    font-size:17px;
-    padding:8px 17px;
+    font-size:1em;
+    padding:8px;
     text-decoration:none;
+    margin-bottom: 5px;
 }
+
+
 input[type=button]:disabled {
     background-color:#dddddd;
     border:1px solid #eeeeee;
@@ -46,7 +49,7 @@ input[type=button]:disabled {
 .footer
 {
 	background: #777;
-	font-size: 16px;
+	font-size: 0.9em;
 	font-weight: bold;
 	color: #fff;
 	line-height: 60px;
@@ -80,6 +83,30 @@ input[type=button]:disabled {
     text-align: left;
     
 }
+
+
+.title_page {
+    text-shadow: 0px 1px 2px #555;
+    text-align: center;
+    font-size: 1.3em;
+}
+
+.title_subpage {
+    text-shadow: 0px 1px 2px #555;
+    text-align: center;
+    font-size: 1em;
+
+}
+
+
+
+hr {
+    width: 40%;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+
 table.center {
     margin-left:auto; 
     margin-right:auto;
@@ -90,14 +117,14 @@ body
 	background: #5BC5FF;
 	color: #fff;
 	font-family: Arial, sans-serif;
-	font-size: 16px;
+	font-size: 0.9em;
 	line-height: 22px;
 	-webkit-text-size-adjust: none;
 }
 
 p, ul, ol, blockquote
 {
-	margin: 0 0 22px 0;
+	margin: 5px 0 22px 0;
 }
 a, a:link, a:active, a:visited, a:hover
 {
@@ -106,7 +133,7 @@ a, a:link, a:active, a:visited, a:hover
 }
 
 select,
-input[type="text"]
+input[type="text"], input[type="password"]
 {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -119,8 +146,9 @@ input[type="text"]
 	line-height: 20px;
 	display: block;
 	height: 30px;
-	width: 95%;
 	padding: 5px 10px;
+        display:inline-block;
+        margin-bottom: 10px;
 }
 
 
@@ -147,6 +175,12 @@ input[type="text"]
 	color: #ccc;
 }
 
+
+.fa {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
 #mm-blocker
 {
 	/*background: rgba( 91, 197, 255, 0 );*/
@@ -163,7 +197,7 @@ body
 {
 	background-color: #fff;
 	font-family: Arial, Helvetica, Verdana;
-	font-size: 14px;
+	font-size: 0.9em;
 	line-height: 22px;
 	color: #666;
 	position: relative;
@@ -173,10 +207,12 @@ body *
 {
 	text-shadow: none;
 }
+
 p
 {
-	margin: 0 0 10px 0;
+	margin: 20px 10px 10px 10px !important;
 }
+
 a, a:link, a:active, a:visited, a:hover
 {
 	color: inherit;
