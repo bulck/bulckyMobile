@@ -90,16 +90,28 @@
             readSensors(0);
             
             // On vient lire l'état des prises
-            
+
+
             
          });
+
+        </script>
+
+        <script>
+            $( document ).ready(function() {
+               //Openning menu for wilder screen : 
+               if($( window ).width()>=1400) {
+                   $("#trigger_menu").trigger("click");
+               }
+            });
+
         </script>
 
     </head>
     <body>
         <div id="page">
             <div class="header fixed">
-                <a href="#menu"></a>
+                <a href="#menu" id="trigger_menu"></a>
                 <p id="texte_info"><?php echo ConfigPHP($GLOBALS,"Irrigation",'CONFIG','nom'); ?></p>
             </div>
             <div class="content">
