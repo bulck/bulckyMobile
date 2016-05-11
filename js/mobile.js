@@ -205,16 +205,16 @@ function readPlugs (periode) {
                    if (attr == "on") {
                        document.getElementById("plug_" + index).classList.add('fa-play');
                        document.getElementById("plug_" + index).classList.remove('fa-stop');
-                       document.getElementById("plug_" + index).classList.remove('fa-warning');
+                       document.getElementById("plug_" + index).classList.remove('fa-question-circle');
                    } else if (attr == "off") {
                        document.getElementById("plug_" + index).classList.add('fa-stop');
                        document.getElementById("plug_" + index).classList.remove('fa-play');
-                       document.getElementById("plug_" + index).classList.remove('fa-warning');
+                       document.getElementById("plug_" + index).classList.remove('fa-question-circle');
                    } else {
                        // DEFCOM
                        document.getElementById("plug_" + index).classList.remove('fa-play');
                        document.getElementById("plug_" + index).classList.remove('fa-stop');
-                       document.getElementById("plug_" + index).classList.add('fa-warning');
+                       document.getElementById("plug_" + index).classList.add('fa-question-circle');
                    }
                }
             }

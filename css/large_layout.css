@@ -1,12 +1,11 @@
 @media (min-width: 600px)  {
     body {
-	background-color: #EEE !important;
+        background-color: #EEE !important;
     }
 
     .content {
        max-width: 600px;
        margin: auto;
-       border: solid 3px;
        border-radius: 20px;
        margin-bottom: 15px;
        padding: 10px 10px 10px 10px;
@@ -14,17 +13,14 @@
 
     .header {
        background-color: rgb(238,<200b> 238,<200b> 238);
-       max-width: 600px;
        margin: auto;
        position: relative !important; 
-       border-radius: 20px;
        margin-bottom: 15px;
     }
 
     #page  {
-	background: #EEE !important;
+        background: #EEE !important;
         height: 100% !important;
     }
-	
 
 }

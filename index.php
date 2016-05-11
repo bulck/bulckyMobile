@@ -57,7 +57,7 @@
         <link rel="icon" href="img/water_drop_32.png" sizes="32x32">
         
         <link type="text/css" href="css/layout.css" rel="stylesheet" />
-	<link type="text/css" href="css/large_layout.css" rel="stylesheet" />
+        <link type="text/css" href="css/large_layout.css" rel="stylesheet" />
 
         <!-- Include jQuery.mmenu .css files -->
         <link type="text/css" href="css/font-awesome.min.css" rel="stylesheet" />
@@ -97,12 +97,12 @@
 
     </head>
     <body>
-		<div id="page">
-			<div class="header fixed">
-				<a href="#menu"></a>
+        <div id="page">
+            <div class="header fixed">
+                <a href="#menu"></a>
                 <p id="texte_info"><?php echo ConfigPHP($GLOBALS,"Irrigation",'CONFIG','nom'); ?></p>
-			</div>
-			<div class="content">
+            </div>
+            <div class="content">
 
             
                 <div id="first_view" class="conf_section" style="display:block;" >
@@ -135,7 +135,7 @@
                 
                 <!-- Page de configuration -->
                 <div id="param_conf" class="conf_section">
-		   <p class="title_page">Configuration générale</p>
+           <p class="title_page">Configuration générale</p>
                     <table class="center" >
                         <tr>
                             <td>Irrigation activée :</td>
@@ -168,7 +168,6 @@
                             </td>
                         </tr>
                     </table>
-		    <hr />
                     <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                 </div> 
 
@@ -198,7 +197,7 @@
                                 <li>Température : <p style="display:inline">25°C</p></li>
                                 <li>Humidité : <p style="display:inline">75%</p></li>
                                 -->
-				<p class="title_page">Configuration cuve</p>
+                                <p class="title_page">Configuration cuve</p>
 
                                     <p class="title_subpage">Dosage engrais 1</p>
                                     <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
@@ -223,7 +222,7 @@
                                     <input type="button" value="Injecter 25 mL de l'engrais 3" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
                                
 
-				<p class="title_subpage">Configuration de la cuve</p> 
+                                <p class="title_subpage">Configuration de la cuve</p> 
                                 <table class="center">
                                     <tr>
                                         <td>Engrais 1 actif : </td>
@@ -254,7 +253,6 @@
                                         </td>
                                     </tr>
                                 </table>
-				<hr />
                                 <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                             </div>
                         <?php
@@ -313,7 +311,7 @@
                                             <?php
                                         }
                                     ?>
-				    <p class="title_subpage">Configuration des lignes</p>
+                                    <p class="title_subpage">Configuration des lignes</p>
                                     <table class="center">
                                     <?php
                                     foreach ($plateforme["ligne"] as $nom_ligne => $ligne) 
@@ -345,10 +343,9 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <hr />
                                     <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
-				    <br />
-				    <p class="title_subpage">Test des lignes</p>
+                                    <br />
+                                    <p class="title_subpage">Test des lignes</p>
                                     <table class="center" >
                                         <tr>
                                             <td>Temps de test :</td>
@@ -425,7 +422,7 @@
                             foreach ($outPrise as $numero => $nom) {
                                 ?>
                                 <tr>
-                                    <td><i id="plug_<?php echo $numero ;?>" class="fa fa-warning"></i><?php echo $numero . " : " . $nom ;?> :</td>
+                                    <td><i id="plug_<?php echo $numero ;?>" class="fa fa-question-circle"></i><?php echo $numero . " : " . $nom ;?> :</td>
                                     <td><input                          type="button" value="&#xf144;"  onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"on", <?php echo $numero ;?>,0);' /></td>
                                     <td><input style="float: right;" type="button" value="&#xf28d;" onclick='setPlug(document.getElementById("temps_test_cyle_plug").value,"off", <?php echo $numero ;?>,0);' /></td>
                                 <tr>
@@ -486,7 +483,7 @@
                 
                 <!-- subpanel for verbose -->
                 <div id="param_verbose"  class="conf_section">
-		    <p class="title_page">Configuration de la verbosité</p>
+                    <p class="title_page">Configuration de la verbosité</p>
                     <table class="center"> 
                         <tr>
                             <td>Verbose Server :</td>
@@ -570,9 +567,9 @@
                     
                 <!-- Action de configuration -->
                 <div id="conf_action" class="conf_section">
-		    <p class="title_page">Actions de configuration</p>
+            <p class="title_page">Actions de configuration</p>
                     <input type="button" value="Mise à jour Bulckyface" onclick="rpi_update('bulckyface');" />
-		    <br />
+                    <br />
                     <input type="button" value="Mise à jour Bulckypi" onclick="rpi_update('bulckypi');" />
 
                     <p class="title_page">Appliquer une conf template</p>
@@ -593,7 +590,7 @@
                 
                 <!-- Configuration des mails -->
                 <div id="conf_mail" class="conf_section">
-		    <p class="title_page">Configuration des mails</p>
+                    <p class="title_page">Configuration des mails</p>
                     <span>Nom d'utilisateur :</span>
                     <input type="text" id="conf_mail_username" ><br />
                     <input type="button" value="Sauvegarder utilisateur" onclick="changeVal('PARAM','MAIL_USERNAME',document.getElementById('conf_mail_username').value);" />
@@ -621,8 +618,8 @@
                     </select>
                 </div>
                 
-			</div>
-		</div>
+            </div>
+        </div>
         
         <!-- The menu -->
         <nav id="menu">
