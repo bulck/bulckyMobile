@@ -310,12 +310,10 @@ li.mm-vertical.mm-opened > .mm-panel {
   box-sizing: border-box;
   position: relative; }
 
-@media all and (max-width: 1399px) {
 .mm-slideout {
   -webkit-transition: -webkit-transform 0.4s ease;
   -ms-transition: -ms-transform 0.4s ease;
   transition: transform 0.4s ease; }
-}
 
 html.mm-opened {
   overflow: hidden;
@@ -351,14 +349,12 @@ html.mm-blocking #mm-blocker {
   min-width: 140px;
   max-width: 440px; }
 
-@media all and (max-width: 1399px) {
 html.mm-opening .mm-slideout {
   -webkit-transform: translate(80%, 0);
   -moz-transform: translate(80%, 0);
   -ms-transform: translate(80%, 0);
   -o-transform: translate(80%, 0);
   transform: translate(80%, 0); }
-}
 
 @media all and (max-width: 175px) {
   html.mm-opening .mm-slideout {
@@ -366,9 +362,14 @@ html.mm-opening .mm-slideout {
     -moz-transform: translate(140px, 0);
     -ms-transform: translate(140px, 0);
     -o-transform: translate(140px, 0);
-    transform: translate(140px, 0); } 
-}
-
+    transform: translate(140px, 0); } }
+@media all and (min-width: 550px) {
+  html.mm-opening .mm-slideout {
+    -webkit-transform: translate(440px, 0);
+    -moz-transform: translate(440px, 0);
+    -ms-transform: translate(440px, 0);
+    -o-transform: translate(440px, 0);
+    transform: translate(440px, 0); } }
 /*
 	jQuery.mmenu autoHeight addon CSS
 */
@@ -1095,14 +1096,12 @@ html.mm-effect-slide-listitems.mm-opening .mm-menu.mm-effect-slide-listitems .mm
   min-width: 140px;
   max-width: 10000px; }
 
-@media all and (max-width: 1399px) {
 html.mm-opening.mm-fullscreen .mm-slideout {
   -webkit-transform: translate(100%, 0);
   -moz-transform: translate(100%, 0);
   -ms-transform: translate(100%, 0);
   -o-transform: translate(100%, 0);
   transform: translate(100%, 0); }
-}
 
 @media all and (max-width: 140px) {
   html.mm-opening.mm-fullscreen .mm-slideout {
@@ -1198,14 +1197,12 @@ html.mm-opened.mm-fullscreen .mm-page {
   top: auto;
   bottom: 0; }
 
-@media all and (max-width: 1399px) {
 html.mm-right.mm-opening .mm-slideout {
   -webkit-transform: translate(-80%, 0);
   -moz-transform: translate(-80%, 0);
   -ms-transform: translate(-80%, 0);
   -o-transform: translate(-80%, 0);
   transform: translate(-80%, 0); }
-}
 
 @media all and (max-width: 175px) {
   html.mm-right.mm-opening .mm-slideout {

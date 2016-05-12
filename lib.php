@@ -1447,6 +1447,56 @@ if(!isset($function) || empty($function)) {
 
             echo json_encode($return_array);
             break;
+
+        case 'GET_POWER':
+        
+            // On récupère les courbes a afficher
+            $plug = $_POST['plug'];
+
+            // On récupere la date du graphique
+            $monthStart  = $_POST['monthStart'];
+            $yearStart   = $_POST['yearStart'];
+        
+            // Open connection to dabase
+            switch(php_uname('s')) {
+                case 'Windows NT':
+                    $db = new PDO('mysql:host=127.0.0.1;port=3891;dbname=cultibox;charset=utf8', 'cultibox', 'cultibox');
+                    break;
+                default : 
+                    $db = new PDO('mysql:host=127.0.0.1;port=3891;dbname=bulcky;charset=utf8', 'bulcky', 'bulcky');
+                    break;
+            }
+
+            $sql = "select SUBSTR(timestamp,5,2), SUBSTR(timestamp,9,2), SUBSTR(timestamp,11,2) , SUBSTR(timestamp,13,2) , record FROM power WHERE plug_number = '{$plug}'"
+                    . " AND timestamp LIKE '{$yearStart}{$monthStart}%' ORDER BY timestamp;";
+        
+            try {
+                $sth = $db->prepare($sql);
+                $sth->execute();
+            } catch(\PDOException $e) {
+                print_r($e->getMessage());
+            }
+
+            $day = 0;
+            $nbSec = array();
+            while ($row = $sth->fetch()) 
+            {
+                if ($row["SUBSTR(timestamp,5,2)"] != $day) {
+                    $startSec = 0;
+                    $day = $row["SUBSTR(timestamp,5,2)"];
+                    $nbSec[$day] = 0;
+                }
+                $secActual = $row["SUBSTR(timestamp,9,2)"] * 3600 + $row["SUBSTR(timestamp,11,2)"] * 60 + $row["SUBSTR(timestamp,13,2)"];
+                if ($row["record"] == "9990" && $startSec == 0) {
+                    $startSec = $secActual;
+                } elseif ($row["record"] == "0" && $startSec != 0) {
+                    $nbSec[$day] = $nbSec[$day] + $secActual - $startSec;
+                    $startSec = 0;
+                }
+            }
+
+            echo json_encode($nbSec);
+            break;
             
         default:
             echo json_encode("0");

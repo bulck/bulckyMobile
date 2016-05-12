@@ -88,25 +88,10 @@
             
             // On vient lire la valeur des capteurs 
             readSensors(0);
-            
-            // On vient lire l'état des prises
 
-
-            
          });
 
         </script>
-
-        <script>
-            $( document ).ready(function() {
-               //Openning menu for wilder screen : 
-               if($( window ).width()>=1400) {
-                   $("#trigger_menu").trigger("click");
-               }
-            });
-
-        </script>
-
     </head>
     <body>
         <div id="page">

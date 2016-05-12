@@ -8,7 +8,8 @@ $GLOBALS['CONFIG'] = array(
 
 $GLOBALS['SURPRESSEUR'] = array(
     'IP' => "localhost",
-    'prise' => 17
+    'prise' => 17,
+    'puissance' => 850
 );
 
 // Pour les capteurs :
@@ -60,7 +61,8 @@ $GLOBALS['IRRIGATION'] = array(
             'Ouest' => array(
                 'prise'   => array (
                     "pompe"             => 18,
-                    'EV_eauclaire'      => 15
+                    'EV_eauclaire'      => 15,
+                    'puissance' => 750
                 ),
                 'capteur'   => array (
                     'pression_pompe'     => array (
@@ -85,6 +87,7 @@ $GLOBALS['IRRIGATION'] = array(
                                 'value,1'     => 1
                             )
                         ),
+                        'longueur' => 50
                      ),
                      "2" => array(
                         'prise' => 2,
@@ -98,6 +101,7 @@ $GLOBALS['IRRIGATION'] = array(
                                 'value,1'       => 1
                             )
                         ),
+                        'longueur' => 50
                      ),
                      "3" => array(
                         'prise' => 3,
@@ -111,6 +115,7 @@ $GLOBALS['IRRIGATION'] = array(
                                 'value,1'       => 1
                             )
                         ),
+                        'longueur' => 50
                      ),
                      "4" => array(
                         'prise' => 4,
@@ -124,6 +129,7 @@ $GLOBALS['IRRIGATION'] = array(
                                 'value,1'       => 1
                             )
                         ),
+                        'longueur' => 50
                      )
                  )
             ),
@@ -155,6 +161,7 @@ $GLOBALS['IRRIGATION'] = array(
                                 'value,1'       => 1
                             )
                         ),
+                        'longueur' => 50
                     ),
                     "6" => array(
                         'prise' => 6,
@@ -168,6 +175,7 @@ $GLOBALS['IRRIGATION'] = array(
                                 'value,1'       => 1
                             )
                         ),
+                        'longueur' => 50
                     ),
                     "7" => array(
                         'prise' => 7,
@@ -180,7 +188,8 @@ $GLOBALS['IRRIGATION'] = array(
                                 'input,1'       => 1,
                                 'value,1'       => 1
                             )
-                        )
+                        ),
+                        'longueur' => 50
                     ),
                     "8" => array(
                         'prise' => 8,
@@ -193,7 +202,8 @@ $GLOBALS['IRRIGATION'] = array(
                                 'input,1'       => 1,
                                 'value,1'       => 1
                             )
-                        )
+                        ),
+                        'longueur' => 50
                     )
                 )
              ),
@@ -225,6 +235,7 @@ $GLOBALS['IRRIGATION'] = array(
                                 'value,1'       => 1
                             )
                         ),
+                        'longueur' => 50
                     ),
                     "10" => array(
                         'prise' => 10,
@@ -238,6 +249,7 @@ $GLOBALS['IRRIGATION'] = array(
                                 'value,1'       => 1
                             )
                         ),
+                        'longueur' => 50
                     ),
                     "11" => array(
                         'prise' => 11,
@@ -250,7 +262,8 @@ $GLOBALS['IRRIGATION'] = array(
                                 'input,1'       => 1,
                                 'value,1'       => 1
                             )
-                        )
+                        ),
+                        'longueur' => 50
                     ),
                     "12" => array(
                         'prise' => 12,
@@ -263,7 +276,8 @@ $GLOBALS['IRRIGATION'] = array(
                                 'input,1'       => 1,
                                 'value,1'       => 1
                             )
-                        )
+                        ),
+                        'longueur' => 50
                     )
                 )
              )

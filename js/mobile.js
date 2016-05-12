@@ -451,3 +451,27 @@ function drawSensor(sensor1Numero, nom) {
         chart.draw(data, options);
     });
 }
+
+
+function readPower(plugNum, yyyys, mms) {
+
+    logMessage("Lecture puissance ...", 0);
+
+    if(mms<10) mms='0'+mms;
+    if(yyyys<10) yyyys='0'+yyyys;
+    
+    $.ajax({
+        cache: false,
+        async: true,
+        type: "POST",
+        url: "lib.php",
+        data: {
+            function:"GET_POWER",
+            plug:plugNum,
+            monthStart:mms,
+            yearStart:yyyys
+        }
+    }).done(function (data) {
+        logMessage("Chargement terminée ", 10000);
+    });
+}

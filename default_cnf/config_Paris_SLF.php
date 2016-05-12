@@ -8,7 +8,8 @@ $GLOBALS['CONFIG'] = array(
 
 $GLOBALS['SURPRESSEUR'] = array(
     'IP' => "localhost",
-    'prise' => 8
+    'prise' => 8,
+    'puissance' => 0
 );
 
 // Pour les capteurs :
@@ -60,7 +61,8 @@ $GLOBALS['IRRIGATION'] = array(
             'Terrasse' => array(
                 'prise'   => array (
                     "pompe"             => 7,
-                    'EV_eauclaire'      => 6
+                    'EV_eauclaire'      => 6,
+                    'puissance'         => 750
                 ),
                 'capteur'   => array (
                     'pression_pompe'     => array (
@@ -85,6 +87,7 @@ $GLOBALS['IRRIGATION'] = array(
                                 'value,1'     => 1
                             )
                         ),
+                        'longueur' => 37
                      ),
                      "2" => array(
                         'prise' => 2,
@@ -98,6 +101,7 @@ $GLOBALS['IRRIGATION'] = array(
                                 'value,1'       => 1
                             )
                         ),
+                        'longueur' => 4
                      ),
                      "3" => array(
                         'prise' => 3,
@@ -110,7 +114,8 @@ $GLOBALS['IRRIGATION'] = array(
                                 'input,1'       => 3,
                                 'value,1'       => 1
                             )
-                        )
+                        ),
+                        'longueur' => 4
                     )
                 )
             )
