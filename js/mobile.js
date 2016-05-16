@@ -341,9 +341,11 @@ function drawChart(graphType, zoneName, plateformeName , ligneNumero) {
 
         var data = new google.visualization.DataTable(jsonData);
 
-        var width = window.innerWidth
-        || document.documentElement.clientWidth
-        || document.body.clientWidth;
+        var width = $(window).width();
+        
+        if (width >= 900) {
+            width = $("#page").width() - 20;
+        }
 
         var options = {
             chart: {

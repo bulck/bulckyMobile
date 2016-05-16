@@ -37,7 +37,7 @@
 
 
 <html>
-   <head>
+    <head>
 
         <title><?php echo ConfigPHP($GLOBALS,"Irrigation",'CONFIG','nom'); ?></title>
         <meta charset="utf-8" />
@@ -57,7 +57,8 @@
         <link rel="icon" href="img/water_drop_32.png" sizes="32x32">
         
         <link type="text/css" href="css/layout.css" rel="stylesheet" />
-        <link type="text/css" href="css/large_layout.css" rel="stylesheet" />
+        <link type="text/css" href="css/large_layout.css" rel="stylesheet" media="(min-width: 900px)" />
+        <link type="text/css" href="css/jquery.mmenu.widescreen.css" type="text/css" rel="stylesheet" media="(min-width: 900px)" />
 
         <!-- Include jQuery.mmenu .css files -->
         <link type="text/css" href="css/font-awesome.min.css" rel="stylesheet" />
@@ -70,26 +71,27 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript" src="js/mobile.js"></script>
 
-      <!-- Fire the plugin onDocumentReady -->
-      <script type="text/javascript">
-         $(function( $ ) {
-            $("#menu").mmenu({
-                extensions: [
-                    "border-none",
-                    "effect-zoom-menu",
-                    "effect-zoom-panels",
-                    "pageshadow",
-                    "theme-dark"
-                ]
-            });
-            
-            // On charge la conf 
-            loadConf();
-            
-            // On vient lire la valeur des capteurs 
-            readSensors(0);
+        <!-- Fire the plugin onDocumentReady -->
+        <script type="text/javascript">
+            $(function( $ ) {
+                $("#menu").mmenu({
+                    extensions: [
+                        "border-none",
+                        "effect-zoom-menu",
+                        "effect-zoom-panels",
+                        "pageshadow",
+                        "theme-dark",
+                        "widescreen"
+                    ]
+                });
 
-         });
+                // On charge la conf 
+                loadConf();
+
+                // On vient lire la valeur des capteurs 
+                readSensors(0);
+
+            });
 
         </script>
     </head>
@@ -99,7 +101,7 @@
                 <a href="#menu" id="trigger_menu"></a>
                 <p id="texte_info"><?php echo ConfigPHP($GLOBALS,"Irrigation",'CONFIG','nom'); ?></p>
             </div>
-            <div class="content">
+            <div class="content" >
 
             
                 <div id="first_view" class="conf_section" style="display:block;" >
