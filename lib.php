@@ -140,7 +140,7 @@ function forcePlug($number,$time,$value) {
     try {
         switch(php_uname('s')) {
             case 'Windows NT':
-                $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "D:\Perso\06_bulckyCore\bulckyPi\getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time,$ret,$err);
+                $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "C:\cultibox\bulckyCore\bulckyPi\getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time,$ret,$err);
                 break;
             default : 
                 $return_array["status"] = exec('tclsh "/opt/bulckypi/bulckyPi/getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time,$ret,$err);
@@ -779,7 +779,7 @@ function generateConf ($path, $pathTmp, $userVar) {
     );
     $paramServerHisto[] = array (
         "key" => "logPeriode",
-        "value" => "60"
+        "value" => "10"
     );
     $paramServerHisto[] = array (
         "key" => "pathMySQL",
@@ -796,7 +796,7 @@ function generateConf ($path, $pathTmp, $userVar) {
         case 'Windows NT':
             $paramServerLog[] = array (
                 "key" => "logPath",
-                "level" => "D:/Perso/06_bulckyCore"
+                "level" => "C:/cultibox/"
             );
             break;
         default : 
@@ -1040,21 +1040,30 @@ if(!isset($function) || empty($function)) {
             break;
         case 'SET_CONF':
 
+            // On vient lire la configuration 
+            $parametre = parse_ini_file("param.ini",true);
+
             // On récupère la conf 
             $variable = $_POST['variable'];
-            write_ini_file($variable, "param.ini", true);
-            
+
+            // On fusionne les deux
+            $fusion["PARAM"] = array_merge($parametre["PARAM"],$variable["PARAM"]);
+            $fusion["CUVE"]  = array_merge($parametre["CUVE"],$variable["CUVE"]);
+            $fusion["LIGNE"] = array_merge($parametre["LIGNE"],$variable["LIGNE"]);
+
+            write_ini_file($fusion, "param.ini", true);
+
             // On cré la conf 
             if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $path = "D:/Perso/06_bulckyCore/_conf";
-                $pathTmp = "D:/tmp";
+                $path = "C:/cultibox/_conf";
+                $pathTmp = "C:/cultibox/tmp";
             } else {
                 $path = "/etc/bulckypi";
                 $pathTmp = "/tmp";
             }
-            
-            generateConf($path, $pathTmp, $variable);
-            
+
+            generateConf($path, $pathTmp, $fusion);
+
             break;
         case 'SET_PLUG':
         
@@ -1080,7 +1089,7 @@ if(!isset($function) || empty($function)) {
             $return_array = array();
             switch(php_uname('s')) {
                 case 'Windows NT':
-                    $commandLine = 'tclsh "D:/Perso/06_bulckyCore/bulckyPi/get.tcl" serverAcqSensor localhost ';
+                    $commandLine = 'tclsh "C:/cultibox/bulckyCore/bulckyPi/get.tcl" serverAcqSensor localhost ';
                     break;
                 default : 
                     $commandLine = 'tclsh "/opt/bulckypi/bulckyPi/get.tcl" serverAcqSensor localhost ';
@@ -1118,7 +1127,7 @@ if(!isset($function) || empty($function)) {
             $return_array = array();
             switch(php_uname('s')) {
                 case 'Windows NT':
-                    $commandLine = 'tclsh "D:/Perso/06_bulckyCore/bulckyPi/get.tcl" serverPlugUpdate localhost ';
+                    $commandLine = 'tclsh "C:/cultibox/bulckyCore/bulckyPi/get.tcl" serverPlugUpdate localhost ';
                     break;
                 default : 
                     $commandLine = 'tclsh "/opt/bulckypi/bulckyPi/get.tcl" serverPlugUpdate localhost ';
@@ -1183,7 +1192,7 @@ if(!isset($function) || empty($function)) {
             try {
                 switch(php_uname('s')) {
                     case 'Windows NT':
-                        $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "D:\Perso\06_bulckyCore\bulckyPi\getCommand.tcl" serverSLF localhost purgeCuve ' . $cuve );
+                        $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "C:\cultibox\bulckyCore\bulckyPi\getCommand.tcl" serverSLF localhost purgeCuve ' . $cuve );
                         break;
                     default : 
                         $return_array["status"] = exec('tclsh "/opt/bulckypi/bulckyPi/getCommand.tcl" serverSLF localhost purgeCuve ' . $cuve );

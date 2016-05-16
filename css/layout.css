@@ -125,6 +125,10 @@ a, a:link, a:active, a:visited, a:hover
 	color: #fff;
 	text-decoration: underline;
 }
+.notactiv {
+   pointer-events: none;
+   cursor: default;
+}
 
 select, input[type="text"], input[type="password"]
 {

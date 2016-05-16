@@ -167,7 +167,7 @@
                             </td>
                         </tr>
                     </table>
-                    <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
+                    <a href="#" onclick='saveConf();' class="HrefBtnApply" ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                 </div> 
 
                 <!-- Pour les cuves -->
@@ -257,7 +257,7 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
+                                <a href="#" onclick='saveConf();' class="HrefBtnApply" ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                             </div>
                         <?php
                         $ZoneIndex++;
@@ -358,7 +358,7 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
+                                    <a href="#" onclick='saveConf();' class="HrefBtnApply"><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                                     <br />
                                     <p class="title_subpage">Test des lignes</p>
                                     <table class="center" >
@@ -642,7 +642,7 @@
             <div id="app">
                 <ul>
                     <li><label>Configuration</label></li>
-                    <li><a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a></li>
+                    <li><a href="#" onclick='saveConf();' class="HrefBtnApply"><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a></li>
                     <li><a href="#" onclick='displayBlock("param_conf");' ><i class="fa fa-cogs"></i>Configuration générale</a></li>
                     <?php
                         // On affiche le titre pour les zones
@@ -680,7 +680,7 @@
                         <li><a href="#" onclick='displayBlock("param_verbose");' ><i class="fa fa-sort-amount-asc"></i>Verbose</a></li>
                         <li><a href="#" onclick='displayBlock("conf_mail");'     ><i class="fa fa-envelope-o"></i>Mail</a></li>
                         <li><a href="#" onclick='displayBlock("conf_action");'   ><i class="fa fa-terminal"></i>Action</a></li>
-                        <li><a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a></li>
+                        <li><a href="#" onclick='saveConf();' class="HrefBtnApply"><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a></li>
                     </ul>
                 </div>
 

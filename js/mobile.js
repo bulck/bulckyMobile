@@ -43,6 +43,7 @@ function saveConf () {
     if( retVal == true ) {
         logMessage("Envoi de la conf...", 0);
         $( ".btnApply" ).removeClass( "fa-arrow-circle-right" ).addClass( "fa-refresh fa-spin" );
+        $( ".HrefBtnApply" ).addClass( "notactiv" );
         $.ajax({
              cache: false,
              async: true,
@@ -59,7 +60,8 @@ function saveConf () {
             } else {
                 logMessage("Configuration appliquée", 5000);
             }
-            $( ".btnApply" ).removeClass( "fa-refresh fa-spin" ).addClass( "fa-arrow-circle-right" );
+            $( ".btnApply" ).removeClass( "fa-refresh fa-spin notactiv" ).addClass( "fa-arrow-circle-right" );
+            $( ".HrefBtnApply" ).removeClass( "notactiv" );
         });
     }
 }
@@ -304,79 +306,6 @@ function displayBlock (sectionName) {
 // Load the Visualization API and the corechart package.
 google.charts.load("current", {packages: ["corechart"]});
 // Set a callback to run when the Google Visualization API is loaded.
-
-
-function drawChart(graphType, zoneName, plateformeName , ligneNumero) {
-
-    logMessage("Chargement courbe ...", 0);
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    if(dd<10) {
-        dd='0'+dd
-    } 
-
-    if(mm<10) {
-        mm='0'+mm
-    } 
-
-    $.ajax({
-        cache: false,
-        async: true,
-        type: "POST",
-        url: "lib.php",
-        data: {
-            function:"GET_GRAPH_VALUES",
-            zone:zoneName,
-            plateforme:plateformeName,
-            graph_type:graphType,
-            ligne:ligneNumero,
-            day:dd,
-            month:mm,
-            year:yyyy
-        }
-    }).done(function (jsonData) {
-        logMessage("Chargement terminée", 10000);
-
-        var data = new google.visualization.DataTable(jsonData);
-
-        var width = $(window).width();
-        
-        if (width >= 900) {
-            width = $("#page").width() - 20;
-        }
-
-        var options = {
-            chart: {
-                title: 'Courbe ' + graphType + ' ' + zoneName + ' ' + plateformeName + ' ' + ligneNumero
-            },
-            series: {
-              0: {targetAxisIndex: 1},
-              1: {targetAxisIndex: 0}
-            },        
-            vAxes: {
-              // Adds titles to each axis.
-              0: {title: 'Pression'},
-              1: {title: 'Niveau cuve'}
-            },
-            explorer: {
-                actions: ['dragToZoom', 'rightClickToReset'],
-                axis: 'horizontal',
-                keepInBounds: true
-            },
-            width: width,
-            height: 500,
-            legend:"bottom"
-        };
-
-        
-        //var chart = new google.charts.Line(document.getElementById('chart_div'));
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-
-        chart.draw(data, options);
-    });
-}
 
 function drawSensor(sensor1Numero, nom1txt , sensor2Numero, nom2txt , sensor3Numero, nom3txt) {
 
