@@ -779,7 +779,7 @@ function generateConf ($path, $pathTmp, $userVar) {
     );
     $paramServerHisto[] = array (
         "key" => "logPeriode",
-        "value" => "10"
+        "value" => "30"
     );
     $paramServerHisto[] = array (
         "key" => "pathMySQL",
@@ -1290,7 +1290,7 @@ if(!isset($function) || empty($function)) {
                 $sensor3Requ = " , " . $sensor3Text ;
             }
             
-            $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , {$sensor1Text} {$sensor2Requ} {$sensor3Requ} FROM bpilogs"
+            $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , SECOND(timestamp) , {$sensor1Text} {$sensor2Requ} {$sensor3Requ} FROM bpilogs"
                     . " WHERE timestamp BETWEEN '{$yearStart}-{$monthStart}-{$dayStart} {$hourStart}:00:00' AND '{$yearEnd}-{$monthEnd}-{$dayEnd} {$hourEnd}:59:59' ORDER BY timestamp;";
         
             try {
@@ -1333,7 +1333,7 @@ if(!isset($function) || empty($function)) {
                     "v" => array(
                         $row['HOUR(timestamp)'],
                         $row['MINUTE(timestamp)'],
-                        "0",
+                        $row['SECOND(timestamp)'],
                     )
                 );
                 $valToSave[] = array ("v" => $row["{$sensor1Text}"]);
