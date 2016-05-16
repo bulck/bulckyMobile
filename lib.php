@@ -1327,18 +1327,12 @@ if(!isset($function) || empty($function)) {
                         "0",
                     )
                 );
-                $valToSave[] = array (
-                    array ("v" => $row["{$sensor1Text}"])
-                );
+                $valToSave[] = array ("v" => $row["{$sensor1Text}"]);
                 if ($sensor2 != "") {
-                    $valToSave[] = array (
-                        array ("v" => $row["{$sensor2Text}"])
-                    );
+                    $valToSave[] = array ("v" => $row["{$sensor2Text}"]);
                 }
                 if ($sensor3 != "") {
-                    $valToSave[] = array (
-                        array ("v" => $row["{$sensor3Text}"])
-                    );
+                    $valToSave[] = array ("v" => $row["{$sensor3Text}"]);
                 }
 
                 $return_array["rows"][] = array ("c" => $valToSave);

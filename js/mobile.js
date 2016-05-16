@@ -439,8 +439,8 @@ function drawSensor(sensor1Numero, nom1txt , sensor2Numero, nom2txt , sensor3Num
                 title: 'Courbe ' + nom1txt + ' ' + nom2txt + ' ' + nom3txt
             },
             series: {
-              0: {targetAxisIndex: 0},
-              1: {targetAxisIndex: 1}
+              0: {targetAxisIndex: 1},
+              1: {targetAxisIndex: 0}
             },
             explorer: {
                 actions: ['dragToZoom', 'rightClickToReset'],
