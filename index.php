@@ -188,7 +188,10 @@
                         $remplissageActif  = $zoneName . "_REMPLISSAGE_ACTIF";
 
                         // 25 mL / min  
-
+                        
+                        $capteurNiveau  = $zone['capteur']['niveau_cuve']['numero'];
+                        $capteurEC_cuve = $zone['capteur']['EC_cuve']['numero'];
+                        
                         ?>
                             <div id="cuve_conf_<?php echo $zoneName ;?>"  class="conf_section">
                                 <!--
@@ -196,30 +199,32 @@
                                 <li>Température : <p style="display:inline">25°C</p></li>
                                 <li>Humidité : <p style="display:inline">75%</p></li>
                                 -->
+                                <p class="title_page">Graphique</p>
+                                <input type="button" value="&#xf1fe;" onclick='google.charts.setOnLoadCallback(function() {drawSensor("<?php echo $capteurNiveau ; ?>","Niveau <?php echo $nom_zone ;?>","<?php echo $capteurEC_cuve ; ?>","EC","","");});displayBlock("display_graph");' />
+                                
                                 <p class="title_page">Configuration cuve</p>
 
-                                    <p class="title_subpage">Dosage engrais 1</p>
-                                    <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
-                                    <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais1,"5");?> ml/min</p> 
-                                    <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
-                                    <p class="title_subpage">Dosage engrais 2</p>
-                                    <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
-                                    <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais2,"5");?> ml/min</p> 
-                                    <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
-                                    <p class="title_subpage">Dosage engrais 3</p>
-                                    <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
-                                    <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais3,"5");?> ml/min</p> 
-                                    <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
+                                <p class="title_subpage">Dosage engrais 1</p>
+                                <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
+                                <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais1,"5");?> ml/min</p> 
+                                <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
+                                <p class="title_subpage">Dosage engrais 2</p>
+                                <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
+                                <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais2,"5");?> ml/min</p> 
+                                <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
+                                <p class="title_subpage">Dosage engrais 3</p>
+                                <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
+                                <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais3,"5");?> ml/min</p> 
+                                <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
 
-                                    <p class="title_subpage">Actions</p>
-                                    <input type="button" value="Purge de la cuve" onclick='purgeCuve("<?php echo $ZoneIndex ;?>");' />
-                                    <br />
-                                    <input type="button" value="Injecter 25 mL de l'engrais 1" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
-                                    <br />
-                                    <input type="button" value="Injecter 25 mL de l'engrais 2" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
-                                    <br />
-                                    <input type="button" value="Injecter 25 mL de l'engrais 3" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
-                               
+                                <p class="title_subpage">Actions</p>
+                                <input type="button" value="Purge de la cuve" onclick='purgeCuve("<?php echo $ZoneIndex ;?>");' />
+                                <br />
+                                <input type="button" value="Injecter 25 mL de l'engrais 1" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
+                                <br />
+                                <input type="button" value="Injecter 25 mL de l'engrais 2" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
+                                <br />
+                                <input type="button" value="Injecter 25 mL de l'engrais 3" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
 
                                 <p class="title_subpage">Configuration de la cuve</p> 
                                 <table class="center">
@@ -263,6 +268,7 @@
                 <?php
                     foreach ($GLOBALS['IRRIGATION'] as $nom_zone => $zone)
                     {
+                        $capteurNiveau  = $zone['capteur']['niveau_cuve']['numero'];
                         // On affiche le titre pour les plateformes
                         foreach ($zone["plateforme"] as $nom_plateforme => $plateforme)
                         {
@@ -272,6 +278,7 @@
                             // On calcul le maximum de l/h max 
                             $nbLigne = count($plateforme["ligne"]);
                             $lhMax = round($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'] / $nbLigne , 1);
+                            $capteurPressionPompe  = $plateforme['capteur']['pression_pompe']['numero'];
                             ?>
                                 <div id="plateforme_conf_<?php echo $pfName ;?>" class="conf_section">
                                     <?php
@@ -285,9 +292,18 @@
                                             $soir = $pfName . "_" . $ligneName . "_SOIR";
                                             $active = $pfName . "_" . $ligneName . "_ACTIVE";
                                             
+                                            $capteurPressionLigne = $ligne['capteur']['pression']['numero'];
+                                            
                                             ?>
-                                                <p class="title_subpage">Ligne <?php echo $ligneName ;?> (l/h/membrane)</p>
+
+                                                
+                                
+                                                <p class="title_subpage"></p>
                                                 <table class="center" >
+                                                    <tr>
+                                                        <td colspan="3">Ligne <?php echo $ligneName ;?> (l/h/membrane)</td>
+                                                        <td><input type="button" value="&#xf1fe;" onclick='google.charts.setOnLoadCallback(function() {drawSensor("<?php echo $capteurNiveau ; ?>","Niveau <?php echo $nom_zone ; ?>","<?php echo $capteurPressionPompe ; ?>","Pression pompe","<?php echo $capteurPressionLigne ; ?>","Pression ligne <?php echo $ligneName ;?>");});displayBlock("display_graph");' /></td>
+                                                    </tr>
                                                     <tr>
                                                         <td>Matin :</td>
                                                         <td><input type="button" value="&#xf146;"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/m", 100);upValTxtLigne ("<?php echo $pfName ;?>" , <?php echo $nbLigne ;?> , "<?php echo $matin ;?>", "<?php echo $GLOBALS['CONFIG']['debit_gouteur'] ;?>" , "<?php echo $GLOBALS['CONFIG']['gouteur_membrane'] ;?>");' /></td>
@@ -467,7 +483,7 @@
                                 <td>Capteur <?php echo $numero;?></td>
                                 <td><?php echo $nom ;?></td>
                                 <td id="sensor_<?php echo $numero ;?>"></td>
-                                <td><input style="float: right;" type="button" value="&#xf1fe;" onclick='google.charts.setOnLoadCallback(function() {drawSensor("<?php echo $numero ; ?>","<?php echo $nom ;?>");});displayBlock("display_graph");' /></td>
+                                <td><input style="float: right;" type="button" value="&#xf1fe;" onclick='google.charts.setOnLoadCallback(function() {drawSensor("<?php echo $numero ; ?>","<?php echo $nom ;?>","","","","");});displayBlock("display_graph");' /></td>
                             </tr>
                             <?php 
                         }
@@ -652,33 +668,12 @@
                             }
                         }
                     ?>
-                    <li><a href="#panel_graph" class="mm-arrow"><i class="fa fa-line-chart"></i>Graph</a></li>
                     <li><label>Debug</label></li>
                     <li><a href="#" onclick='displayBlock("debug_pilotage");' ><i class="fa fa-power-off"></i>Pilotage</a></li>
                     <li><a href="#" onclick='displayBlock("sensors");' ><i class="fa fa-tachometer"></i>Capteurs</a></li>
                     <li><a href="#param_debug" class="mm-arrow"><i class="fa fa-file-code-o"></i>Paramètres avancées</a></li>
                 </ul>
 
-                <!-- subpanel for graph -->
-                <div id="panel_graph"  class="Panel">
-                    <ul>
-                        <?php
-                            foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
-                                ?>
-                                    <li><a href="#" onclick='google.charts.setOnLoadCallback(function() {drawChart("cuve","<?php echo $zone_nom ; ?>","","");});displayBlock("display_graph");' >Cuve <?php echo $zone_nom ; ?></a></li>
-                                <?php
-                                foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
-                                    foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
-                                        ?>
-                                            <li><a href="#" onclick='google.charts.setOnLoadCallback(function() {drawChart("ligne","<?php echo $zone_nom ; ?>","<?php echo $plateforme_nom ; ?>","<?php echo $ligne_numero ; ?>");});displayBlock("display_graph");' >Ligne <?php echo $ligne_numero ; ?></a></li>
-                                        <?php
-                                    }
-                                }
-                            }
-                        ?>
-                    </ul>
-                </div>
-                
                 <!-- subpanel for debug -->
                 <div id="param_debug"  class="Panel">
                     <ul>

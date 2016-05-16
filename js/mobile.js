@@ -378,7 +378,7 @@ function drawChart(graphType, zoneName, plateformeName , ligneNumero) {
     });
 }
 
-function drawSensor(sensor1Numero, nom) {
+function drawSensor(sensor1Numero, nom1txt , sensor2Numero, nom2txt , sensor3Numero, nom3txt) {
 
     logMessage("Chargement courbe ...", 0);
     var endDate = new Date();
@@ -409,7 +409,11 @@ function drawSensor(sensor1Numero, nom) {
         data: {
             function:"GET_SENSOR_VALUE",
             sensor1:sensor1Numero,
-            nom1:nom,
+            nom1:nom1txt,
+            sensor2:sensor2Numero,
+            nom2:nom2txt,
+            sensor3:sensor3Numero,
+            nom3:nom3txt,
             hourStart:hhs,
             dayStart:dds,
             monthStart:mms,
@@ -424,13 +428,15 @@ function drawSensor(sensor1Numero, nom) {
 
         var data = new google.visualization.DataTable(jsonData);
 
-        var width = window.innerWidth
-        || document.documentElement.clientWidth
-        || document.body.clientWidth;
+        var width = $(window).width();
+        
+        if (width >= 900) {
+            width = $("#page").width() - 20;
+        }
 
         var options = {
             chart: {
-                title: 'Courbe ' + nom
+                title: 'Courbe ' + nom1txt + ' ' + nom2txt + ' ' + nom3txt
             },
             series: {
               0: {targetAxisIndex: 0},
