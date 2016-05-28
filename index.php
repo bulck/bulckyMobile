@@ -196,28 +196,37 @@
                                 -->
                                 <p class="title_page">Configuration cuve</p>
 
-                                    <p class="title_subpage">Dosage engrais 1</p>
-                                    <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
-                                    <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais1,"5");?> ml/min</p> 
-                                    <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
-                                    <p class="title_subpage">Dosage engrais 2</p>
-                                    <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
-                                    <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais2,"5");?> ml/min</p> 
-                                    <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
-                                    <p class="title_subpage">Dosage engrais 3</p>
-                                    <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
-                                    <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais3,"5");?> ml/min</p> 
-                                    <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
+                                <p class="title_subpage">Dosage engrais 1</p>
+                                <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", -0.1, "ml/min");' />
+                                <p id="<?php echo "CUVE_" . $engrais1 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais1,"5");?> ml/min</p> 
+                                <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais1 ;?>", 0.1, "ml/min");' />
+                                <p class="title_subpage">Dosage engrais 2</p>
+                                <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", -0.1, "ml/min");' />
+                                <p id="<?php echo "CUVE_" . $engrais2 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais2,"5");?> ml/min</p> 
+                                <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais2 ;?>", 0.1, "ml/min");' />
+                                <p class="title_subpage">Dosage engrais 3</p>
+                                <input type="button" value="&#xf146;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", -0.1, "ml/min");' />
+                                <p id="<?php echo "CUVE_" . $engrais3 ;?>" style="display:inline"><?php echo ParamIni("CUVE",$engrais3,"5");?> ml/min</p> 
+                                <input type="button" value="&#xf0fe;" onclick='upVal("CUVE", "<?php echo $engrais3 ;?>", 0.1, "ml/min");' />
 
-                                    <p class="title_subpage">Actions</p>
-                                    <input type="button" value="Purge de la cuve" onclick='purgeCuve("<?php echo $ZoneIndex ;?>");' />
-                                    <br />
-                                    <input type="button" value="Injecter 25 mL de l'engrais 1" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
-                                    <br />
-                                    <input type="button" value="Injecter 25 mL de l'engrais 2" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
-                                    <br />
-                                    <input type="button" value="Injecter 25 mL de l'engrais 3" onclick='setPlug(60,"on", "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
-                               
+                                <p class="title_subpage">Volume injection engrais :</p>
+                                <select id="temps_ajout_engrais" >
+                                    <option value="240" >1 ml</option>
+                                    <option value="300" >5 ml</option>
+                                    <option value="600" selected>10 ml</option>
+                                    <option value="900" >20 ml</option>
+                                    <option value="1200" >50 ml</option>
+                                    <option value="3600" >100 ml</option>
+                                </select>
+                                <br />
+                                <input type="button" value="Injecter engrais 1" onclick='setPlug(document.getElementById("temps_ajout_engrais").value,"on", "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
+                                <br />
+                                <input type="button" value="Injecter engrais 2" onclick='setPlug(document.getElementById("temps_ajout_engrais").value,"on", "<?php echo $zone["prise"]["engrais2"] ;?>", 0);' />
+                                <br />
+                                <input type="button" value="Injecter engrais 3" onclick='setPlug(document.getElementById("temps_ajout_engrais").value,"on", "<?php echo $zone["prise"]["engrais3"] ;?>", 0);' />
+                                <p class="title_subpage">Actions</p>
+                                <input type="button" value="Purge de la cuve" onclick='purgeCuve("<?php echo $ZoneIndex ;?>");' />
+                                <br />
 
                                 <p class="title_subpage">Configuration de la cuve</p> 
                                 <table class="center">

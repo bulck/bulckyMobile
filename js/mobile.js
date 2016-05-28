@@ -235,14 +235,14 @@ function readPlugs (periode) {
 function purgeCuve (cuveIdx) {
     logMessage("Demande purge...", 0);
     $.ajax({
-         cache: false,
-         async: true,
-         type: "POST",
-         url: "lib.php",
-         data: {
-             function:"PURGE_CUVE",
-             cuve:cuveIdx
-         }
+        cache: false,
+        async: true,
+        type: "POST",
+        url: "lib.php",
+        data: {
+            function:"PURGE_CUVE",
+            cuve:cuveIdx
+        }
     }).done(function (data) {
         if (data == "TIMEOUT") {
             logMessage("Erreur : serverSLF ne répond pas " , 10000);
