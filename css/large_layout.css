@@ -1,48 +1,9 @@
-@media (min-width: 1400px)  {
-    html.mm-opened body {
-        overflow: auto !important;
-    }
+.header a
+{
+	display: none
+}
 
-    html {
-         overflow: auto !important;
-    }
-
-    body {
-        background-color: #EEE !important;
-    }
-
-    .content {
-       max-width: 800px;
-       margin-left: auto;
-       margin-right: auto;
-       border-radius: 20px;
-       margin-bottom: 15px;
-       padding: 10px 10px 10px 10px;
-       position: relative;
-       overflow:auto;
-       z-index: 1;
-       left: 10%;
-    }
-
-    .header {
-       background-color: rgb(238,<200b> 238,<200b> 238);
-       margin: auto;
-       position: relative !important; 
-       margin-bottom: 15px;
-       display: none;
-    }
-
-    #page  {
-        background: #EEE !important;
-        height: 100% !important;
-    }
-
-    input[type=button] {
-        margin-bottom: 5px;
-    }
-
-    .mm-opened {
-        border-radius: 0px 0px 20px 0px;
-    }
-
+.mm-menu 
+{
+    margin-top: 60px !important
 }

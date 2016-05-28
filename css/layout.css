@@ -103,7 +103,8 @@ hr {
 table.center {
     margin-left:auto; 
     margin-right:auto;
-  }
+    width:100%;
+}
 
 body
 {
@@ -124,9 +125,12 @@ a, a:link, a:active, a:visited, a:hover
 	color: #fff;
 	text-decoration: underline;
 }
+.notactiv {
+   pointer-events: none;
+   cursor: default;
+}
 
-select,
-input[type="text"], input[type="password"]
+select, input[type="text"], input[type="password"]
 {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -142,6 +146,7 @@ input[type="text"], input[type="password"]
 	padding: 5px 10px;
 	display:inline-block;
 	margin-bottom: 5px;
+    width: 100%;
 }
 
 
@@ -204,6 +209,11 @@ p
 {
 	margin: 20px 10px 10px 10px !important;
 }
+#texte_info
+{
+    margin: 0 !important;
+}
+
 a, a:link, a:active, a:visited, a:hover
 {
 	color: inherit;

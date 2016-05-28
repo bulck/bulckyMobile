@@ -37,7 +37,7 @@
 
 
 <html>
-   <head>
+    <head>
 
         <title><?php echo ConfigPHP($GLOBALS,"Irrigation",'CONFIG','nom'); ?></title>
         <meta charset="utf-8" />
@@ -57,7 +57,8 @@
         <link rel="icon" href="img/water_drop_32.png" sizes="32x32">
         
         <link type="text/css" href="css/layout.css" rel="stylesheet" />
-        <link type="text/css" href="css/large_layout.css" rel="stylesheet" />
+        <link type="text/css" href="css/large_layout.css" rel="stylesheet" media="(min-width: 900px)" />
+        <link type="text/css" href="css/jquery.mmenu.widescreen.css" type="text/css" rel="stylesheet" media="(min-width: 900px)" />
 
         <!-- Include jQuery.mmenu .css files -->
         <link type="text/css" href="css/font-awesome.min.css" rel="stylesheet" />
@@ -70,26 +71,27 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript" src="js/mobile.js"></script>
 
-      <!-- Fire the plugin onDocumentReady -->
-      <script type="text/javascript">
-         $(function( $ ) {
-            $("#menu").mmenu({
-                extensions: [
-                    "border-none",
-                    "effect-zoom-menu",
-                    "effect-zoom-panels",
-                    "pageshadow",
-                    "theme-dark"
-                ]
-            });
-            
-            // On charge la conf 
-            loadConf();
-            
-            // On vient lire la valeur des capteurs 
-            readSensors(0);
+        <!-- Fire the plugin onDocumentReady -->
+        <script type="text/javascript">
+            $(function( $ ) {
+                $("#menu").mmenu({
+                    extensions: [
+                        "border-none",
+                        "effect-zoom-menu",
+                        "effect-zoom-panels",
+                        "pageshadow",
+                        "theme-dark",
+                        "widescreen"
+                    ]
+                });
 
-         });
+                // On charge la conf 
+                loadConf();
+
+                // On vient lire la valeur des capteurs 
+                readSensors(0);
+
+            });
 
         </script>
     </head>
@@ -99,7 +101,7 @@
                 <a href="#menu" id="trigger_menu"></a>
                 <p id="texte_info"><?php echo ConfigPHP($GLOBALS,"Irrigation",'CONFIG','nom'); ?></p>
             </div>
-            <div class="content">
+            <div class="content" >
 
             
                 <div id="first_view" class="conf_section" style="display:block;" >
@@ -165,7 +167,7 @@
                             </td>
                         </tr>
                     </table>
-                    <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
+                    <a href="#" onclick='saveConf();' class="HrefBtnApply" ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                 </div> 
 
                 <!-- Pour les cuves -->
@@ -186,7 +188,10 @@
                         $remplissageActif  = $zoneName . "_REMPLISSAGE_ACTIF";
 
                         // 25 mL / min  
-
+                        
+                        $capteurNiveau  = $zone['capteur']['niveau_cuve']['numero'];
+                        $capteurEC_cuve = $zone['capteur']['EC_cuve']['numero'];
+                        
                         ?>
                             <div id="cuve_conf_<?php echo $zoneName ;?>"  class="conf_section">
                                 <!--
@@ -194,6 +199,9 @@
                                 <li>Température : <p style="display:inline">25°C</p></li>
                                 <li>Humidité : <p style="display:inline">75%</p></li>
                                 -->
+                                <p class="title_page">Graphique</p>
+                                <input type="button" value="&#xf1fe;" onclick='google.charts.setOnLoadCallback(function() {drawSensor("<?php echo $capteurNiveau ; ?>","Niveau <?php echo $nom_zone ;?>","<?php echo $capteurEC_cuve ; ?>","EC","","");});displayBlock("display_graph");' />
+                                
                                 <p class="title_page">Configuration cuve</p>
 
                                 <p class="title_subpage">Dosage engrais 1</p>
@@ -211,12 +219,12 @@
 
                                 <p class="title_subpage">Volume injection engrais :</p>
                                 <select id="temps_ajout_engrais" >
-                                    <option value="240" >1 ml</option>
-                                    <option value="300" >5 ml</option>
-                                    <option value="600" selected>10 ml</option>
-                                    <option value="900" >20 ml</option>
-                                    <option value="1200" >50 ml</option>
-                                    <option value="3600" >100 ml</option>
+                                    <option value="3" >1 ml</option>
+                                    <option value="12" >5 ml</option>
+                                    <option value="24" selected>10 ml</option>
+                                    <option value="48" >20 ml</option>
+                                    <option value="120" >50 ml</option>
+                                    <option value="240" >100 ml</option>
                                 </select>
                                 <br />
                                 <input type="button" value="Injecter engrais 1" onclick='setPlug(document.getElementById("temps_ajout_engrais").value,"on", "<?php echo $zone["prise"]["engrais1"] ;?>", 0);' />
@@ -259,7 +267,7 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
+                                <a href="#" onclick='saveConf();' class="HrefBtnApply" ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                             </div>
                         <?php
                         $ZoneIndex++;
@@ -270,6 +278,7 @@
                 <?php
                     foreach ($GLOBALS['IRRIGATION'] as $nom_zone => $zone)
                     {
+                        $capteurNiveau  = $zone['capteur']['niveau_cuve']['numero'];
                         // On affiche le titre pour les plateformes
                         foreach ($zone["plateforme"] as $nom_plateforme => $plateforme)
                         {
@@ -279,6 +288,7 @@
                             // On calcul le maximum de l/h max 
                             $nbLigne = count($plateforme["ligne"]);
                             $lhMax = round($GLOBALS['CONFIG']['debit_gouteur'] * $GLOBALS['CONFIG']['gouteur_membrane'] / $nbLigne , 1);
+                            $capteurPressionPompe  = $plateforme['capteur']['pression_pompe']['numero'];
                             ?>
                                 <div id="plateforme_conf_<?php echo $pfName ;?>" class="conf_section">
                                     <?php
@@ -292,9 +302,18 @@
                                             $soir = $pfName . "_" . $ligneName . "_SOIR";
                                             $active = $pfName . "_" . $ligneName . "_ACTIVE";
                                             
+                                            $capteurPressionLigne = $ligne['capteur']['pression']['numero'];
+                                            
                                             ?>
-                                                <p class="title_subpage">Ligne <?php echo $ligneName ;?> (l/h/membrane)</p>
+
+                                                
+                                
+                                                <p class="title_subpage"></p>
                                                 <table class="center" >
+                                                    <tr>
+                                                        <td colspan="3">Ligne <?php echo $ligneName ;?> (l/h/membrane)</td>
+                                                        <td><input type="button" value="&#xf1fe;" onclick='google.charts.setOnLoadCallback(function() {drawSensor("<?php echo $capteurNiveau ; ?>","Niveau <?php echo $nom_zone ; ?>","<?php echo $capteurPressionPompe ; ?>","Pression pompe","<?php echo $capteurPressionLigne ; ?>","Pression ligne <?php echo $ligneName ;?>");});displayBlock("display_graph");' /></td>
+                                                    </tr>
                                                     <tr>
                                                         <td>Matin :</td>
                                                         <td><input type="button" value="&#xf146;"   onclick='upVal("LIGNE", "<?php echo $matin ;?>", -0.1, "l/h/m", 100);upValTxtLigne ("<?php echo $pfName ;?>" , <?php echo $nbLigne ;?> , "<?php echo $matin ;?>", "<?php echo $GLOBALS['CONFIG']['debit_gouteur'] ;?>" , "<?php echo $GLOBALS['CONFIG']['gouteur_membrane'] ;?>");' /></td>
@@ -349,7 +368,7 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
+                                    <a href="#" onclick='saveConf();' class="HrefBtnApply"><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a>
                                     <br />
                                     <p class="title_subpage">Test des lignes</p>
                                     <table class="center" >
@@ -474,7 +493,7 @@
                                 <td>Capteur <?php echo $numero;?></td>
                                 <td><?php echo $nom ;?></td>
                                 <td id="sensor_<?php echo $numero ;?>"></td>
-                                <td><input style="float: right;" type="button" value="&#xf1fe;" onclick='google.charts.setOnLoadCallback(function() {drawSensor("<?php echo $numero ; ?>","<?php echo $nom ;?>");});displayBlock("display_graph");' /></td>
+                                <td><input style="float: right;" type="button" value="&#xf1fe;" onclick='google.charts.setOnLoadCallback(function() {drawSensor("<?php echo $numero ; ?>","<?php echo $nom ;?>","","","","");});displayBlock("display_graph");' /></td>
                             </tr>
                             <?php 
                         }
@@ -633,7 +652,7 @@
             <div id="app">
                 <ul>
                     <li><label>Configuration</label></li>
-                    <li><a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a></li>
+                    <li><a href="#" onclick='saveConf();' class="HrefBtnApply"><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a></li>
                     <li><a href="#" onclick='displayBlock("param_conf");' ><i class="fa fa-cogs"></i>Configuration générale</a></li>
                     <?php
                         // On affiche le titre pour les zones
@@ -659,40 +678,19 @@
                             }
                         }
                     ?>
-                    <li><a href="#panel_graph" class="mm-arrow"><i class="fa fa-line-chart"></i>Graph</a></li>
                     <li><label>Debug</label></li>
                     <li><a href="#" onclick='displayBlock("debug_pilotage");' ><i class="fa fa-power-off"></i>Pilotage</a></li>
                     <li><a href="#" onclick='displayBlock("sensors");' ><i class="fa fa-tachometer"></i>Capteurs</a></li>
                     <li><a href="#param_debug" class="mm-arrow"><i class="fa fa-file-code-o"></i>Paramètres avancées</a></li>
                 </ul>
 
-                <!-- subpanel for graph -->
-                <div id="panel_graph"  class="Panel">
-                    <ul>
-                        <?php
-                            foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
-                                ?>
-                                    <li><a href="#" onclick='google.charts.setOnLoadCallback(function() {drawChart("cuve","<?php echo $zone_nom ; ?>","","");});displayBlock("display_graph");' >Cuve <?php echo $zone_nom ; ?></a></li>
-                                <?php
-                                foreach ($zone["plateforme"] as $plateforme_nom => $plateforme) {
-                                    foreach ($plateforme["ligne"] as $ligne_numero => $ligne) {
-                                        ?>
-                                            <li><a href="#" onclick='google.charts.setOnLoadCallback(function() {drawChart("ligne","<?php echo $zone_nom ; ?>","<?php echo $plateforme_nom ; ?>","<?php echo $ligne_numero ; ?>");});displayBlock("display_graph");' >Ligne <?php echo $ligne_numero ; ?></a></li>
-                                        <?php
-                                    }
-                                }
-                            }
-                        ?>
-                    </ul>
-                </div>
-                
                 <!-- subpanel for debug -->
                 <div id="param_debug"  class="Panel">
                     <ul>
                         <li><a href="#" onclick='displayBlock("param_verbose");' ><i class="fa fa-sort-amount-asc"></i>Verbose</a></li>
                         <li><a href="#" onclick='displayBlock("conf_mail");'     ><i class="fa fa-envelope-o"></i>Mail</a></li>
                         <li><a href="#" onclick='displayBlock("conf_action");'   ><i class="fa fa-terminal"></i>Action</a></li>
-                        <li><a href="#" onclick='saveConf();' ><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a></li>
+                        <li><a href="#" onclick='saveConf();' class="HrefBtnApply"><i class="btnApply fa fa-arrow-circle-right"></i>Appliquer la configuration</a></li>
                     </ul>
                 </div>
 

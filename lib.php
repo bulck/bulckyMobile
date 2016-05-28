@@ -140,7 +140,7 @@ function forcePlug($number,$time,$value) {
     try {
         switch(php_uname('s')) {
             case 'Windows NT':
-                $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "D:\Perso\06_bulckyCore\bulckyPi\getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time,$ret,$err);
+                $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "C:\cultibox\bulckyCore\bulckyPi\getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time,$ret,$err);
                 break;
             default : 
                 $return_array["status"] = exec('tclsh "/opt/bulckypi/bulckyPi/getCommand.tcl" serverPlugUpdate localhost setGetRepere ' . $number . ' ' . $value . ' ' . $time,$ret,$err);
@@ -779,7 +779,7 @@ function generateConf ($path, $pathTmp, $userVar) {
     );
     $paramServerHisto[] = array (
         "key" => "logPeriode",
-        "value" => "60"
+        "value" => "30"
     );
     $paramServerHisto[] = array (
         "key" => "pathMySQL",
@@ -796,7 +796,7 @@ function generateConf ($path, $pathTmp, $userVar) {
         case 'Windows NT':
             $paramServerLog[] = array (
                 "key" => "logPath",
-                "level" => "D:/Perso/06_bulckyCore"
+                "level" => "C:/cultibox/"
             );
             break;
         default : 
@@ -1040,21 +1040,30 @@ if(!isset($function) || empty($function)) {
             break;
         case 'SET_CONF':
 
+            // On vient lire la configuration 
+            $parametre = parse_ini_file("param.ini",true);
+
             // On récupère la conf 
             $variable = $_POST['variable'];
-            write_ini_file($variable, "param.ini", true);
-            
+
+            // On fusionne les deux
+            $fusion["PARAM"] = array_merge($parametre["PARAM"],$variable["PARAM"]);
+            $fusion["CUVE"]  = array_merge($parametre["CUVE"],$variable["CUVE"]);
+            $fusion["LIGNE"] = array_merge($parametre["LIGNE"],$variable["LIGNE"]);
+
+            write_ini_file($fusion, "param.ini", true);
+
             // On cré la conf 
             if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $path = "D:/Perso/06_bulckyCore/_conf";
-                $pathTmp = "D:/tmp";
+                $path = "C:/cultibox/_conf";
+                $pathTmp = "C:/cultibox/tmp";
             } else {
                 $path = "/etc/bulckypi";
                 $pathTmp = "/tmp";
             }
-            
-            generateConf($path, $pathTmp, $variable);
-            
+
+            generateConf($path, $pathTmp, $fusion);
+
             break;
         case 'SET_PLUG':
         
@@ -1080,7 +1089,7 @@ if(!isset($function) || empty($function)) {
             $return_array = array();
             switch(php_uname('s')) {
                 case 'Windows NT':
-                    $commandLine = 'tclsh "D:/Perso/06_bulckyCore/bulckyPi/get.tcl" serverAcqSensor localhost ';
+                    $commandLine = 'tclsh "C:/cultibox/bulckyCore/bulckyPi/get.tcl" serverAcqSensor localhost ';
                     break;
                 default : 
                     $commandLine = 'tclsh "/opt/bulckypi/bulckyPi/get.tcl" serverAcqSensor localhost ';
@@ -1118,7 +1127,7 @@ if(!isset($function) || empty($function)) {
             $return_array = array();
             switch(php_uname('s')) {
                 case 'Windows NT':
-                    $commandLine = 'tclsh "D:/Perso/06_bulckyCore/bulckyPi/get.tcl" serverPlugUpdate localhost ';
+                    $commandLine = 'tclsh "C:/cultibox/bulckyCore/bulckyPi/get.tcl" serverPlugUpdate localhost ';
                     break;
                 default : 
                     $commandLine = 'tclsh "/opt/bulckypi/bulckyPi/get.tcl" serverPlugUpdate localhost ';
@@ -1183,7 +1192,7 @@ if(!isset($function) || empty($function)) {
             try {
                 switch(php_uname('s')) {
                     case 'Windows NT':
-                        $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "D:\Perso\06_bulckyCore\bulckyPi\getCommand.tcl" serverSLF localhost purgeCuve ' . $cuve );
+                        $return_array["status"] = exec('C:\Tcl\bin\tclsh.exe "C:\cultibox\bulckyCore\bulckyPi\getCommand.tcl" serverSLF localhost purgeCuve ' . $cuve );
                         break;
                     default : 
                         $return_array["status"] = exec('tclsh "/opt/bulckypi/bulckyPi/getCommand.tcl" serverSLF localhost purgeCuve ' . $cuve );
@@ -1236,152 +1245,16 @@ if(!isset($function) || empty($function)) {
             if ($err != 0) echo "Erreur déplacement : $cmdLine";
 
             break;             
-            
-        case 'GET_GRAPH_VALUES':
-        
-            // On récupère le type de graphique (cuve ou ligne)
-            $graph_type = $_POST['graph_type'];
-            $zone       = $_POST['zone'];
-            $plateforme = $_POST['plateforme'];
-            $ligne      = $_POST['ligne'];
-            
-            // On récupere la date du graphique
-            $day   = $_POST['day'];
-            $month = $_POST['month'];
-            $year  = $_POST['year'];
-        
-            $return_array = array();
-        
-            // Open connection to dabase
-            switch(php_uname('s')) {
-                case 'Windows NT':
-                    $db = new PDO('mysql:host=127.0.0.1;port=3891;dbname=cultibox;charset=utf8', 'cultibox', 'cultibox');
-                    break;
-                default : 
-                    $db = new PDO('mysql:host=127.0.0.1;port=3891;dbname=bulcky;charset=utf8', 'bulcky', 'bulcky');
-                    break;
-            }
-            
-        
-            // Un point par minute et par ligne 
-            if ($graph_type == "cuve") {
-                // Si c'est une cuve :
-                // Niveau d'eau
-                // EC
-                // SELECT HOUR(timestamp) , MINUTE(timestamp) , sensor3/100 , sensor4/100 , sensor5/100 FROM bpilogs WHERE timestamp BETWEEN '2016-05-07 00:00:00' AND '2016-05-07 23:59:59' ORDER BY timestamp;
-                $sensorNiveau = "sensor" . $GLOBALS['IRRIGATION'][$zone]['capteur']['niveau_cuve']['numero'];
-                $sensorEC     = "sensor" . $GLOBALS['IRRIGATION'][$zone]['capteur']['EC_cuve']['numero'];
-                
-                $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , {$sensorNiveau} , {$sensorEC} FROM bpilogs"
-                        . " WHERE timestamp BETWEEN '{$year}-{$month}-{$day} 00:00:00' AND '{$year}-{$month}-{$day} 23:59:59' ORDER BY timestamp;";
 
-                try {
-                    $sth = $db->prepare($sql);
-                    $sth->execute();
-                } catch(\PDOException $e) {
-                    print_r($e->getMessage());
-                }
-                
-                $return_array["cols"] = array (
-                    array(
-                        "type" => 'timeofday',
-                        "label" => "Heure"
-                    ),
-                    array(
-                        "type" => 'number',
-                        "label" => "Niveau eau"
-                    ),
-                    array(
-                        "type" => 'number',
-                        "label" => "EC"
-                    )
-                );
-                
-                $return_array["rows"] = array ();
-                while ($row = $sth->fetch()) 
-                {
-                    $return_array["rows"][] = array (
-                        "c" => array (
-                            array ("v" => 
-                                array(
-                                    $row['HOUR(timestamp)'],
-                                    $row['MINUTE(timestamp)'],
-                                    "0",
-                                )
-                            ),
-                            array ("v" => $row["{$sensorNiveau}"]),
-                            array ("v" => $row["{$sensorEC}"])
-                        )
-                    );
-                }
-            
-            } else {
-                // Si c'est une ligne :
-                // Niveau d'eau
-                // Pompe
-                // Pression ligne
-                $sensorNiveau = "sensor" . $GLOBALS['IRRIGATION'][$zone]['capteur']['niveau_cuve']['numero'];
-                $sensorPompe  = "sensor" . $GLOBALS['IRRIGATION'][$zone]['plateforme'][$plateforme]['capteur']['pression_pompe']['numero'];
-                $sensorPLigne = "sensor" . $GLOBALS['IRRIGATION'][$zone]['plateforme'][$plateforme]['ligne'][$ligne]['capteur']['pression']['numero'];
-                
-                $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , {$sensorNiveau} , {$sensorPompe} , {$sensorPLigne} FROM bpilogs"
-                        . " WHERE timestamp BETWEEN '{$year}-{$month}-{$day} 00:00:00' AND '{$year}-{$month}-{$day} 23:59:59' ORDER BY timestamp;";
-                        
-                try {
-                    $sth = $db->prepare($sql);
-                    $sth->execute();
-                } catch(\PDOException $e) {
-                    print_r($e->getMessage());
-                }
-                
-                $return_array["cols"] = array (
-                    array(
-                        "type" => 'timeofday',
-                        "label" => "Heure"
-                    ),
-                    array(
-                        "type" => 'number',
-                        "label" => "Niveau eau" . $zone
-                    ),
-                    array(
-                        "type" => 'number',
-                        "label" => "Pression pompe " . $plateforme
-                    ),
-                    array(
-                        "type" => 'number',
-                        "label" => "Pression ligne " . $ligne
-                    )
-                );
-                
-                $return_array["rows"] = array ();
-                while ($row = $sth->fetch()) 
-                {
-                    $return_array["rows"][] = array (
-                        "c" => array (
-                            array ("v" => 
-                                array(
-                                    $row['HOUR(timestamp)'],
-                                    $row['MINUTE(timestamp)'],
-                                    "0",
-                                )
-                            ),
-                            array ("v" => $row["{$sensorNiveau}"]),
-                            array ("v" => $row["{$sensorPompe}"]),
-                            array ("v" => $row["{$sensorPLigne}"])
-                        )
-                    );
-                }
-                
-            }
-        
-            echo json_encode($return_array);
-            break;
-            
         case 'GET_SENSOR_VALUE':
         
             // On récupère les courbes a afficher
             $sensor1 = $_POST['sensor1'];
             $nom1    = $_POST['nom1'];
+            $sensor2 = $_POST['sensor2'];
+            $nom2    = $_POST['nom2'];
+            $sensor3 = $_POST['sensor3'];
+            $nom3    = $_POST['nom3'];
             
             // On récupere la date du graphique
             $hourStart   = $_POST['hourStart'];
@@ -1406,8 +1279,18 @@ if(!isset($function) || empty($function)) {
             }
             
             $sensor1Text = "sensor" . $sensor1 ;
+            $sensor2Text = "sensor" . $sensor2 ;
+            $sensor2Requ = "";
+            if ($sensor2 != "") {
+                $sensor2Requ = " , " . $sensor2Text ;
+            }
+            $sensor3Text = "sensor" . $sensor3 ;
+            $sensor3Requ = "";
+            if ($sensor3 != "") {
+                $sensor3Requ = " , " . $sensor3Text ;
+            }
             
-            $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , {$sensor1Text} FROM bpilogs"
+            $sql = "SELECT HOUR(timestamp) , MINUTE(timestamp) , SECOND(timestamp) , {$sensor1Text} {$sensor2Requ} {$sensor3Requ} FROM bpilogs"
                     . " WHERE timestamp BETWEEN '{$yearStart}-{$monthStart}-{$dayStart} {$hourStart}:00:00' AND '{$yearEnd}-{$monthEnd}-{$dayEnd} {$hourEnd}:59:59' ORDER BY timestamp;";
         
             try {
@@ -1427,22 +1310,41 @@ if(!isset($function) || empty($function)) {
                     "label" => $nom1
                 )
             );
-
+            
+            if ($sensor2 != "") {
+                $return_array["cols"][] = array (
+                    "type" => 'number',
+                    "label" => $nom2
+                );
+            }
+            if ($sensor3 != "") {
+                $return_array["cols"][] = array (
+                    "type" => 'number',
+                    "label" => $nom3
+                );
+            }
+            
             $return_array["rows"] = array ();
             while ($row = $sth->fetch()) 
             {
-                $return_array["rows"][] = array (
-                    "c" => array (
-                        array ("v" => 
-                            array(
-                                $row['HOUR(timestamp)'],
-                                $row['MINUTE(timestamp)'],
-                                "0",
-                            )
-                        ),
-                        array ("v" => $row["{$sensor1Text}"])
+                // Creation du vecteur de valeur 
+                $valToSave = array ();
+                $valToSave[] = array (
+                    "v" => array(
+                        $row['HOUR(timestamp)'],
+                        $row['MINUTE(timestamp)'],
+                        $row['SECOND(timestamp)'],
                     )
                 );
+                $valToSave[] = array ("v" => $row["{$sensor1Text}"]);
+                if ($sensor2 != "") {
+                    $valToSave[] = array ("v" => $row["{$sensor2Text}"]);
+                }
+                if ($sensor3 != "") {
+                    $valToSave[] = array ("v" => $row["{$sensor3Text}"]);
+                }
+
+                $return_array["rows"][] = array ("c" => $valToSave);
             }
 
             echo json_encode($return_array);
