@@ -996,6 +996,10 @@ function generateConf ($path, $pathTmp, $userVar) {
             exec("sudo cp -R $pathTemporaire/* $path/" .  date("YmdH") . "/" ,$ret,$err);
             if ($err != 0) echo "Erreur copie dans le rep $path/" .  date("YmdH");
             
+            // On ajoute l'ancien param.ini 
+            exec("sudo mv /tmp/param.ini $path/" .  date("YmdH") . "/param.ini",$ret,$err);
+            if ($err != 0) echo 'Erreur sauvegarde ancien param.ini';
+            
             break;
     }
 
@@ -1047,22 +1051,34 @@ if(!isset($function) || empty($function)) {
             $variable = $_POST['variable'];
 
             // On fusionne les deux
-            $fusion["PARAM"] = array_merge($parametre["PARAM"],$variable["PARAM"]);
-            $fusion["CUVE"]  = array_merge($parametre["CUVE"],$variable["CUVE"]);
-            $fusion["LIGNE"] = array_merge($parametre["LIGNE"],$variable["LIGNE"]);
+            if (!empty($parametre["PARAM"]) &&
+                !empty($parametre["CUVE"])  &&
+                !empty($parametre["LIGNE"]) &&
+                !empty($variable["PARAM"])  &&
+                !empty($variable["CUVE"])   &&
+                !empty($variable["LIGNE"])) {
+                    
+                $fusion["PARAM"] = array_merge($parametre["PARAM"],$variable["PARAM"]);
+                $fusion["CUVE"]  = array_merge($parametre["CUVE"],$variable["CUVE"]);
+                $fusion["LIGNE"] = array_merge($parametre["LIGNE"],$variable["LIGNE"]);
+                
+                // On sauvegarde l'ancien param.ini
+                exec("sudo cp /var/www/mobile/param.ini /tmp/param.ini",$ret,$err);
+                if ($err != 0) echo 'Erreur sauvegarde ancien param.ini';
+                
+                write_ini_file($fusion, "param.ini", true);
 
-            write_ini_file($fusion, "param.ini", true);
+                // On cré la conf 
+                if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                    $path = "C:/cultibox/_conf";
+                    $pathTmp = "C:/cultibox/tmp";
+                } else {
+                    $path = "/etc/bulckypi";
+                    $pathTmp = "/tmp";
+                }
 
-            // On cré la conf 
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $path = "C:/cultibox/_conf";
-                $pathTmp = "C:/cultibox/tmp";
-            } else {
-                $path = "/etc/bulckypi";
-                $pathTmp = "/tmp";
+                generateConf($path, $pathTmp, $fusion);
             }
-
-            generateConf($path, $pathTmp, $fusion);
 
             break;
         case 'SET_PLUG':
