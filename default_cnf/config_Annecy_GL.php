@@ -67,9 +67,9 @@ $GLOBALS['IRRIGATION'] = array(
                         'numero'      => 5,
                         'type'        => "ADS1015",
                         'index'       => 0,
-                        'input'       => "1",
-                        'min'         => "-4",
-                        'max'         => 16
+                        'input'       => 1,
+                        'min'         => -2.5,
+                        'max'         => 10
                     ),
                 ),
                  'ligne' => array (
@@ -141,9 +141,9 @@ $GLOBALS['IRRIGATION'] = array(
                         'numero'      => 10,
                         'type'        => "ADS1015",
                         'index'       => 0,
-                        'input'       => "1",
-                        'min'         => "0",
-                        'max'         => "10"
+                        'input'       => 2,
+                        'min'         => -2.5,
+                        'max'         => 10
                     )
                 ),
                 'ligne' => array (
@@ -216,9 +216,9 @@ $GLOBALS['IRRIGATION'] = array(
                         'numero'      => 15,
                         'type'        => "ADS1015",
                         'index'       => 0,
-                        'input'       => "1",
-                        'min'         => "0",
-                        'max'         => "10"
+                        'input'       => 3,
+                        'min'         => -2.5,
+                        'max'         => 10
                     ),
                 ),
                 'ligne' => array (

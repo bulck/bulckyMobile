@@ -67,8 +67,8 @@ $GLOBALS['IRRIGATION'] = array(
                         'numero'      => 5,
                         'type'        => "ADS1015",
                         'index'       => 0,
-                        'input'       => "1",
-                        'min'         => "0",
+                        'input'       => 1,
+                        'min'         => 2.5,
                         'max'         => 10
                     ),
                 ),
@@ -140,10 +140,10 @@ $GLOBALS['IRRIGATION'] = array(
                     'pression_pompe'     => array (
                         'numero'      => 10,
                         'type'        => "ADS1015",
-                        'index'       => 1,
-                        'input'       => "2",
-                        'min'         => "0",
-                        'max'         => "10"
+                        'index'       => 0,
+                        'input'       => 2,
+                        'min'         => -2.5,
+                        'max'         => 10
                     )
                 ),
                 'ligne' => array (
