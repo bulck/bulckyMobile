@@ -134,7 +134,7 @@
                 
                 <!-- Page de configuration -->
                 <div id="param_conf" class="conf_section">
-           <p class="title_page">Configuration générale</p>
+                    <p class="title_page">Configuration générale</p>
                     <table class="center" >
                         <tr>
                             <td>Irrigation activée :</td>
