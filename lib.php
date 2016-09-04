@@ -1091,13 +1091,13 @@ if(!isset($function) || empty($function)) {
         
             if ($prise1 != 0 ) {
                 $status = forcePlug($prise1,$temps,$etat);
-                echo $status["status"];
             }
             
             if ($prise2 != 0 && $status["status"] == "done" ) {
                 $status = forcePlug($prise2,$temps,$etat);
-                echo $status["status"];
             }
+            
+            echo $status["status"];
         
             break;        
         case 'GET_SENSORS' :
