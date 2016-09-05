@@ -115,20 +115,20 @@ $GLOBALS['IRRIGATION'] = array(
                         ),
                         'longueur' => 50
                      ),
-                     "4" => array(
-                        'prise' => 4,
+                    "5" => array(
+                        'prise' => 5,
                         'capteur'   => array (
                             'pression'    =>  array (
-                                'numero'      => 9,
+                                'numero'      => 11,
                                 'type'        => "MCP230XX",
                                 'index'       => 7,
                                 'nbinput'       => 1,
-                                'input,1'       => 4,
+                                'input,1'       => 5,
                                 'value,1'       => 1
                             )
                         ),
                         'longueur' => 50
-                     )
+                    ),
                  )
             ),
             'Nord' => array(
@@ -147,20 +147,20 @@ $GLOBALS['IRRIGATION'] = array(
                     )
                 ),
                 'ligne' => array (
-                    "5" => array(
-                        'prise' => 5,
+                     "4" => array(
+                        'prise' => 4,
                         'capteur'   => array (
                             'pression'    =>  array (
-                                'numero'      => 11,
+                                'numero'      => 9,
                                 'type'        => "MCP230XX",
                                 'index'       => 7,
                                 'nbinput'       => 1,
-                                'input,1'       => 5,
+                                'input,1'       => 4,
                                 'value,1'       => 1
                             )
                         ),
                         'longueur' => 50
-                    ),
+                     )
                     "6" => array(
                         'prise' => 6,
                         'capteur'   => array (
