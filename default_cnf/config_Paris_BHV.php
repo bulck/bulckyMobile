@@ -46,7 +46,7 @@ $GLOBALS['IRRIGATION'] = array(
                 'type'        => "EC",
                 'index'       => 1,
                 'comPort'     => "/dev/ttyUSB0",
-                'version'     => "EC3.0"
+                'version'     => "EZO"
             ),
         ),
         'prise'   => array (
