@@ -102,12 +102,13 @@ function upVal (type, varname, incr, unit, max) {
     }
 
 }
+
 function upValTxtLigne (plateforme, nbLigne , varname, debit_par_goutteur , goutteur_par_membrane) {
     // On affiche le temps que ça correspond
     // temps_cycle * Debit / (Debit_par_gouteur * gouteur_par_membrane)
     tempsOn = parseFloat(CONF["LIGNE"][plateforme + "_TEMPS_CYCLE"]) * parseFloat(CONF["LIGNE"][varname]) / ( parseFloat(debit_par_goutteur) * parseFloat(goutteur_par_membrane) );
     tempsOff = parseFloat(CONF["LIGNE"][plateforme + "_TEMPS_CYCLE"]) / nbLigne - tempsOn
-    logMessage("ON : " + tempsOn + "s" + " OFF : " + tempsOff + "s", 5000);
+    logMessage("ON : " + tempsOn.toFixed(1) + "s" + " OFF : " + tempsOff.toFixed(1) + "s", 5000);
     
 }
 
