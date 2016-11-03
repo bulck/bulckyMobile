@@ -949,6 +949,49 @@ function generateConf ($path, $pathTmp, $userVar) {
         }
     }
     
+    // On ajoute une vérification de la température ( inférieur à 1°C pendant 2H)
+    $paramConfSupervision = array (
+        array (
+            "key" => "action",
+            "level" => "checkSensor"
+        ),
+        array (
+            "key" => "eMail",
+            "value" => readInIni($userVar, 'PARAM', 'MAIL_USERNAME', "test@gmail.com")
+        ),
+        array (
+            "key" => "sensorName",
+            "value" => "Temperature"
+        ),
+        array (
+            "key" => "sensor",
+            "value" => $zone['capteur']['temperature']['numero']
+        ),
+        array (
+            "key" => "sensorOutput",
+            "value" => "1"
+        ),
+        array (
+            "key" => "valueSeuil",
+            "value" => "1"
+        ),
+        array (
+            "key" => "timeSeuilInS",
+            "value" => "7200"
+        ),
+        array (
+            "key" => "alertIf",
+            "value" => "down"
+        )
+    );
+
+    // On sauvegarde
+    create_conf_XML($pathTemporaire . "/serverSupervision/process_" . $processSupervisionId . "_checkSensor.xml" , $paramConfSupervision);  
+
+    unset($paramConfSupervision);
+
+    $processSupervisionId++;
+    
     // Add trace level
     $paramServerSupervision = array (
         array (
