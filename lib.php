@@ -1035,13 +1035,6 @@ if(!isset($function) || empty($function)) {
     echo json_encode("0");
 } else {
     switch($function) {
-        case 'GET_CONF':
-        
-            // On vient lire la configuration 
-            $parametre = parse_ini_file("param.ini",true);
-
-            echo json_encode($parametre);
-            break;
         case 'SET_CONF':
 
             // On vient lire la configuration 

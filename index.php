@@ -85,13 +85,17 @@
                     ]
                 });
 
-                // On charge la conf 
-                loadConf();
-
                 // On vient lire la valeur des capteurs 
                 readSensors(0);
 
             });
+            
+            // On charge la conf 
+            <?php
+                $parametre = parse_ini_file("param.ini",true);
+                $js_array = json_encode($parametre);
+            ?>
+            var CONF = JSON.parse('<?php echo $js_array ?>');
 
         </script>
     </head>
@@ -418,6 +422,7 @@
                                     <option value="30" >30 secondes</option>
                                     <option value="60" selected>1 minute</option>
                                     <option value="120" >2 minutes</option>
+                                    <option value="300" >5 minutes</option>
                                     <option value="600" >10 minutes</option>
                                     <option value="1200" >20 minutes</option>
                                     <option value="3600" >1 heure</option>

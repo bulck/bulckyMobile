@@ -21,23 +21,7 @@ function logMessage (message, timeOut) {
     }
 }
 
-// Cette fonction charge en mémoire la configuration
-function loadConf () {
-    $.ajax({
-         cache: false,
-         async: true,
-         type: "POST",
-         url: "lib.php",
-         data: {
-             function:"GET_CONF"
-         }
-    }).done(function (data) {
-        
-        CONF = jQuery.parseJSON(data);
-        
-    });
-}
-
+// Cette fonction sauvegarde la configuration
 function saveConf () {
     var retVal = confirm("Confirmez-vous l'envoi ?");
     if( retVal == true ) {
