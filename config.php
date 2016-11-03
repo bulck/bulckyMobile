@@ -8,7 +8,7 @@ $GLOBALS['CONFIG'] = array(
 
 $GLOBALS['SURPRESSEUR'] = array(
     'IP' => "localhost",
-    'prise' => 17,
+    'prise' => 24,
     'puissance' => 850
 );
 
@@ -61,8 +61,7 @@ $GLOBALS['IRRIGATION'] = array(
             'Ouest' => array(
                 'prise'   => array (
                     "pompe"             => 18,
-                    'EV_eauclaire'      => 15,
-                    'puissance' => 750
+                    'EV_eauclaire'      => 15
                 ),
                 'capteur'   => array (
                     'pression_pompe'     => array (

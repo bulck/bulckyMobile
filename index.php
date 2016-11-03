@@ -432,6 +432,7 @@
                         </tr>
                         <?php 
                             
+                            $outPrise[$GLOBALS['SURPRESSEUR']['prise']] = "Surpresseur";
                             foreach ($GLOBALS['IRRIGATION'] as $zone_nom => $zone) {
                                 
                                 // On ajoute les prises engrais, purge , remplissage
