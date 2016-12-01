@@ -3,7 +3,8 @@
 $GLOBALS['CONFIG'] = array(
     'debit_gouteur' => "7.6",
     'gouteur_membrane' => "2",
-    'nom' => "BHV Paris"
+    'nom' => "BHV Paris",
+    'nomcomplet' => "Bazar de l'Hotel de Ville"
 );
 
 $GLOBALS['SURPRESSEUR'] = array(

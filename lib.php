@@ -935,6 +935,10 @@ function generateConf ($path, $pathTmp, $userVar) {
                     array (
                         "key" => "alertIf",
                         "value" => "down"
+                    ),
+                    array (
+                        "key" => "hostnameValue",
+                        "value" => $GLOBALS['CONFIG']['nomcomplet']
                     )
                 );
                 

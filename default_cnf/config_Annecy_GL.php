@@ -3,7 +3,8 @@
 $GLOBALS['CONFIG'] = array(
     'debit_gouteur' => "7.6",
     'gouteur_membrane' => "2",
-    'nom' => "GLA"
+    'nom' => "GLA",
+    'nomcomplet' => "Galeries Lafayette Annecy"
 );
 
 $GLOBALS['SURPRESSEUR'] = array(
@@ -57,6 +58,66 @@ $GLOBALS['IRRIGATION'] = array(
             "remplissage" => 14
         ),
         'plateforme' => array (
+            'Est' => array(
+                'prise'   => array (
+                    "pompe"             => 19,
+                    'EV_eauclaire'      => 16
+                ),
+                'capteur'   => array (
+                    'pression_pompe'     => array (
+                        'numero'      => 10,
+                        'type'        => "ADS1015",
+                        'index'       => 0,
+                        'input'       => 2,
+                        'min'         => -2.5,
+                        'max'         => 10
+                    )
+                ),
+                'ligne' => array (
+                    "1" => array(
+                        'prise' => 1,
+                        'capteur'   => array (
+                            'pression'    =>  array (
+                                'numero'      => 9,
+                                'type'        => "MCP230XX",
+                                'index'       => 7,
+                                'nbinput'       => 1,
+                                'input,1'       => 16,
+                                'value,1'       => 1
+                            )
+                        ),
+                        'longueur' => 50
+                    ),
+                    "2" => array(
+                        'prise' => 2,
+                        'capteur'   => array (
+                            'pression'    =>  array (
+                                'numero'      => 11,
+                                'type'        => "MCP230XX",
+                                'index'       => 7,
+                                'nbinput'       => 1,
+                                'input,1'       => 15,
+                                'value,1'       => 1
+                            )
+                        ),
+                        'longueur' => 50
+                    ),
+                    "3" => array(
+                        'prise' => 3,
+                        'capteur'   => array (
+                            'pression'    =>  array (
+                                'numero'      => 12,
+                                'type'        => "MCP230XX",
+                                'index'       => 7,
+                                'nbinput'       => 1,
+                                'input,1'       => 14,
+                                'value,1'       => 1
+                            )
+                        ),
+                        'longueur' => 50
+                    )
+                )
+            ),
             'Ouest' => array(
                 'prise'   => array (
                     "pompe"             => 18,
@@ -73,99 +134,25 @@ $GLOBALS['IRRIGATION'] = array(
                     ),
                 ),
                  'ligne' => array (
-                     "1" => array(
-                        'prise' => 1,
+                     "4" => array(
+                        'prise' => 5,
                         'capteur'   => array (
                             'pression'    =>  array (
                                 'numero'      => 6,
                                 'type'        => "MCP230XX",
                                 'index'       => 7,
                                 'nbinput'     => 1,
-                                'input,1'     => 16,
+                                'input,1'     => 12,
                                 'value,1'     => 1
                             )
                         ),
                         'longueur' => 50
-                     ),
-                     "2" => array(
-                        'prise' => 2,
-                        'capteur'   => array (
-                            'pression'    =>  array (
-                                'numero'      => 7,
-                                'type'        => "MCP230XX",
-                                'index'       => 7,
-                                'nbinput'       => 1,
-                                'input,1'       => 15,
-                                'value,1'       => 1
-                            )
-                        ),
-                        'longueur' => 50
-                     ),
-                     "3" => array(
-                        'prise' => 3,
-                        'capteur'   => array (
-                            'pression'    =>  array (
-                                'numero'      => 8,
-                                'type'        => "MCP230XX",
-                                'index'       => 7,
-                                'nbinput'       => 1,
-                                'input,1'       => 14,
-                                'value,1'       => 1
-                            )
-                        ),
-                        'longueur' => 50
-                     ),
-                     "4" => array(
-                        'prise' => 4,
-                        'capteur'   => array (
-                            'pression'    =>  array (
-                                'numero'      => 9,
-                                'type'        => "MCP230XX",
-                                'index'       => 7,
-                                'nbinput'       => 1,
-                                'input,1'       => 13,
-                                'value,1'       => 1
-                            )
-                        ),
-                        'longueur' => 50
-                     )
-                 )
-            ),
-            'Sud' => array(
-                'prise'   => array (
-                    "pompe"             => 19,
-                    'EV_eauclaire'      => 16
-                ),
-                'capteur'   => array (
-                    'pression_pompe'     => array (
-                        'numero'      => 10,
-                        'type'        => "ADS1015",
-                        'index'       => 0,
-                        'input'       => 2,
-                        'min'         => -2.5,
-                        'max'         => 10
-                    )
-                ),
-                'ligne' => array (
-                    "5" => array(
-                        'prise' => 5,
-                        'capteur'   => array (
-                            'pression'    =>  array (
-                                'numero'      => 11,
-                                'type'        => "MCP230XX",
-                                'index'       => 7,
-                                'nbinput'       => 1,
-                                'input,1'       => 12,
-                                'value,1'       => 1
-                            )
-                        ),
-                        'longueur' => 50
                     ),
-                    "6" => array(
+                    "5" => array(
                         'prise' => 6,
                         'capteur'   => array (
                             'pression'    =>  array (
-                                'numero'      => 12,
+                                'numero'      => 7,
                                 'type'        => "MCP230XX",
                                 'index'       => 7,
                                 'nbinput'       => 1,
@@ -175,11 +162,11 @@ $GLOBALS['IRRIGATION'] = array(
                         ),
                         'longueur' => 50
                     ),
-                    "7" => array(
+                    "6" => array(
                         'prise' => 7,
                         'capteur'   => array (
                             'pression'    =>  array (
-                                'numero'      => 13,
+                                'numero'      => 8,
                                 'type'        => "MCP230XX",
                                 'index'       => 7,
                                 'nbinput'       => 1,
@@ -189,11 +176,11 @@ $GLOBALS['IRRIGATION'] = array(
                         ),
                         'longueur' => 50
                     ),
-                    "8" => array(
+                    "7" => array(
                         'prise' => 8,
                         'capteur'   => array (
                             'pression'    =>  array (
-                                'numero'      => 14,
+                                'numero'      => 13,
                                 'type'        => "MCP230XX",
                                 'index'       => 7,
                                 'nbinput'       => 1,
@@ -203,7 +190,7 @@ $GLOBALS['IRRIGATION'] = array(
                         ),
                         'longueur' => 50
                     )
-                )
+                 )
             )
         )
     )
